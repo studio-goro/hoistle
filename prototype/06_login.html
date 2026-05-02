@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>新規登録</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100..900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../design-system/design-system-example-components-html-main/src/global.css">
+  <link rel="stylesheet" href="../design-system/design-system-example-components-html-main/src/components/button/button.css">
+  <link rel="stylesheet" href="../design-system/design-system-example-components-html-main/src/components/input-text/input-text.css">
+  <link rel="stylesheet" href="../design-system/design-system-example-components-html-main/src/components/form-control-label/form-control-label.css">
+  <link rel="stylesheet" href="../design-system/design-system-example-components-html-main/src/components/link/link.css">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+
+    html {
+      background: var(--color-neutral-solid-gray-100);
+    }
+
+    body {
+      font-family: var(--font-family-sans);
+      background: var(--color-neutral-solid-gray-50);
+      margin: 0 auto;
+      max-width: 390px;
+      min-height: 100vh;
+      color: var(--color-neutral-solid-gray-800);
+      box-shadow: 0 0 16px rgba(0,0,0,0.12);
+    }
+
+    /* ── 上部（戻る / ロゴ） ── */
+    .nav-bar {
+      display: grid;
+      grid-template-columns: 40px 1fr 40px;
+      align-items: center;
+      gap: 8px;
+      background: var(--color-neutral-white);
+      padding: 12px 12px;
+      border-bottom: 1px solid var(--color-neutral-solid-gray-200);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    .icon-btn.dads-button {
+      width: 40px;
+      height: 40px;
+      padding: 0;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 999px;
+      background: transparent;
+      border-color: transparent;
+      color: var(--color-neutral-solid-gray-700);
+    }
+    .icon-btn.dads-button:hover {
+      background: var(--color-neutral-solid-gray-50);
+      border-color: transparent;
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      min-width: 0;
+    }
+    .brand-mark {
+      width: 28px;
+      height: 28px;
+      border-radius: 8px;
+      background: var(--color-neutral-solid-gray-800);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--color-neutral-white);
+      flex-shrink: 0;
+    }
+    .brand-name {
+      font-size: 14px;
+      font-weight: 800;
+      letter-spacing: 0.04em;
+      color: var(--color-neutral-solid-gray-900);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    /* ── フォームエリア ── */
+    .content {
+      padding: 18px 16px 24px;
+    }
+    .page-title {
+      margin: 10px 0 18px;
+      font-size: 22px;
+      font-weight: 800;
+      color: var(--color-neutral-solid-gray-900);
+      letter-spacing: 0.02em;
+    }
+
+    .form {
+      display: grid;
+      gap: 16px;
+    }
+
+    .field .dads-input-text__input {
+      width: 100%;
+    }
+
+    /* パスワード：右側アイコン */
+    .pw-wrap {
+      position: relative;
+    }
+    .pw-wrap .dads-input-text {
+      position: relative;
+      display: block;
+      width: 100%;
+      line-height: 0;
+    }
+    .pw-wrap .dads-input-text__input {
+      width: 100%;
+      padding-right: 48px;
+    }
+    .pw-toggle.dads-button {
+      position: absolute;
+      top: 0;
+      right: 8px;
+      bottom: 0;
+      transform: none;
+      margin: auto 0;
+      height: 32px;
+      width: 32px;
+      min-width: 32px;
+      padding: 0;
+      border-color: transparent;
+      background: transparent;
+      z-index: 2;
+    }
+    .pw-toggle.dads-button:hover {
+      background: transparent;
+      border-color: transparent;
+    }
+
+    /* ── ソーシャルログイン ── */
+    .social {
+      margin-top: 4px;
+      display: grid;
+      gap: 10px;
+    }
+    .or-sep {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      align-items: center;
+      gap: 10px;
+      margin: 6px 0 2px;
+      color: var(--color-neutral-solid-gray-500);
+      font-size: 12px;
+    }
+    .or-sep::before,
+    .or-sep::after {
+      content: "";
+      height: 1px;
+      background: var(--color-neutral-solid-gray-200);
+    }
+
+    .social-btn.dads-button {
+      width: 100%;
+      justify-content: center;
+      gap: 10px;
+      background: var(--color-neutral-white);
+      border-color: var(--color-neutral-solid-gray-300);
+      color: var(--color-neutral-solid-gray-900);
+    }
+    .social-btn.dads-button:hover {
+      background: var(--color-neutral-solid-gray-50);
+      border-color: var(--color-neutral-solid-gray-420);
+    }
+    .social-btn__icon {
+      width: 18px;
+      height: 18px;
+      flex-shrink: 0;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* ── メインCTA ── */
+    .cta {
+      margin-top: 18px;
+      display: grid;
+      gap: 12px;
+    }
+    .primary-cta.dads-button {
+      width: 100%;
+      justify-content: center;
+      background: var(--color-neutral-solid-gray-800);
+      border-color: var(--color-neutral-solid-gray-800);
+      color: var(--color-neutral-white);
+    }
+    .primary-cta.dads-button:hover {
+      background: var(--color-neutral-solid-gray-900);
+      border-color: var(--color-neutral-solid-gray-900);
+    }
+
+    /* ── 補足テキスト ── */
+    .note {
+      margin: 0;
+      font-size: 12px;
+      line-height: 1.6;
+      color: var(--color-neutral-solid-gray-600);
+    }
+    .note .dads-link {
+      color: var(--color-neutral-solid-gray-800);
+    }
+
+    .login-link {
+      margin-top: 10px;
+      text-align: center;
+      font-size: 13px;
+      color: var(--color-neutral-solid-gray-600);
+    }
+
+    /* small helper */
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0,0,0,0);
+      white-space: nowrap;
+      border: 0;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 上部 -->
+  <header class="nav-bar">
+    <a href="02_event-detail.html" aria-label="戻る" class="dads-link" style="justify-self:start; text-decoration:none;">
+      <button class="dads-button icon-btn" data-size="sm" data-type="outline" type="button" aria-hidden="true" tabindex="-1">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <path d="M15 18l-6-6 6-6"/>
+        </svg>
+      </button>
+    </a>
+    <div class="brand" aria-label="Whistle">
+      <span class="brand-mark" aria-hidden="true">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+          <path d="M9 7a3 3 0 0 1 6 0v4a4 4 0 1 1-8 0V7h2Zm6 4V7a1 1 0 1 0-2 0v4H9V7a1 1 0 1 0-2 0v4a6 6 0 1 0 12 0Z"/>
+        </svg>
+      </span>
+      <span class="brand-name">ホイッスル</span>
+    </div>
+    <div aria-hidden="true"></div>
+  </header>
+
+  <!-- フォーム -->
+  <main class="content">
+    <h1 class="page-title">ログイン</h1>
+
+    <form class="form" action="04_account-verify.html" method="get" onsubmit="event.preventDefault(); var v=document.getElementById('email').value.trim(); window.location.href='04_account-verify.html' + (v ? ('?email=' + encodeURIComponent(v)) : ''); return false;">
+      <div class="field dads-form-control-label" data-size="md">
+        <label class="dads-form-control-label__label" for="email">
+          メールアドレス
+        </label>
+        <div>
+          <span class="dads-input-text">
+            <input id="email" class="dads-input-text__input" type="email" inputmode="email" autocomplete="email" data-size="md" placeholder="example@example.com">
+          </span>
+        </div>
+      </div>
+
+      <div class="field dads-form-control-label" data-size="md">
+        <label class="dads-form-control-label__label" for="password">
+          パスワード
+        </label>
+        <div class="pw-wrap">
+          <span class="dads-input-text">
+            <input id="password" class="dads-input-text__input" type="password" autocomplete="new-password" data-size="md" placeholder="パスワードを入力">
+            <button class="dads-button icon-btn pw-toggle" data-size="sm" data-type="outline" type="button" aria-label="パスワードを表示" aria-pressed="false" onclick="togglePassword()">
+              <span class="sr-only">表示/非表示</span>
+              <svg id="pwIconEye" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12z"/>
+                <circle cx="12" cy="12" r="3"/>
+              </svg>
+              <svg id="pwIconEyeOff" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" style="display:none;">
+                <path d="M2 2l20 20"/>
+                <path d="M10.6 10.6a2 2 0 0 0 2.8 2.8"/>
+                <path d="M9.9 5.1A10.9 10.9 0 0 1 12 5c7 0 11 7 11 7a18.5 18.5 0 0 1-3.2 4.2"/>
+                <path d="M6.7 6.7A18.5 18.5 0 0 0 1 12s4 7 11 7c1.1 0 2.2-.2 3.2-.5"/>
+              </svg>
+            </button>
+          </span>
+        </div>
+      </div>
+
+      <div class="cta">
+        <button class="dads-button primary-cta" data-size="md" data-type="solid-fill" type="submit">ログイン</button>
+
+        <div class="or-sep" aria-hidden="true">または</div>
+
+        <div class="social" aria-label="ソーシャルログイン">
+          <button class="dads-button social-btn" data-size="md" data-type="outline" type="button" aria-label="LINEでログイン">
+            <span class="social-btn__icon" aria-hidden="true">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M12 3C6.5 3 2 6.4 2 10.6c0 2.4 1.4 4.6 3.6 6.1L5 21l4.1-2.3c.9.2 1.9.3 2.9.3 5.5 0 10-3.4 10-7.6S17.5 3 12 3Z"/>
+              </svg>
+            </span>
+            LINEで登録
+          </button>
+
+          <button class="dads-button social-btn" data-size="md" data-type="outline" type="button" aria-label="Googleでログイン">
+            <span class="social-btn__icon" aria-hidden="true">
+              <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M21.6 12.3c0-.7-.1-1.2-.2-1.8H12v3.4h5.4c-.2 1-.9 2.4-2.4 3.4v2.3h3.3c2-1.8 3.3-4.5 3.3-7.6Z" fill="#4285F4"/>
+                <path d="M12 22c2.7 0 5-.9 6.7-2.4l-3.3-2.3c-.9.6-2 1-3.4 1-2.6 0-4.8-1.7-5.6-4.1H3v2.4A10 10 0 0 0 12 22Z" fill="#34A853"/>
+                <path d="M6.4 14.2c-.2-.6-.3-1.2-.3-1.9s.1-1.3.3-1.9V8.1H3A10 10 0 0 0 2 12.3c0 1.6.4 3.1 1 4.4l3.4-2.5Z" fill="#FBBC05"/>
+                <path d="M12 6.1c1.5 0 2.6.6 3.2 1.1l2.4-2.3C17 3.6 14.7 2.7 12 2.7A10 10 0 0 0 3 8.1l3.4 2.5C7.2 8 9.4 6.1 12 6.1Z" fill="#EA4335"/>
+              </svg>
+            </span>
+            Googleで登録
+          </button>
+
+          <button class="dads-button social-btn" data-size="md" data-type="outline" type="button" aria-label="Appleでログイン">
+            <span class="social-btn__icon" aria-hidden="true">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M16.7 13.4c0 2.6 2.3 3.5 2.3 3.5s-1.8 5.1-4.3 5.1c-1.2 0-1.7-.8-3-.8s-1.8.8-3 .8C6 22 3.9 17.5 3.9 13.9c0-3.2 2-4.9 4-4.9 1.2 0 2.2.8 3 .8.7 0 1.9-.9 3.3-.9.5 0 2.4 0 3.6 1.9-.1.1-2.1 1.2-2.1 3.6ZM14.6 4.8c.8-1 1.4-2.4 1.2-3.8-1.2.1-2.6.8-3.5 1.8-.8.9-1.4 2.3-1.2 3.7 1.3.1 2.7-.7 3.5-1.7Z"/>
+              </svg>
+            </span>
+            Appleで登録
+          </button>
+        </div>
+
+        <div class="login-link">
+          <a class="dads-link" href="03_signup.html">新規登録はこちら</a>
+        </div>
+      </div>
+    </form>
+  </main>
+
+  <script>
+    function togglePassword() {
+      const input = document.getElementById('password');
+      const btn = document.querySelector('.pw-toggle');
+      const isPassword = input.type === 'password';
+      input.type = isPassword ? 'text' : 'password';
+      btn.setAttribute('aria-pressed', String(isPassword));
+      btn.setAttribute('aria-label', isPassword ? 'パスワードを非表示' : 'パスワードを表示');
+      document.getElementById('pwIconEye').style.display = isPassword ? 'none' : '';
+      document.getElementById('pwIconEyeOff').style.display = isPassword ? '' : 'none';
+    }
+  </script>
+</body>
+</html>

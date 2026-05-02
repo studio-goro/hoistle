@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>基本情報入力</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100..900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../design-system/design-system-example-components-html-main/src/global.css">
+  <link rel="stylesheet" href="../design-system/design-system-example-components-html-main/src/components/button/button.css">
+  <link rel="stylesheet" href="../design-system/design-system-example-components-html-main/src/components/input-text/input-text.css">
+  <link rel="stylesheet" href="../design-system/design-system-example-components-html-main/src/components/form-control-label/form-control-label.css">
+  <link rel="stylesheet" href="../design-system/design-system-example-components-html-main/src/components/select/select.css">
+  <link rel="stylesheet" href="../design-system/design-system-example-components-html-main/src/components/radio/radio.css">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+
+    html {
+      background: var(--color-neutral-solid-gray-100);
+    }
+
+    body {
+      font-family: var(--font-family-sans);
+      background: var(--color-neutral-solid-gray-50);
+      margin: 0 auto;
+      max-width: 390px;
+      min-height: 100vh;
+      color: var(--color-neutral-solid-gray-800);
+      box-shadow: 0 0 16px rgba(0,0,0,0.12);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .main {
+      flex: 1;
+      padding: calc(20 / 16 * 1rem) calc(16 / 16 * 1rem) calc(100 / 16 * 1rem);
+    }
+
+    .section-title {
+      margin: 0 0 calc(20 / 16 * 1rem);
+      padding-bottom: calc(8 / 16 * 1rem);
+      border-bottom: 2px solid var(--color-neutral-solid-gray-800);
+      font-size: calc(17 / 16 * 1rem);
+      font-weight: 700;
+      color: var(--color-neutral-solid-gray-900);
+      letter-spacing: 0.02em;
+      display: inline-block;
+      width: 100%;
+    }
+
+    .form-stack {
+      display: flex;
+      flex-direction: column;
+      gap: calc(20 / 16 * 1rem);
+    }
+
+    .name-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: calc(12 / 16 * 1rem);
+    }
+
+    .field .dads-input-text__input,
+    .field .dads-select {
+      width: 100%;
+    }
+
+    .field .dads-select__control {
+      width: 100%;
+    }
+
+    .field .dads-select__select {
+      width: 100%;
+    }
+
+    .radio-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: calc(8 / 16 * 1rem) calc(16 / 16 * 1rem);
+      align-items: center;
+    }
+
+    fieldset.gender-fieldset {
+      border: 0;
+      padding: 0;
+      margin: 0;
+      min-width: 0;
+    }
+
+    .cta-bar {
+      position: fixed;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100%;
+      max-width: 390px;
+      padding: calc(12 / 16 * 1rem) calc(16 / 16 * 1rem);
+      padding-bottom: calc(12 / 16 * 1rem + env(safe-area-inset-bottom, 0px));
+      background: var(--color-neutral-white);
+      border-top: 1px solid var(--color-neutral-solid-gray-200);
+      z-index: 10;
+    }
+
+    .cta-bar .dads-button {
+      width: 100%;
+      justify-content: center;
+      background: var(--color-neutral-solid-gray-800);
+      border-color: var(--color-neutral-solid-gray-800);
+      color: var(--color-neutral-white);
+    }
+
+    .cta-bar .dads-button:hover {
+      background: var(--color-neutral-solid-gray-900);
+      border-color: var(--color-neutral-solid-gray-900);
+    }
+  </style>
+</head>
+<body>
+
+  <main class="main">
+    <form id="basicForm" class="form-stack" action="07_payment.html" method="get">
+      <h1 class="section-title">基本情報</h1>
+
+      <div class="name-row">
+        <div class="field dads-form-control-label" data-size="md">
+          <label class="dads-form-control-label__label" for="familyName">
+            姓
+            <span class="dads-form-control-label__requirement" data-required="true">※必須</span>
+          </label>
+          <div>
+            <span class="dads-input-text">
+              <input id="familyName" class="dads-input-text__input" type="text" autocomplete="family-name" data-size="md" placeholder="山田">
+            </span>
+          </div>
+        </div>
+        <div class="field dads-form-control-label" data-size="md">
+          <label class="dads-form-control-label__label" for="givenName">
+            名
+            <span class="dads-form-control-label__requirement" data-required="true">※必須</span>
+          </label>
+          <div>
+            <span class="dads-input-text">
+              <input id="givenName" class="dads-input-text__input" type="text" autocomplete="given-name" data-size="md" placeholder="太郎">
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <fieldset class="dads-form-control-label gender-fieldset" data-size="md">
+        <legend class="dads-form-control-label__label">性別</legend>
+        <div class="radio-group">
+          <label class="dads-radio" data-size="sm">
+            <span class="dads-radio__radio">
+              <input class="dads-radio__input" type="radio" name="gender" value="male">
+            </span>
+            <span class="dads-radio__label">男性</span>
+          </label>
+          <label class="dads-radio" data-size="sm">
+            <span class="dads-radio__radio">
+              <input class="dads-radio__input" type="radio" name="gender" value="female">
+            </span>
+            <span class="dads-radio__label">女性</span>
+          </label>
+          <label class="dads-radio" data-size="sm">
+            <span class="dads-radio__radio">
+              <input class="dads-radio__input" type="radio" name="gender" value="no_answer" checked>
+            </span>
+            <span class="dads-radio__label">回答しない</span>
+          </label>
+        </div>
+      </fieldset>
+
+      <div class="field dads-form-control-label" data-size="md">
+        <label class="dads-form-control-label__label" for="birthYear">
+          生まれ年（西暦）
+          <span class="dads-form-control-label__requirement" data-required="true">※必須</span>
+        </label>
+        <div>
+          <span class="dads-input-text">
+            <input id="birthYear" class="dads-input-text__input" type="number" inputmode="numeric" min="1900" max="2026" data-size="md" placeholder="1990">
+          </span>
+        </div>
+      </div>
+
+      <div class="field dads-form-control-label" data-size="md">
+        <label class="dads-form-control-label__label" for="nationality">
+          国籍
+        </label>
+        <div>
+          <span class="dads-select">
+            <span class="dads-select__control">
+              <select id="nationality" class="dads-select__select" data-size="md">
+                <option value="">選択してください</option>
+                <option value="JP">日本</option>
+                <option value="KR">韓国</option>
+                <option value="CN">中国</option>
+                <option value="US">アメリカ</option>
+                <option value="GB">イギリス</option>
+                <option value="OTHER">その他</option>
+              </select>
+              <svg class="dads-select__chevron" width="16" height="16" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M12 17L3 8L4 7L12 15L20 7L21 8L12 17Z" fill="currentcolor"/>
+              </svg>
+            </span>
+          </span>
+        </div>
+      </div>
+
+      <div class="field dads-form-control-label" data-size="md">
+        <label class="dads-form-control-label__label" for="email">メールアドレス</label>
+        <div>
+          <span class="dads-input-text">
+            <input id="email" class="dads-input-text__input" type="email" inputmode="email" autocomplete="email" data-size="md" placeholder="example@example.com">
+          </span>
+        </div>
+      </div>
+
+      <div class="field dads-form-control-label" data-size="md">
+        <label class="dads-form-control-label__label" for="phone">電話番号</label>
+        <div>
+          <span class="dads-input-text">
+            <input id="phone" class="dads-input-text__input" type="tel" inputmode="tel" autocomplete="tel" data-size="md" placeholder="09012345678">
+          </span>
+        </div>
+      </div>
+    </form>
+  </main>
+
+  <div class="cta-bar">
+    <button class="dads-button" data-size="md" data-type="solid-fill" type="submit" form="basicForm">アカウントを作成する</button>
+  </div>
+
+  <script>
+    (function () {
+      var params = new URLSearchParams(window.location.search);
+      var email = params.get('email');
+      if (email) {
+        document.getElementById('email').value = email;
+      }
+    })();
+  </script>
+</body>
+</html>

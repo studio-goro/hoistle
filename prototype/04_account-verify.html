@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>アカウント確認</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100..900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../design-system/design-system-example-components-html-main/src/global.css">
+  <link rel="stylesheet" href="../design-system/design-system-example-components-html-main/src/components/button/button.css">
+  <link rel="stylesheet" href="../design-system/design-system-example-components-html-main/src/components/input-text/input-text.css">
+  <link rel="stylesheet" href="../design-system/design-system-example-components-html-main/src/components/form-control-label/form-control-label.css">
+  <link rel="stylesheet" href="../design-system/design-system-example-components-html-main/src/components/link/link.css">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+
+    html {
+      background: var(--color-neutral-solid-gray-100);
+    }
+
+    body {
+      font-family: var(--font-family-sans);
+      background: var(--color-neutral-solid-gray-50);
+      margin: 0 auto;
+      max-width: 390px;
+      min-height: 100vh;
+      color: var(--color-neutral-solid-gray-800);
+      box-shadow: 0 0 16px rgba(0,0,0,0.12);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .page-shell {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      padding: calc(24 / 16 * 1rem) calc(16 / 16 * 1rem);
+      justify-content: center;
+    }
+
+    .card {
+      background: var(--color-neutral-white);
+      border: 1px solid var(--color-neutral-solid-gray-200);
+      border-radius: calc(8 / 16 * 1rem);
+      padding: calc(24 / 16 * 1rem) calc(20 / 16 * 1rem);
+      max-width: 100%;
+    }
+
+    .page-title {
+      margin: 0 0 calc(8 / 16 * 1rem);
+      font-size: calc(22 / 16 * 1rem);
+      font-weight: 800;
+      color: var(--color-neutral-solid-gray-900);
+      letter-spacing: 0.02em;
+      text-align: center;
+    }
+
+    .lead {
+      margin: 0 0 calc(24 / 16 * 1rem);
+      font-size: calc(14 / 16 * 1rem);
+      line-height: 1.7;
+      color: var(--color-neutral-solid-gray-600);
+      text-align: center;
+    }
+
+    .lead .email {
+      font-weight: 700;
+      color: var(--color-neutral-solid-gray-800);
+      word-break: break-all;
+    }
+
+    .form-stack {
+      display: flex;
+      flex-direction: column;
+      gap: calc(16 / 16 * 1rem);
+    }
+
+    .field .dads-input-text__input {
+      width: 100%;
+    }
+
+    .submit.dads-button {
+      width: 100%;
+      justify-content: center;
+      margin-top: calc(8 / 16 * 1rem);
+      background: var(--color-neutral-solid-gray-800);
+      border-color: var(--color-neutral-solid-gray-800);
+      color: var(--color-neutral-white);
+    }
+    .submit.dads-button:hover {
+      background: var(--color-neutral-solid-gray-900);
+      border-color: var(--color-neutral-solid-gray-900);
+    }
+
+    .resend {
+      margin-top: calc(16 / 16 * 1rem);
+      text-align: center;
+      font-size: calc(14 / 16 * 1rem);
+    }
+
+    .resend .dads-link {
+      color: var(--color-neutral-solid-gray-800);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="page-shell">
+    <div class="card">
+      <h1 class="page-title">アカウント確認</h1>
+      <p class="lead" id="verifyLead">
+        <span class="email" id="verifyEmail">example@example.com</span>宛に送信された確認コードを入力してください
+      </p>
+
+      <form class="form-stack" action="05_basic-info.html" method="get" onsubmit="event.preventDefault(); var q=new URLSearchParams(window.location.search); var e=q.get('email'); window.location.href='05_basic-info.html'+(e?'?email='+encodeURIComponent(e):''); return false;">
+        <div class="field dads-form-control-label" data-size="md">
+          <label class="dads-form-control-label__label" for="code">確認コード</label>
+          <div>
+            <span class="dads-input-text">
+              <input id="code" class="dads-input-text__input" type="text" inputmode="numeric" autocomplete="one-time-code" data-size="md" placeholder="確認コード">
+            </span>
+          </div>
+        </div>
+
+        <button class="dads-button submit" data-size="md" data-type="solid-fill" type="submit">確認</button>
+
+        <div class="resend">
+          <a class="dads-link" href="#">コードを再送信</a>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      const params = new URLSearchParams(window.location.search);
+      const email = params.get('email');
+      if (email) {
+        const el = document.getElementById('verifyEmail');
+        el.textContent = email;
+      }
+    })();
+  </script>
+</body>
+</html>

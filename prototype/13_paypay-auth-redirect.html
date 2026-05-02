@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>PayPay認証中</title>
+  <link rel="stylesheet" href="../design-system/design-system-example-components-html-main/src/global.css">
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: var(--color-neutral-solid-gray-900);
+    }
+
+    body {
+      max-width: 390px;
+      margin: 0 auto;
+      min-height: 100vh;
+      box-shadow: 0 0 16px rgba(0,0,0,0.15);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .screenshot {
+      display: block;
+      width: 100%;
+      pointer-events: none;
+      user-select: none;
+    }
+  </style>
+</head>
+<body>
+
+  <img
+    class="screenshot"
+    src="../screen/paypay認証2.png"
+    alt="PayPay認証処理中"
+    draggable="false"
+  >
+
+  <script>
+    setTimeout(function () {
+      window.location.href = '11_paypay-connected.html';
+    }, 3000);
+  </script>
+
+</body>
+</html>

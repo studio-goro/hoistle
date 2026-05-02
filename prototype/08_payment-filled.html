@@ -1,0 +1,731 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>お支払い</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100..900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../design-system/design-system-example-components-html-main/src/global.css">
+  <link rel="stylesheet" href="../design-system/design-system-example-components-html-main/src/components/divider/divider.css">
+  <link rel="stylesheet" href="../design-system/design-system-example-components-html-main/src/components/button/button.css">
+  <link rel="stylesheet" href="../design-system/design-system-example-components-html-main/src/components/form-control-label/form-control-label.css">
+  <link rel="stylesheet" href="../design-system/design-system-example-components-html-main/src/components/input-text/input-text.css">
+  <link rel="stylesheet" href="../design-system/design-system-example-components-html-main/src/components/select/select.css">
+  <link rel="stylesheet" href="../design-system/design-system-example-components-html-main/src/components/checkbox/checkbox.css">
+  <link rel="stylesheet" href="prototype.css">
+  <style>
+    body {
+      padding-bottom: 88px;
+      color: var(--color-neutral-solid-gray-800, #1a1a1a);
+    }
+
+    /* ── カード共通 ── */
+    .card {
+      background: #fff;
+      border: 1px solid var(--color-neutral-solid-gray-200, #e0e0e0);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    /* ── 支払い内容カード ── */
+    .price-card {
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .price-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .price-row__label {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--color-neutral-solid-gray-700, #444);
+      margin: 0;
+    }
+    .price-row__value {
+      font-size: 14px;
+      color: var(--color-neutral-solid-gray-800, #1a1a1a);
+      margin: 0;
+    }
+    .price-row__value--discount {
+      color: var(--color-neutral-solid-gray-600, #666);
+    }
+    .price-divider {
+      border: none;
+      border-top: 1px solid var(--color-neutral-solid-gray-200, #e0e0e0);
+      margin: 0;
+    }
+    .price-total-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 4px;
+    }
+    .price-total-row__label {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--color-neutral-solid-gray-800, #1a1a1a);
+      margin: 0;
+    }
+    .price-total-row__value {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--color-neutral-solid-gray-800, #1a1a1a);
+      margin: 0;
+    }
+
+    /* ── クーポン・ポイント行 ── */
+    .option-row {
+      padding: 14px 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+    }
+    .option-row__info {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+    .option-row__title {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--color-neutral-solid-gray-800, #1a1a1a);
+      margin: 0;
+    }
+    .option-row__sub {
+      font-size: 12px;
+      color: var(--color-neutral-solid-gray-600, #666);
+      margin: 0;
+    }
+    .option-row__sub strong {
+      color: var(--color-neutral-solid-gray-800, #1a1a1a);
+    }
+    .option-row__action {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-shrink: 0;
+    }
+    .option-row__status {
+      font-size: 13px;
+      color: var(--color-neutral-solid-gray-500, #888);
+      margin: 0;
+      text-align: right;
+    }
+    .option-row__change {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--color-neutral-solid-gray-800, #1a1a1a);
+      text-decoration: underline;
+      cursor: pointer;
+      background: none;
+      border: none;
+      padding: 0;
+      font-family: inherit;
+    }
+    .option-row__note {
+      font-size: 12px;
+      color: var(--color-neutral-solid-gray-500, #888);
+      padding: 0 16px 14px;
+      margin: 0;
+    }
+
+    /* ── フォームセクション ── */
+    .form-card {
+      padding: 20px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    /* input-textを全幅に */
+    .dads-input-text {
+      display: block;
+    }
+    .dads-input-text__input {
+      width: 100%;
+      box-sizing: border-box;
+    }
+
+    /* selectを全幅に */
+    .dads-select {
+      display: block;
+    }
+    .dads-select__control {
+      display: block;
+    }
+    .dads-select__select {
+      width: 100%;
+    }
+
+    /* form-control-labelをブロック表示 */
+    .dads-form-control-label {
+      display: block;
+      width: 100%;
+    }
+
+    /* ── チェックボックス行 ── */
+    .checkbox-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+    }
+
+    /* ── 注意書き ── */
+    .disclaimer {
+      font-size: 12px;
+      color: var(--color-neutral-solid-gray-500, #888);
+      line-height: 1.7;
+      margin: 0;
+    }
+
+    /* ── ポイントシート専用スタイル ── */
+    .point-options {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .point-option-card {
+      padding: 14px 16px;
+      border-radius: 12px;
+      border: 1px solid var(--color-neutral-solid-gray-200, #e0e0e0);
+      background: #fff;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      width: 100%;
+      box-sizing: border-box;
+    }
+    .point-option-card--with-balance {
+      justify-content: space-between;
+    }
+    .point-option-card .dads-radio {
+      flex: 1;
+    }
+    .point-balance {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--color-ref-primary-primary-900, #0017c1);
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    .point-sub-panel {
+      margin-left: 16px;
+      padding: 16px;
+      border-radius: 12px;
+      border: 1px solid var(--color-neutral-solid-gray-200, #e0e0e0);
+      background: var(--color-neutral-solid-gray-50, #f5f5f5);
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .point-sub-panel.hidden { display: none; }
+    .partial-input-area {
+      padding-left: 32px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .partial-input-area.hidden { display: none; }
+    .partial-input-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .partial-input-row .dads-input-text {
+      flex: 1;
+    }
+    .partial-input-row .dads-input-text__input {
+      width: 100%;
+      box-sizing: border-box;
+    }
+    .partial-hint {
+      font-size: 12px;
+      color: var(--color-neutral-solid-gray-500, #767676);
+      margin: 0;
+    }
+    .account-link-note {
+      font-size: 12px;
+      color: var(--color-neutral-solid-gray-600, #595959);
+      margin: 0;
+    }
+    .point-apply-btn {
+      width: 100%;
+      justify-content: center;
+    }
+  </style>
+</head>
+<body>
+  <!-- 比較用導線（控えめ・最上部） -->
+  <div class="compare-link">
+    <a href="07_payment.html">未入力を見る</a>
+  </div>
+
+  <!-- ナビバー -->
+  <div class="nav-bar">
+    <a class="nav-back" href="02_event-detail.html" aria-label="戻る">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+        <polyline points="15 18 9 12 15 6"/>
+      </svg>
+    </a>
+    <p class="nav-title">お支払い</p>
+    <div class="nav-spacer"></div>
+  </div>
+
+  <!-- メインコンテンツ -->
+  <main class="main">
+
+    <!-- ── お支払い内容 ── -->
+    <div class="section-block">
+      <p class="section-heading">お支払い内容</p>
+      <div class="card">
+        <div class="price-card">
+          <div class="price-row">
+            <p class="price-row__label">商品金額</p>
+            <p class="price-row__value">¥2,000</p>
+          </div>
+          <div class="price-row">
+            <p class="price-row__label">キャンペーン割引</p>
+            <p class="price-row__value price-row__value--discount">-¥300</p>
+          </div>
+          <div class="price-row">
+            <p class="price-row__label">クーポン利用</p>
+            <p class="price-row__value price-row__value--discount">-¥300</p>
+          </div>
+          <div class="price-row">
+            <p class="price-row__label">ポイント利用</p>
+            <p class="price-row__value price-row__value--discount">-¥500</p>
+          </div>
+          <hr class="price-divider">
+          <div class="price-total-row">
+            <p class="price-total-row__label">合計</p>
+            <p class="price-total-row__value">¥900</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── クーポン・ポイント ── -->
+    <div class="section-block">
+      <!-- クーポン利用 -->
+      <div class="card">
+        <div class="option-row">
+          <div class="option-row__info">
+            <p class="option-row__title">クーポン利用</p>
+          </div>
+          <div class="option-row__action">
+            <p class="option-row__status">初回限定クーポン</p>
+            <button class="option-row__change" onclick="document.getElementById('coupon-sheet').showModal()">変更</button>
+          </div>
+        </div>
+      </div>
+      <!-- ポイント利用 -->
+      <div class="card">
+        <div class="option-row">
+          <div class="option-row__info">
+            <p class="option-row__title">ポイント利用</p>
+            <p class="option-row__sub">利用可能ポイント：<strong>1,200pt</strong></p>
+          </div>
+          <div class="option-row__action">
+            <p class="option-row__status">ホイッスルポイント<br>500pt</p>
+            <button class="option-row__change" onclick="document.getElementById('point-sheet').showModal()">変更</button>
+          </div>
+        </div>
+        <p class="option-row__note">paypayポイント・dポイントもご利用いただけます</p>
+      </div>
+    </div>
+
+    <!-- ── カード情報 ── -->
+    <div class="section-block">
+      <p class="section-heading">カード情報</p>
+      <div class="card">
+        <div class="form-card">
+
+          <!-- カード番号 -->
+          <div class="dads-form-control-label" data-size="md">
+            <label class="dads-form-control-label__label" for="card-number">
+              カード番号
+              <span class="dads-form-control-label__requirement" data-required="true">※必須</span>
+            </label>
+            <span class="dads-input-text">
+              <input id="card-number" class="dads-input-text__input" type="text" data-size="md" inputmode="numeric" value="1234 4567 8901 234" placeholder="1234 5678 1234 5678" autocomplete="cc-number">
+            </span>
+          </div>
+
+          <!-- 有効期限 -->
+          <div class="dads-form-control-label" data-size="md">
+            <label class="dads-form-control-label__label" for="card-expiry">
+              有効期限
+              <span class="dads-form-control-label__requirement" data-required="true">※必須</span>
+            </label>
+            <span class="dads-input-text">
+              <input id="card-expiry" class="dads-input-text__input" type="text" data-size="md" inputmode="numeric" value="12 / 30" placeholder="MM / YY" autocomplete="cc-exp">
+            </span>
+          </div>
+
+          <!-- CVC -->
+          <div class="dads-form-control-label" data-size="md">
+            <label class="dads-form-control-label__label" for="card-cvc">
+              CVC
+              <span class="dads-form-control-label__requirement" data-required="true">※必須</span>
+            </label>
+            <span class="dads-input-text">
+              <input id="card-cvc" class="dads-input-text__input" type="text" data-size="md" inputmode="numeric" value="123" placeholder="123" autocomplete="cc-csc">
+            </span>
+          </div>
+
+          <!-- 国または地域 -->
+          <div class="dads-form-control-label" data-size="md">
+            <label class="dads-form-control-label__label" for="card-country">
+              国または地域
+              <span class="dads-form-control-label__requirement" data-required="true">※必須</span>
+            </label>
+            <span class="dads-select">
+              <span class="dads-select__control">
+                <select id="card-country" class="dads-select__select" data-size="md" autocomplete="country">
+                  <option value="JP" selected>日本</option>
+                  <option value="US">アメリカ</option>
+                  <option value="GB">イギリス</option>
+                  <option value="CN">中国</option>
+                  <option value="KR">韓国</option>
+                  <option value="TW">台湾</option>
+                </select>
+                <svg class="dads-select__chevron" width="16" height="16" viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M12 17L3 8L4 7L12 15L20 7L21 8L12 17Z" fill="currentcolor"/>
+                </svg>
+              </span>
+            </span>
+          </div>
+
+          <!-- 保存チェックボックス -->
+          <label class="dads-checkbox" data-size="md">
+            <span class="dads-checkbox__checkbox">
+              <input class="dads-checkbox__input" type="checkbox" id="save-card" checked>
+            </span>
+            <span class="dads-checkbox__label">情報を保存して次回以降の入力を省略する</span>
+          </label>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- ── ユーザー情報 ── -->
+    <div class="section-block">
+      <p class="section-heading">ユーザー情報</p>
+      <div class="card">
+        <div class="form-card">
+
+  
+
+          <div class="dads-form-control-label" data-size="md">
+            <label class="dads-form-control-label__label" for="user-email">
+              メールアドレス
+            </label>
+            <span class="dads-input-text">
+              <input id="user-email" class="dads-input-text__input" type="email" data-size="md" value="example@link.com" autocomplete="email">
+            </span>
+          </div>
+
+          <!-- 電話番号 -->
+          <div class="dads-form-control-label" data-size="md">
+            <label class="dads-form-control-label__label" for="user-phone">
+              電話番号
+            </label>
+            <span class="dads-input-text">
+            
+              <input id="user-phone" class="dads-input-text__input" type="tel" data-size="md" value="080-0000-0000" autocomplete="tel">
+            </span>
+          </div>
+
+          <!-- 氏名 -->
+          <div class="dads-form-control-label" data-size="md">
+            <label class="dads-form-control-label__label" for="user-name">
+              氏名
+            </label>
+            <span class="dads-input-text">
+              <input id="user-name" class="dads-input-text__input" type="text" data-size="md" value="山田 太郎" autocomplete="name">
+            </span>
+          </div>
+
+        </div>
+      </div>
+      <p class="disclaimer">カード情報を入力すると、今後のお支払いにこのカードが使用されることに同意したものとみなされます。</p>
+    </div>
+
+  </main>
+
+  <!-- 固定フッター -->
+  <div class="fixed-footer">
+    <a href="09_reservation-complete.html" class="dads-button" data-size="lg" data-type="solid-fill" role="button">支払う</a>
+  </div>
+
+  <!-- クーポン利用変更 ハーフモーダル -->
+  <dialog id="coupon-sheet" class="bottom-sheet" aria-labelledby="coupon-sheet-title">
+    <div class="sheet-handle" aria-hidden="true"></div>
+    <div class="sheet-header">
+      <p class="sheet-title" id="coupon-sheet-title">クーポンを利用する</p>
+      <button class="sheet-close" id="coupon-close" aria-label="閉じる">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M18 6L6 18M6 6L18 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </button>
+    </div>
+    <div class="sheet-body">
+      <div class="dads-form-control-label" data-size="md">
+        <label class="dads-form-control-label__label" for="coupon-code">クーポンコード</label>
+        <span class="dads-input-text">
+          <input id="coupon-code" class="dads-input-text__input" type="text" data-size="md" value="abcd1234" placeholder="コードを入力" autocomplete="off">
+        </span>
+      </div>
+      <button class="dads-button" data-size="lg" data-type="solid-fill">適用</button>
+    </div>
+  </dialog>
+
+  <!-- ポイント利用変更 ハーフモーダル -->
+  <dialog id="point-sheet" class="bottom-sheet" aria-labelledby="point-sheet-title">
+    <div class="sheet-handle" aria-hidden="true"></div>
+    <div class="sheet-header">
+      <p class="sheet-title" id="point-sheet-title">ポイントを利用する</p>
+      <button class="sheet-close" id="point-close" aria-label="閉じる">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M18 6L6 18M6 6L18 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </button>
+    </div>
+    <div class="sheet-body">
+      <div class="point-options">
+
+        <!-- 利用しない -->
+        <div class="point-option-card">
+          <label class="dads-radio" data-size="md">
+            <span class="dads-radio__radio">
+              <input class="dads-radio__input" type="radio" name="point-type" value="none">
+            </span>
+            <span class="dads-radio__label">利用しない</span>
+          </label>
+        </div>
+
+        <!-- ホイッスルポイント -->
+        <div class="point-option-card point-option-card--with-balance">
+          <label class="dads-radio" data-size="md">
+            <span class="dads-radio__radio">
+              <input class="dads-radio__input" type="radio" name="point-type" value="whistle" checked>
+            </span>
+            <span class="dads-radio__label">ホイッスルポイント</span>
+          </label>
+          <span class="point-balance">1,200 pt</span>
+        </div>
+        <div id="whistle-sub" class="point-sub-panel">
+          <label class="dads-radio" data-size="md">
+            <span class="dads-radio__radio">
+              <input class="dads-radio__input" type="radio" name="whistle-amount" value="all">
+            </span>
+            <span class="dads-radio__label">全て使う</span>
+          </label>
+          <div>
+            <label class="dads-radio" data-size="md">
+              <span class="dads-radio__radio">
+                <input class="dads-radio__input" type="radio" name="whistle-amount" value="partial" checked>
+              </span>
+              <span class="dads-radio__label">一部使う</span>
+            </label>
+            <div id="partial-input-area" class="partial-input-area">
+              <div class="partial-input-row">
+                <span class="dads-input-text">
+                  <input id="point-amount" class="dads-input-text__input" type="number" data-size="md" min="1" max="1200" value="500" placeholder="0" inputmode="numeric">
+                </span>
+                <span style="font-size:14px;color:var(--color-neutral-solid-gray-600,#595959);white-space:nowrap">pt</span>
+              </div>
+              <p class="partial-hint">※1ポイント単位でご利用いただけます</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- PayPayポイント -->
+        <div class="point-option-card">
+          <label class="dads-radio" data-size="md">
+            <span class="dads-radio__radio">
+              <input class="dads-radio__input" type="radio" name="point-type" value="paypay">
+            </span>
+            <span class="dads-radio__label">PayPayポイント</span>
+          </label>
+        </div>
+        <div id="paypay-sub" class="point-sub-panel hidden">
+          <label class="dads-radio" data-size="md">
+            <span class="dads-radio__radio">
+              <input class="dads-radio__input" type="radio" name="paypay-amount" value="all" checked>
+            </span>
+            <span class="dads-radio__label">全て使う</span>
+          </label>
+          <div>
+            <label class="dads-radio" data-size="md">
+              <span class="dads-radio__radio">
+                <input class="dads-radio__input" type="radio" name="paypay-amount" value="partial">
+              </span>
+              <span class="dads-radio__label">一部使う</span>
+            </label>
+            <div id="paypay-partial-input-area" class="partial-input-area hidden">
+              <div class="partial-input-row">
+                <span class="dads-input-text">
+                  <input id="paypay-point-amount" class="dads-input-text__input" type="number" data-size="md" min="1" max="1200" placeholder="0" inputmode="numeric">
+                </span>
+                <span style="font-size:14px;color:var(--color-neutral-solid-gray-600,#595959);white-space:nowrap">pt</span>
+              </div>
+              <p class="partial-hint">※1ポイント単位でご利用いただけます</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tポイント -->
+        <div class="point-option-card">
+          <label class="dads-radio" data-size="md">
+            <span class="dads-radio__radio">
+              <input class="dads-radio__input" type="radio" name="point-type" value="tpoint">
+            </span>
+            <span class="dads-radio__label">Tポイント</span>
+          </label>
+        </div>
+        <div id="tpoint-sub" class="point-sub-panel hidden">
+          <label class="dads-radio" data-size="md">
+            <span class="dads-radio__radio">
+              <input class="dads-radio__input" type="radio" name="tpoint-amount" value="all" checked>
+            </span>
+            <span class="dads-radio__label">全て使う</span>
+          </label>
+          <div>
+            <label class="dads-radio" data-size="md">
+              <span class="dads-radio__radio">
+                <input class="dads-radio__input" type="radio" name="tpoint-amount" value="partial">
+              </span>
+              <span class="dads-radio__label">一部使う</span>
+            </label>
+            <div id="tpoint-partial-input-area" class="partial-input-area hidden">
+              <div class="partial-input-row">
+                <span class="dads-input-text">
+                  <input id="tpoint-point-amount" class="dads-input-text__input" type="number" data-size="md" min="1" max="1200" placeholder="0" inputmode="numeric">
+                </span>
+                <span style="font-size:14px;color:var(--color-neutral-solid-gray-600,#595959);white-space:nowrap">pt</span>
+              </div>
+              <p class="partial-hint">※1ポイント単位でご利用いただけます</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- dポイント -->
+        <div class="point-option-card">
+          <label class="dads-radio" data-size="md">
+            <span class="dads-radio__radio">
+              <input class="dads-radio__input" type="radio" name="point-type" value="dpoint">
+            </span>
+            <span class="dads-radio__label">dポイント</span>
+          </label>
+        </div>
+        <div id="dpoint-sub" class="point-sub-panel hidden">
+          <label class="dads-radio" data-size="md">
+            <span class="dads-radio__radio">
+              <input class="dads-radio__input" type="radio" name="dpoint-amount" value="all" checked>
+            </span>
+            <span class="dads-radio__label">全て使う</span>
+          </label>
+          <div>
+            <label class="dads-radio" data-size="md">
+              <span class="dads-radio__radio">
+                <input class="dads-radio__input" type="radio" name="dpoint-amount" value="partial">
+              </span>
+              <span class="dads-radio__label">一部使う</span>
+            </label>
+            <div id="dpoint-partial-input-area" class="partial-input-area hidden">
+              <div class="partial-input-row">
+                <span class="dads-input-text">
+                  <input id="dpoint-point-amount" class="dads-input-text__input" type="number" data-size="md" min="1" max="1200" placeholder="0" inputmode="numeric">
+                </span>
+                <span style="font-size:14px;color:var(--color-neutral-solid-gray-600,#595959);white-space:nowrap">pt</span>
+              </div>
+              <p class="partial-hint">※1ポイント単位でご利用いただけます</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <button class="dads-button point-apply-btn" data-size="lg" data-type="solid-fill">適用する</button>
+    </div>
+  </dialog>
+
+  <script>
+    const couponSheet = document.getElementById('coupon-sheet');
+    document.getElementById('coupon-close').addEventListener('click', () => couponSheet.close());
+    couponSheet.addEventListener('click', e => { if (e.target === couponSheet) couponSheet.close(); });
+
+
+    // ── ポイントシート ──
+    const pointSheet = document.getElementById('point-sheet');
+    document.getElementById('point-close').addEventListener('click', () => pointSheet.close());
+    pointSheet.addEventListener('click', e => { if (e.target === pointSheet) pointSheet.close(); });
+
+    const pointTypeRadios = pointSheet.querySelectorAll('input[name="point-type"]');
+    const whistleAmountRadios = pointSheet.querySelectorAll('input[name="whistle-amount"]');
+    const paypayAmountRadios = pointSheet.querySelectorAll('input[name="paypay-amount"]');
+    const tpointAmountRadios = pointSheet.querySelectorAll('input[name="tpoint-amount"]');
+    const dpointAmountRadios = pointSheet.querySelectorAll('input[name="dpoint-amount"]');
+    const whistleSub = document.getElementById('whistle-sub');
+    const paypaySub = document.getElementById('paypay-sub');
+    const tpointSub = document.getElementById('tpoint-sub');
+    const dpointSub = document.getElementById('dpoint-sub');
+    const partialInputArea = document.getElementById('partial-input-area');
+    const paypayPartialInputArea = document.getElementById('paypay-partial-input-area');
+    const tpointPartialInputArea = document.getElementById('tpoint-partial-input-area');
+    const dpointPartialInputArea = document.getElementById('dpoint-partial-input-area');
+
+    function updatePointUI() {
+      const val = pointSheet.querySelector('input[name="point-type"]:checked')?.value;
+      whistleSub.classList.toggle('hidden', val !== 'whistle');
+      paypaySub.classList.toggle('hidden', val !== 'paypay');
+      tpointSub.classList.toggle('hidden', val !== 'tpoint');
+      dpointSub.classList.toggle('hidden', val !== 'dpoint');
+      if (val !== 'whistle') {
+        pointSheet.querySelector('input[name="whistle-amount"][value="all"]').checked = true;
+        partialInputArea.classList.add('hidden');
+      }
+    }
+
+    function updateWhistleUI() {
+      const amtVal = pointSheet.querySelector('input[name="whistle-amount"]:checked')?.value;
+      partialInputArea.classList.toggle('hidden', amtVal !== 'partial');
+    }
+
+    function updatePaypayUI() {
+      const amtVal = pointSheet.querySelector('input[name="paypay-amount"]:checked')?.value;
+      paypayPartialInputArea.classList.toggle('hidden', amtVal !== 'partial');
+    }
+
+    function updateTpointUI() {
+      const amtVal = pointSheet.querySelector('input[name="tpoint-amount"]:checked')?.value;
+      tpointPartialInputArea.classList.toggle('hidden', amtVal !== 'partial');
+    }
+
+    function updateDpointUI() {
+      const amtVal = pointSheet.querySelector('input[name="dpoint-amount"]:checked')?.value;
+      dpointPartialInputArea.classList.toggle('hidden', amtVal !== 'partial');
+    }
+
+    pointTypeRadios.forEach(r => r.addEventListener('change', updatePointUI));
+    whistleAmountRadios.forEach(r => r.addEventListener('change', updateWhistleUI));
+    paypayAmountRadios.forEach(r => r.addEventListener('change', updatePaypayUI));
+    tpointAmountRadios.forEach(r => r.addEventListener('change', updateTpointUI));
+    dpointAmountRadios.forEach(r => r.addEventListener('change', updateDpointUI));
+
+    if (window.location.hash === '#paypay') {
+      pointSheet.querySelector('input[name="point-type"][value="paypay"]').checked = true;
+      updatePointUI();
+      pointSheet.showModal();
+    }
+  </script>
+
+</body>
+</html>

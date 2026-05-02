@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>PayPayアカウント追加完了</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100..900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../design-system/design-system-example-components-html-main/src/global.css">
+  <link rel="stylesheet" href="../design-system/design-system-example-components-html-main/src/components/button/button.css">
+  <style>
+    html {
+      background: #d0d0d0;
+    }
+
+    body {
+      font-family: 'Noto Sans JP', sans-serif;
+      background: var(--color-neutral-solid-gray-50);
+      margin: 0 auto;
+      max-width: 390px;
+      min-height: 100vh;
+      box-shadow: 0 0 16px rgba(0,0,0,0.15);
+      display: flex;
+      flex-direction: column;
+      padding: 56px 24px 40px;
+      box-sizing: border-box;
+    }
+
+    /* ── メインコンテンツ（縦中央揃え） ── */
+    .main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    /* ── アイコンエリア ── */
+    .icon-area {
+      padding-bottom: 64px;
+      position: relative;
+      display: inline-flex;
+    }
+
+    /* PayPayロゴ円 */
+    .paypay-circle {
+      width: 96px;
+      height: 96px;
+      border-radius: 9999px;
+      background: #FF0033;
+      box-shadow: 0px 10px 15px -3px rgba(0, 0, 0, 0.10), 0px 4px 6px -4px rgba(0, 0, 0, 0.10);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .paypay-circle::after {
+      content: '';
+      position: absolute;
+      inset: 8px;
+      border-radius: 9999px;
+      border: 4px solid rgba(255, 255, 255, 0.20);
+      pointer-events: none;
+    }
+
+    .paypay-letter {
+      font-size: 60px;
+      font-weight: 900;
+      color: #fff;
+      font-style: italic;
+      line-height: 1;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* 成功バッジ */
+    .success-badge {
+      width: 40px;
+      height: 40px;
+      border-radius: 9999px;
+      background: var(--color-primitive-green-500);
+      box-shadow: 0px 4px 6px -1px rgba(0, 0, 0, 0.10), 0px 2px 4px -2px rgba(0, 0, 0, 0.10);
+      border: 4px solid var(--color-neutral-solid-gray-50);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: absolute;
+      top: -8px;
+      right: -8px;
+    }
+
+    /* ── テキストコンテンツ ── */
+    .text-content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+      width: 100%;
+    }
+
+    .connected-title {
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--color-neutral-solid-gray-900);
+      text-align: center;
+      margin: 0;
+      line-height: 1.5;
+    }
+
+    .connected-body {
+      font-size: 16px;
+      font-weight: 400;
+      color: var(--color-neutral-solid-gray-600);
+      text-align: center;
+      margin: 0;
+      line-height: 1.7;
+    }
+
+    /* ── フッターボタン ── */
+    .footer-action {
+      padding-top: 32px;
+      width: 100%;
+    }
+
+    .footer-action .dads-button {
+      width: 100%;
+      justify-content: center;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- メインコンテンツ -->
+  <main class="main">
+
+    <!-- PayPayロゴ + 成功バッジ -->
+    <div class="icon-area" aria-hidden="true">
+      <div class="paypay-circle">
+        <span class="paypay-letter">P</span>
+      </div>
+      <div class="success-badge">
+        <svg width="20" height="16" viewBox="0 0 20 16" fill="none" aria-hidden="true">
+          <path d="M2 8L7.5 13.5L18 2" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+    </div>
+
+    <!-- テキスト -->
+    <div class="text-content">
+      <h1 class="connected-title">PayPayアカウントが<br>追加されました</h1>
+      <p class="connected-body">お支払いに、<br>PayPayアカウントを利用できます。</p>
+    </div>
+
+  </main>
+
+  <!-- フッター：次へ進むボタン -->
+  <div class="footer-action">
+    <a href="08_payment-filled.html#paypay" class="dads-button" data-size="lg" data-type="solid-fill" role="button">次に進む</a>
+  </div>
+
+</body>
+</html>

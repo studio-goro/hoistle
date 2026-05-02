@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>予約完了</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100..900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../design-system/design-system-example-components-html-main/src/global.css">
+  <link rel="stylesheet" href="../design-system/design-system-example-components-html-main/src/components/button/button.css">
+  <link rel="stylesheet" href="prototype.css">
+  <style>
+    .nav-logo {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--color-primitive-blue-1000);
+      letter-spacing: 0.02em;
+    }
+
+    /* ── メインコンテンツ ── */
+    .main {
+      padding: 40px 16px 48px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 32px;
+    }
+
+    /* ── 完了ヘッダー（アイコン + タイトル） ── */
+    .completion-header {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .completion-icon {
+      width: 80px;
+      height: 80px;
+      border-radius: 9999px;
+      background: var(--color-primitive-blue-50);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .completion-title {
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--color-primitive-blue-1000);
+      text-align: center;
+      margin: 0;
+      line-height: 1.4;
+    }
+
+    /* ── カード ── */
+    .card {
+      background: #fff;
+      border: 1px solid var(--color-neutral-solid-gray-420);
+      border-radius: 12px;
+      width: 100%;
+      box-sizing: border-box;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    /* ── イベント情報エリア ── */
+    .event-info {
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--color-neutral-solid-gray-200);
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .event-name {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--color-neutral-solid-gray-800);
+      margin: 0;
+      line-height: 1.6;
+    }
+
+    .event-meta {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .event-meta-item {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .event-meta-item span {
+      font-size: 12px;
+      color: var(--color-neutral-solid-gray-900);
+      line-height: 1.5;
+    }
+
+    /* ── CTAエリア ── */
+    .card-cta {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .card-cta__heading {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--color-neutral-solid-gray-900);
+      text-align: center;
+      margin: 0;
+      line-height: 1.5;
+    }
+
+    .card-cta__body {
+      font-size: 14px;
+      font-weight: 400;
+      color: var(--color-neutral-solid-gray-900);
+      text-align: center;
+      margin: 0;
+      line-height: 1.7;
+    }
+
+    /* ── ボタン全幅 ── */
+    .dads-button {
+      width: 100%;
+      justify-content: center;
+    }
+
+    /* ── トップへ戻るリンク ── */
+    .back-link {
+      font-size: 14px;
+      color: var(--color-neutral-solid-gray-600);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-family: inherit;
+      padding: 0;
+    }
+
+    .back-link:hover {
+      color: var(--color-neutral-solid-gray-800);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ナビバー -->
+  <div class="nav-bar">
+    <span class="nav-logo">Whistle</span>
+  </div>
+
+  <!-- メインコンテンツ -->
+  <main class="main">
+
+    <!-- 完了ヘッダー -->
+    <div class="completion-header">
+      <div class="completion-icon">
+        <svg width="40" height="40" viewBox="0 0 40 40" fill="none" aria-hidden="true">
+          <path d="M33 12L16.5 28.5L8 20" stroke="var(--color-primitive-blue-900)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <h1 class="completion-title">お支払いが完了しました！</h1>
+      <p style="text-align: center; margin: 0; font-size: 14px; line-height: 1.6; color: var(--color-neutral-solid-gray-800);">
+        当日のご参加お待ちしております！
+      </p>
+    </div>
+
+    <!-- カード -->
+    <div class="card">
+
+      <!-- イベント情報 -->
+      <div class="event-info">
+        <p class="event-name">初心者歓迎！ゆるっと楽しむバスケットボール</p>
+        <div class="event-meta">
+          <div class="event-meta-item">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+              <rect x="2" y="3" width="12" height="11" rx="1" stroke="var(--color-neutral-solid-gray-900)" stroke-width="1.2"/>
+              <path d="M2 6.5H14" stroke="var(--color-neutral-solid-gray-900)" stroke-width="1.2"/>
+              <path d="M5 2V4M11 2V4" stroke="var(--color-neutral-solid-gray-900)" stroke-width="1.2" stroke-linecap="round"/>
+            </svg>
+            <span>4/12(土) 9:00〜</span>
+          </div>
+          <div class="event-meta-item">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+              <path d="M8 1.5C5.515 1.5 3.5 3.515 3.5 6C3.5 9.5 8 14.5 8 14.5C8 14.5 12.5 9.5 12.5 6C12.5 3.515 10.485 1.5 8 1.5Z" stroke="var(--color-neutral-solid-gray-900)" stroke-width="1.2"/>
+              <circle cx="8" cy="6" r="1.5" stroke="var(--color-neutral-solid-gray-900)" stroke-width="1.2"/>
+            </svg>
+            <span>神奈川県 藤沢市</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- CTAエリア -->
+      <div class="card-cta">
+        <p class="card-cta__heading">参加者専用ページを<br>チェックしませんか？</p>
+        <p class="card-cta__body">イベント当日の流れや<br>参加者同士の交流を楽しめるページです</p>
+      </div>
+
+      <!-- プライマリボタン -->
+      <button class="dads-button" data-size="lg" data-type="solid-fill" type="button">
+        参加者専用ページを見る
+        <svg class="dads-button__icon" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+          <path d="M6 3L11 8L6 13" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+
+    </div>
+
+    <!-- トップへ戻る -->
+    <a class="back-link" href="01_event-list.html">トップへ戻る</a>
+
+  </main>
+
+</body>
+</html>

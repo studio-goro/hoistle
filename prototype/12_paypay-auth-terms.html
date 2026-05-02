@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>PayPay利用規約への同意</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100..900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../design-system/design-system-example-components-html-main/src/global.css">
+  <link rel="stylesheet" href="../design-system/design-system-example-components-html-main/src/components/button/button.css">
+  <style>
+    html {
+      background: #d0d0d0;
+    }
+
+    body {
+      font-family: 'Noto Sans JP', sans-serif;
+      background: var(--color-neutral-solid-gray-50);
+      margin: 0 auto;
+      max-width: 390px;
+      min-height: 100vh;
+      box-shadow: 0 0 16px rgba(0,0,0,0.15);
+      display: flex;
+      flex-direction: column;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    /* ── スクリーンショット画像 ── */
+    .screenshot {
+      display: block;
+      width: 100%;
+      pointer-events: none;
+      user-select: none;
+    }
+
+    /* ── アクションエリア ── */
+    .action-area {
+      padding: 32px 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+      border-top: 1px solid var(--color-neutral-solid-gray-200);
+    }
+
+    .action-area .dads-button {
+      width: 100%;
+      justify-content: center;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- PayPay画面スクリーンショット（タップ不可） -->
+  <img
+    class="screenshot"
+    src="../screen/paypay認証1.png"
+    alt="PayPay利用規約画面"
+    draggable="false"
+  >
+
+  <!-- アクションボタン -->
+  <div class="action-area">
+    <a href="13_paypay-auth-redirect.html" class="dads-button" data-size="lg" data-type="solid-fill" role="button">上記に同意して続ける</a>
+    <a href="07_payment.html#paypay" class="dads-button" data-size="lg" data-type="text" role="button">ご利用中のサービスに戻る</a>
+  </div>
+
+</body>
+</html>
