@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>画面マップ — Whistle</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100..900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../design-system/design-system-example-components-html-main/src/global.css">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+
+    html { background: #111; }
+
+    body {
+      font-family: 'Noto Sans JP', sans-serif;
+      background: #111;
+      margin: 0;
+      padding: 0 0 60px;
+      color: #fff;
+      max-width: none;
+      box-shadow: none;
+    }
+
+    /* ── ヘッダー ── */
+    .map-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 20px;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+    .map-header__left {
+      display: flex;
+      align-items: baseline;
+      gap: 10px;
+    }
+    .map-header__title {
+      font-size: 16px;
+      font-weight: 700;
+      color: #fff;
+      margin: 0;
+    }
+    .map-header__sub {
+      font-size: 11px;
+      color: rgba(255,255,255,0.35);
+      margin: 0;
+    }
+    .map-header__count {
+      font-size: 11px;
+      color: rgba(255,255,255,0.3);
+    }
+
+    /* ── キャンバス ── */
+    .map-canvas {
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      max-width: 760px;
+      margin: 0 auto;
+    }
+
+    /* ── フローセクション ── */
+    .flow-section {
+      background: #1e1e1e;
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 16px;
+      padding: 14px 16px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .flow-section__label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      color: rgba(255,255,255,0.3);
+      margin: 0;
+      text-transform: uppercase;
+    }
+
+    /* ── フロー行 ── */
+    .flow-row {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+    .flow-sub {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-wrap: wrap;
+      padding-left: 28px;
+    }
+
+    /* ── 画面カード ── */
+    .screen-card {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      padding: 8px 12px;
+      background: #2a2a2a;
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 10px;
+      text-decoration: none;
+      color: inherit;
+      transition: background 0.1s, border-color 0.1s;
+      min-width: 80px;
+    }
+    .screen-card:hover {
+      background: #383838;
+      border-color: rgba(255,255,255,0.22);
+    }
+    .screen-card:active {
+      background: #424242;
+    }
+    .screen-card__num {
+      font-size: 9px;
+      font-weight: 700;
+      color: rgba(255,255,255,0.28);
+      line-height: 1;
+    }
+    .screen-card__name {
+      font-size: 12px;
+      font-weight: 700;
+      color: rgba(255,255,255,0.82);
+      line-height: 1.35;
+    }
+    .screen-card__note {
+      font-size: 9px;
+      color: rgba(255,255,255,0.28);
+      line-height: 1.3;
+      margin-top: 1px;
+    }
+
+    /* ── コネクター ── */
+    .arrow {
+      color: rgba(255,255,255,0.2);
+      font-size: 13px;
+      flex-shrink: 0;
+      line-height: 1;
+    }
+    .arrow-down {
+      text-align: left;
+      color: rgba(255,255,255,0.2);
+      font-size: 12px;
+      padding-left: 36px;
+      line-height: 1;
+    }
+    .badge-or {
+      font-size: 9px;
+      font-weight: 700;
+      color: rgba(255,255,255,0.28);
+      background: rgba(255,255,255,0.07);
+      border-radius: 4px;
+      padding: 2px 5px;
+      flex-shrink: 0;
+    }
+
+    /* ── ステータスグループ ── */
+    .status-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      padding-left: 10px;
+      border-left: 2px solid rgba(255,255,255,0.1);
+    }
+    .status-group__label {
+      font-size: 10px;
+      color: rgba(255,255,255,0.3);
+      margin: 0;
+    }
+
+    /* ── 凡例 ── */
+    .legend {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+      padding: 4px 0 8px;
+    }
+    .legend__item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 10px;
+      color: rgba(255,255,255,0.3);
+    }
+    .legend__dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 2px;
+      background: #2a2a2a;
+      border: 1px solid rgba(255,255,255,0.1);
+      flex-shrink: 0;
+    }
+  </style>
+</head>
+<body>
+
+  <header class="map-header">
+    <div class="map-header__left">
+      <h1 class="map-header__title">画面マップ</h1>
+      <p class="map-header__sub">Whistle プロトタイプ</p>
+    </div>
+    <span class="map-header__count">20 screens</span>
+  </header>
+
+  <div class="map-canvas">
+
+    <div class="legend">
+      <div class="legend__item">
+        <div class="legend__dot"></div>
+        クリックで画面を開く
+      </div>
+      <div class="legend__item">
+        <span style="color:rgba(255,255,255,0.2);font-size:12px;">→</span>
+        遷移方向
+      </div>
+      <div class="legend__item">
+        <span style="color:rgba(255,255,255,0.2);font-size:12px;">↔</span>
+        双方向
+      </div>
+    </div>
+
+    <!-- イベント発見 -->
+    <section class="flow-section">
+      <p class="flow-section__label">イベント発見</p>
+      <div class="flow-row">
+        <a href="01_event-list.html" class="screen-card">
+          <span class="screen-card__num">01</span>
+          <span class="screen-card__name">一覧（グリッド）</span>
+        </a>
+        <span class="arrow">↔</span>
+        <a href="01_event-list_list.html" class="screen-card">
+          <span class="screen-card__num">01L</span>
+          <span class="screen-card__name">一覧（リスト）</span>
+        </a>
+      </div>
+      <div class="arrow-down">↓</div>
+      <div class="flow-row">
+        <a href="02_event-detail.html" class="screen-card">
+          <span class="screen-card__num">02</span>
+          <span class="screen-card__name">イベント詳細</span>
+          <span class="screen-card__note">→ 申込へ</span>
+        </a>
+      </div>
+    </section>
+
+    <!-- 認証 -->
+    <section class="flow-section">
+      <p class="flow-section__label">認証</p>
+      <div class="flow-row">
+        <a href="03_signup.html" class="screen-card">
+          <span class="screen-card__num">03</span>
+          <span class="screen-card__name">新規登録</span>
+        </a>
+        <span class="arrow">→</span>
+        <a href="04_account-verify.html" class="screen-card">
+          <span class="screen-card__num">04</span>
+          <span class="screen-card__name">メール認証</span>
+        </a>
+        <span class="arrow">→</span>
+        <a href="05_basic-info.html" class="screen-card">
+          <span class="screen-card__num">05</span>
+          <span class="screen-card__name">基本情報入力</span>
+        </a>
+      </div>
+      <div class="flow-row">
+        <a href="06_login.html" class="screen-card">
+          <span class="screen-card__num">06</span>
+          <span class="screen-card__name">ログイン</span>
+        </a>
+      </div>
+    </section>
+
+    <!-- 申込・決済 -->
+    <section class="flow-section">
+      <p class="flow-section__label">申込・決済</p>
+      <div class="flow-row">
+        <a href="07_payment.html" class="screen-card">
+          <span class="screen-card__num">07</span>
+          <span class="screen-card__name">支払方法選択</span>
+        </a>
+        <span class="arrow">→</span>
+        <a href="08_payment-filled.html" class="screen-card">
+          <span class="screen-card__num">08</span>
+          <span class="screen-card__name">支払い確認</span>
+        </a>
+      </div>
+      <div class="arrow-down">↓</div>
+      <div class="flow-row">
+        <a href="09_reservation-complete.html" class="screen-card">
+          <span class="screen-card__num">09</span>
+          <span class="screen-card__name">予約完了</span>
+          <span class="screen-card__note">→ 参加者ページへ</span>
+        </a>
+        <span class="badge-or">or</span>
+        <a href="10_payment-auth.html" class="screen-card">
+          <span class="screen-card__num">10</span>
+          <span class="screen-card__name">PayPay認証</span>
+        </a>
+      </div>
+      <div class="flow-sub">
+        <span class="arrow">→</span>
+        <a href="12_paypay-auth-terms.html" class="screen-card">
+          <span class="screen-card__num">12</span>
+          <span class="screen-card__name">PayPay利用規約</span>
+        </a>
+        <span class="arrow">→</span>
+        <a href="13_paypay-auth-redirect.html" class="screen-card">
+          <span class="screen-card__num">13</span>
+          <span class="screen-card__name">認証中</span>
+        </a>
+      </div>
+      <div class="flow-sub">
+        <span class="arrow">→</span>
+        <a href="11_paypay-connected.html" class="screen-card">
+          <span class="screen-card__num">11</span>
+          <span class="screen-card__name">PayPay連携完了</span>
+        </a>
+      </div>
+    </section>
+
+    <!-- 参加者専用ページ -->
+    <section class="flow-section">
+      <p class="flow-section__label">参加者専用ページ — ステータス別</p>
+
+      <div class="status-group">
+        <p class="status-group__label">開催前</p>
+        <div class="flow-row">
+          <a href="14_participant-event.html" class="screen-card">
+            <span class="screen-card__num">14</span>
+            <span class="screen-card__name">参加者ページ</span>
+          </a>
+          <span class="arrow">↔</span>
+          <a href="19_participant-event-dm.html" class="screen-card">
+            <span class="screen-card__num">19</span>
+            <span class="screen-card__name">DM</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="status-group">
+        <p class="status-group__label">開催中</p>
+        <div class="flow-row">
+          <a href="16_participant-event-ongoing.html" class="screen-card">
+            <span class="screen-card__num">16</span>
+            <span class="screen-card__name">参加者ページ</span>
+          </a>
+          <span class="arrow">→</span>
+          <a href="15_match-detail.html" class="screen-card">
+            <span class="screen-card__num">15</span>
+            <span class="screen-card__name">試合詳細</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="status-group">
+        <p class="status-group__label">開催後</p>
+        <div class="flow-row">
+          <a href="17_participant-event-ended.html" class="screen-card">
+            <span class="screen-card__num">17</span>
+            <span class="screen-card__name">参加者ページ</span>
+          </a>
+          <span class="arrow">→</span>
+          <a href="18_match-detail-ended.html" class="screen-card">
+            <span class="screen-card__num">18</span>
+            <span class="screen-card__name">試合詳細（終了）</span>
+          </a>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- マイページ・プロフィール -->
+    <section class="flow-section">
+      <p class="flow-section__label">マイページ・プロフィール</p>
+      <div class="flow-row">
+        <a href="20_mypage.html" class="screen-card">
+          <span class="screen-card__num">20</span>
+          <span class="screen-card__name">マイページ</span>
+        </a>
+        <span class="arrow">→</span>
+        <a href="21_user-profile.html" class="screen-card">
+          <span class="screen-card__num">21</span>
+          <span class="screen-card__name">ユーザープロフィール</span>
+        </a>
+      </div>
+    </section>
+
+  </div>
+
+</body>
+</html>
