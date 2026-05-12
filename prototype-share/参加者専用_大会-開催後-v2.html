@@ -673,6 +673,22 @@
       });
     });
   </script>
+  <!-- アプリDLモーダル -->
+  <dialog class="app-modal" id="app-modal">
+    <div class="app-modal__img-wrap">
+      <img class="app-modal__img" src="../material/screen/モーダル_アプリ-DL.png" alt="">
+      <div class="app-modal__img-fade"></div>
+      <button class="app-modal__close" id="app-modal-close" type="button" aria-label="閉じる">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M18 6L6 18M6 6L18 18"/></svg>
+      </button>
+    </div>
+    <div class="app-modal__body">
+      <p class="app-modal__title">アプリなら、<br>すべての写真が見れる！</p>
+      <p class="app-modal__desc">アプリを無料ダウンロードして、<br>続きの写真をチェック！</p>
+      <div class="app-modal__badge">\ 初回ダウンロードで<strong>500ポイント</strong>GET！ /</div>
+      <button class="app-modal__dl-btn" type="button">今すぐアプリをダウンロード！</button>
+    </div>
+  </dialog>
   <script>
     // フィルターチップ scroll-sync
     const chips = document.querySelectorAll('.filter-chip');
@@ -709,22 +725,6 @@
     appModal.addEventListener('click', e => { if (e.target === appModal) appModal.close(); });
   </script>
   <script src="prototype-map.js"></script>
-  <!-- アプリDLモーダル -->
-  <dialog class="app-modal" id="app-modal">
-    <div class="app-modal__img-wrap">
-      <img class="app-modal__img" src="../material/screen/モーダル_アプリ-DL.png" alt="">
-      <div class="app-modal__img-fade"></div>
-      <button class="app-modal__close" id="app-modal-close" type="button" aria-label="閉じる">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M18 6L6 18M6 6L18 18"/></svg>
-      </button>
-    </div>
-    <div class="app-modal__body">
-      <p class="app-modal__title">アプリなら、<br>すべての写真が見れる！</p>
-      <p class="app-modal__desc">アプリを無料ダウンロードして、<br>続きの写真をチェック！</p>
-      <div class="app-modal__badge">\ 初回ダウンロードで<strong>500ポイント</strong>GET！ /</div>
-      <button class="app-modal__dl-btn" type="button">今すぐアプリをダウンロード！</button>
-    </div>
-  </dialog>
 <footer class="app-download-footer">
   <div class="app-download-footer__badge">初回ダウンロードで<strong>500ポイント</strong>GET！</div>
   <a href="#" class="app-download-footer__btn">今すぐアプリをダウンロード！</a>
