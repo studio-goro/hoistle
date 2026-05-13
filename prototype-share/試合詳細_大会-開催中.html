@@ -396,10 +396,10 @@
   <script>
     document.addEventListener('DOMContentLoaded', function() {
       document.querySelectorAll('.match-card__body').forEach(function(body) {
-        body.style.display = 'none';
+        body.style.display = '';
       });
       document.querySelectorAll('.match-card__top').forEach(function(top) {
-        top.classList.remove('match-card__top--expanded');
+        top.classList.add('match-card__top--expanded');
         top.style.cursor = 'pointer';
         top.addEventListener('click', function() {
           var body = top.nextElementSibling;
