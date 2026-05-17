@@ -10,6 +10,79 @@
   <link rel="stylesheet" href="../design-system/design-system-example-components-html-main/src/global.css">
   <link rel="stylesheet" href="prototype.css">
   <style>
+    #auth-overlay {
+      position: fixed;
+      inset: 0;
+      background: var(--color-neutral-solid-gray-100);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+      transition: opacity 0.25s;
+    }
+    #auth-overlay.fade-out {
+      opacity: 0;
+      pointer-events: none;
+    }
+    .auth-card {
+      background: var(--color-neutral-white);
+      border: 1px solid var(--color-neutral-solid-gray-200);
+      border-radius: 16px;
+      padding: 32px 24px;
+      width: 100%;
+      max-width: 320px;
+      text-align: center;
+    }
+    .auth-card__label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      color: var(--color-neutral-solid-gray-500);
+      text-transform: uppercase;
+      margin: 0 0 6px;
+    }
+    .auth-card__title {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--color-neutral-solid-gray-900);
+      margin: 0 0 24px;
+    }
+    .auth-input {
+      width: 100%;
+      padding: 12px 14px;
+      border: 1.5px solid var(--color-neutral-solid-gray-300);
+      border-radius: 8px;
+      font-size: 15px;
+      font-family: inherit;
+      outline: none;
+      box-sizing: border-box;
+      margin-bottom: 12px;
+      color: var(--color-neutral-solid-gray-800);
+      background: var(--color-neutral-white);
+    }
+    .auth-input:focus {
+      border-color: var(--color-neutral-solid-gray-700);
+    }
+    .auth-btn {
+      width: 100%;
+      padding: 12px;
+      background: var(--color-neutral-solid-gray-900);
+      color: var(--color-neutral-white);
+      border: none;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      font-family: inherit;
+      cursor: pointer;
+    }
+    .auth-btn:hover { opacity: 0.85; }
+    .auth-btn:disabled { opacity: 0.5; cursor: default; }
+    .auth-error {
+      font-size: 12px;
+      color: #e53e3e;
+      margin: 10px 0 0;
+      min-height: 18px;
+    }
     body {
       background: var(--color-neutral-solid-gray-100);
       padding: 24px 16px 48px;
@@ -84,6 +157,16 @@
   </style>
 </head>
 <body>
+
+  <div id="auth-overlay">
+    <div class="auth-card">
+      <p class="auth-card__label">Hoistle Prototype</p>
+      <h1 class="auth-card__title">パスワードを入力</h1>
+      <input type="password" id="auth-input" class="auth-input" placeholder="Password" autocomplete="current-password">
+      <button id="auth-btn" class="auth-btn">確認する</button>
+      <p class="auth-error" id="auth-error"></p>
+    </div>
+  </div>
 
   <div class="index-header">
     <p class="index-header__label">Hoistle Prototype</p>
@@ -170,5 +253,37 @@
     </div>
   </div>
 
+
+  <script src="auth.js"></script>
+  <script>
+    (function () {
+      var overlay = document.getElementById('auth-overlay');
+      if (_AUTH.isAuthenticated()) {
+        overlay.style.display = 'none';
+        return;
+      }
+      var input = document.getElementById('auth-input');
+      var btn = document.getElementById('auth-btn');
+      var error = document.getElementById('auth-error');
+      async function submit() {
+        var pw = input.value;
+        if (!pw) return;
+        btn.disabled = true;
+        var ok = await _AUTH.login(pw);
+        if (ok) {
+          overlay.classList.add('fade-out');
+          setTimeout(function () { overlay.style.display = 'none'; }, 260);
+        } else {
+          error.textContent = 'パスワードが違います';
+          input.value = '';
+          input.focus();
+          btn.disabled = false;
+        }
+      }
+      btn.addEventListener('click', submit);
+      input.addEventListener('keydown', function (e) { if (e.key === 'Enter') submit(); });
+      setTimeout(function () { input.focus(); }, 100);
+    })();
+  </script>
 </body>
 </html>
