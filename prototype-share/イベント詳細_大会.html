@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>イベント詳細_エンジョイ</title>
+  <title>第１回 ビギナーズ ホイッスルカップ</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100..900&amp;display=swap" rel="stylesheet">
@@ -16,6 +16,9 @@
     body {
       color: var(--color-neutral-solid-gray-800);
       padding-bottom: 112px;
+    }
+    .section {
+      scroll-margin-top: 56px;
     }
   </style>
 </head>
@@ -54,31 +57,31 @@
   <!-- 既存ページ流用: 基本情報 -->
   <section class="section" data-reuse-section="event-basic-info">
     <p class="event-category-label">バスケ</p>
-    <h1 class="event-title">バスケ エンジョイ交流戦<br>初心者・未経験者歓迎</h1>
+    <h1 class="event-title">第１回 ビギナーズ ホイッスルカップ</h1>
 
     <div class="event-meta dads-u-dns-14N-120">
       <span class="event-meta__item">
         <img class="event-meta__icon" src="../material/icon/date.svg" alt="" aria-hidden="true">
-        <span>5月10日（土）10:00〜13:00</span>
+        <span>4月12日（土）10:00〜13:00</span>
       </span>
       <span class="event-meta__item">
         <img class="event-meta__icon" src="../material/icon/pin.svg" alt="" aria-hidden="true">
-        <span>渋谷区・港区エリア</span>
+        <span>藤沢市エリア</span>
       </span>
       <span class="event-meta__item">
         <img class="event-meta__icon" src="../material/icon/group.svg" alt="" aria-hidden="true">
-        <span>定員 30名</span>
+        <span>定員 12名</span>
       </span>
     </div>
 
     <div class="attrs-grid">
       <div class="attr-item">
         <span class="attr-item__label">カテゴリ</span>
-        <span class="attr-item__value">エンジョイ</span>
+        <span class="attr-item__value">大会</span>
       </div>
       <div class="attr-item">
         <span class="attr-item__label">レベル</span>
-        <span class="attr-item__value">全員参加</span>
+        <span class="attr-item__value">球技大会</span>
       </div>
       <div class="attr-item">
         <span class="attr-item__label">所要時間</span>
@@ -86,21 +89,6 @@
       </div>
     </div>
 
-    <div class="social-proof" aria-label="知り合いの参加予定">
-      <div class="social-proof__avatars">
-        <div class="social-proof__avatar">T</div>
-        <div class="social-proof__avatar">Y</div>
-        <div class="social-proof__avatar">M</div>
-        <div class="social-proof__avatar social-proof__avatar--extra">+5</div>
-      </div>
-      <div class="social-proof__body">
-        <p class="social-proof__label">過去のイベントで一緒だった人が参加予定です</p>
-        <p class="social-proof__sub">タナカさん、ヤマダさん、他5人</p>
-      </div>
-      <svg class="social-proof__arrow" width="8" height="14" viewBox="0 0 8 14" fill="none" aria-hidden="true">
-        <path d="M1 1L7 7L1 13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
-    </div>
   </section>
 
   <div class="view-banner" role="status" aria-live="polite">
@@ -108,13 +96,15 @@
       <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
       <circle cx="12" cy="12" r="3"/>
     </svg>
-    1週間以内に15人が閲覧
+    1週間以内に24人が閲覧
   </div>
 
   <div class="filter-chips-wrap">
     <div class="filter-chips-scroll" role="navigation" aria-label="セクション">
       <button class="filter-chip filter-chip--active" data-target="section-about">このイベントについて</button>
+      <button class="filter-chip" data-target="section-teams">参加チーム</button>
       <button class="filter-chip" data-target="section-schedule">当日の流れ</button>
+      <button class="filter-chip" data-target="section-prize">景品情報</button>
       <button class="filter-chip" data-target="section-organizer">運営者</button>
       <button class="filter-chip" data-target="section-participant-trends">参加者の傾向</button>
       <button class="filter-chip" data-target="section-venue">開催時間・場所</button>
@@ -130,14 +120,62 @@
     <section id="section-about" class="section" data-reuse-section="event-about">
       <h2 class="section-title">このイベントについて</h2>
       <div class="event-description">
-        <p>気軽に楽しむエンジョイバスケ交流戦！</p>
+        <p>初めての大会参加でも楽しみやすい、ビギナー向けのバスケカップです。</p>
         <ul class="event-description__list">
-          <li>初心者・ブランクありの方も多数参加</li>
-          <li>1人参加でも安心（当日運営がチーム分け）</li>
-          <li>アットホームな雰囲気で自然と仲間ができる</li>
+          <li>3チーム総当たりで、試合形式をしっかり楽しめる</li>
+          <li>初心者・ブランクありでも参加しやすい球技大会</li>
+          <li>順位だけでなく、参加賞や特別賞も用意</li>
         </ul>
-        <p>「久しぶりにスポーツをしたい」「友達を増やしたい」という方は、ぜひお気軽にご参加ください！</p>
+        <p>「試合の緊張感を味わいたい」「チームで盛り上がりたい」という方におすすめです。</p>
       </div>
+    </section>
+
+    <section id="section-teams" class="section" data-reuse-section="event-teams">
+      <h2 class="section-title">参加チーム</h2>
+      <div class="event-team-list">
+        <a class="event-team-card" href="チーム詳細.html" aria-label="チームAの詳細を見る">
+          <span class="event-team-card__name">チームA</span>
+          <span class="event-team-card__avatars" aria-label="チームAの参加メンバー">
+            <img class="event-team-card__avatar" src="../material/user-icon/Toshinari.Asahi_旭俊成.png" alt="旭俊成">
+            <img class="event-team-card__avatar" src="../material/user-icon/Yusaku.Takasugi_高杉優作.png" alt="高杉優作">
+            <img class="event-team-card__avatar" src="../material/user-icon/Nanami.Tanahashi_棚橋七海.png" alt="棚橋七海">
+          </span>
+          <img class="event-team-card__arrow" src="../material/icon/arrow_right.svg" alt="" aria-hidden="true">
+        </a>
+        <a class="event-team-card" href="チーム詳細.html" aria-label="チームBの詳細を見る">
+          <span class="event-team-card__name">チームB</span>
+          <span class="event-team-card__avatars" aria-label="チームBの参加メンバー">
+            <img class="event-team-card__avatar" src="../material/user-icon/Mana.Kurita_栗田茉奈.png" alt="栗田茉奈">
+            <img class="event-team-card__avatar" src="../material/user-icon/Hikaru.Tezuka_手塚光.png" alt="手塚光">
+            <img class="event-team-card__avatar" src="../material/user-icon/Takeru .Mukai_向井猛.png" alt="向井猛">
+          </span>
+          <img class="event-team-card__arrow" src="../material/icon/arrow_right.svg" alt="" aria-hidden="true">
+        </a>
+        <a class="event-team-card" href="チーム詳細.html" aria-label="チームCの詳細を見る">
+          <span class="event-team-card__name">チームC</span>
+          <span class="event-team-card__avatars" aria-label="チームCの参加メンバー">
+            <img class="event-team-card__avatar" src="../material/user-icon/Yuki.Kurokawa_黒川優喜.png" alt="黒川優喜">
+            <img class="event-team-card__avatar" src="../material/user-icon/Ryota.Kokubun_國分椋太.png" alt="國分椋太">
+            <img class="event-team-card__avatar" src="../material/user-icon/Arata.Kobayashi_小林新.png" alt="小林新">
+          </span>
+          <img class="event-team-card__arrow" src="../material/icon/arrow_right.svg" alt="" aria-hidden="true">
+        </a>
+      </div>
+      <button class="social-proof social-proof--button" type="button" id="social-proof-open" aria-haspopup="dialog" aria-controls="social-proof-sheet">
+        <div class="social-proof__avatars">
+          <div class="social-proof__avatar">T</div>
+          <div class="social-proof__avatar">Y</div>
+          <div class="social-proof__avatar">M</div>
+          <div class="social-proof__avatar social-proof__avatar--extra">+5</div>
+        </div>
+        <div class="social-proof__body">
+          <p class="social-proof__label">過去のイベントで一緒だった人が参加予定です</p>
+          <p class="social-proof__sub">チームA・B・Cの参加者がエントリー済み</p>
+        </div>
+        <svg class="social-proof__arrow" width="8" height="14" viewBox="0 0 8 14" fill="none" aria-hidden="true">
+          <path d="M1 1L7 7L1 13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
     </section>
 
     <!-- 既存ページ流用: 当日の流れ -->
@@ -172,6 +210,52 @@
               <span class="timeline__duration">約50分</span>
             </div>
             <p class="timeline__desc">チームに分かれてバスケを楽しみます。</p>
+            <div class="match-schedule">
+              <p class="match-schedule__label">試合の進行</p>
+              <div class="match-schedule__card">
+                <div class="match-schedule__item">
+                  <div class="match-schedule__item-header">
+                    <span class="match-schedule__round">第1試合</span>
+                    <span class="match-schedule__duration">15分</span>
+                  </div>
+                  <div class="match-schedule__teams">
+                    <span class="match-schedule__team">チームA</span>
+                    <span class="match-schedule__vs">VS</span>
+                    <span class="match-schedule__team">チームB</span>
+                  </div>
+                </div>
+                <div class="match-schedule__break">
+                  <img src="../material/icon/time.svg" width="16" height="16" alt="" aria-hidden="true">
+                  <span>入れ替え・休憩（2分）</span>
+                </div>
+                <div class="match-schedule__item">
+                  <div class="match-schedule__item-header">
+                    <span class="match-schedule__round">第2試合</span>
+                    <span class="match-schedule__duration">15分</span>
+                  </div>
+                  <div class="match-schedule__teams">
+                    <span class="match-schedule__team">チームB</span>
+                    <span class="match-schedule__vs">VS</span>
+                    <span class="match-schedule__team">チームC</span>
+                  </div>
+                </div>
+                <div class="match-schedule__break">
+                  <img src="../material/icon/time.svg" width="16" height="16" alt="" aria-hidden="true">
+                  <span>入れ替え・休憩（3分）</span>
+                </div>
+                <div class="match-schedule__item">
+                  <div class="match-schedule__item-header">
+                    <span class="match-schedule__round">第3試合</span>
+                    <span class="match-schedule__duration">15分</span>
+                  </div>
+                  <div class="match-schedule__teams">
+                    <span class="match-schedule__team">チームC</span>
+                    <span class="match-schedule__vs">VS</span>
+                    <span class="match-schedule__team">チームA</span>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </li>
         <li class="timeline__item">
@@ -186,6 +270,20 @@
         </li>
       </ol>
       <p class="section-note">※内容は参加者や運営状況によって変更になるケースがございます</p>
+    </section>
+
+    <!-- 参加者専用ページ同期: 景品情報 -->
+    <section id="section-prize" class="section" data-reuse-section="event-prize">
+      <h2 class="section-title">景品情報</h2>
+      <div class="section-group">
+        <p class="section-sub">🏆 優勝チーム</p>
+        <p>優勝カップ＆次回使える1000pt</p>
+      </div>
+      <div class="section-group">
+        <p class="section-sub">🎁 参加賞</p>
+        <p>スポーツドリンク＆次回使える500pt</p>
+      </div>
+      <p class="section-note">順位だけでなく、初心者でももらえる特別賞をご用意しています！</p>
     </section>
 
     <!-- 既存ページ流用: 運営者 -->
@@ -269,7 +367,7 @@
       <div class="participant-trends">
         <div class="trend-block">
           <p class="trend-block__label">参加者のプレイスタイル・価値観の傾向</p>
-          <div class="trend-radar" aria-label="コミュ力、連携度、エンジョイ度、熱量、柔軟性の傾向">
+          <div class="trend-radar" aria-label="コミュ力、連携度、フェアプレー度、熱量、柔軟性の傾向">
             <svg viewBox="0 0 320 320" role="img" aria-labelledby="trend-radar-title">
               <title id="trend-radar-title">参加者のプレイスタイル傾向</title>
               <polygon class="trend-radar__grid" points="160,32 281,120 235,264 85,264 39,120"/>
@@ -279,7 +377,7 @@
               <polygon class="trend-radar__shape" points="160,56 256,128 216,240 100,224 64,136"/>
               <text x="160" y="22" text-anchor="middle">コミュ力</text>
               <text x="292" y="124" text-anchor="start">連携度</text>
-              <text x="236" y="292" text-anchor="start">エンジョイ度</text>
+              <text x="236" y="292" text-anchor="start">フェアプレー度</text>
               <text x="70" y="292" text-anchor="middle">熱量</text>
               <text x="24" y="124" text-anchor="middle">柔軟性</text>
             </svg>
@@ -290,8 +388,8 @@
               <p class="trend-callout__text">個人技での突破より、パス回しやチームプレイを好む人が集まっています。</p>
             </div>
             <div class="trend-callout">
-              <p class="trend-callout__title">エンジョイ度が高め</p>
-              <p class="trend-callout__text">ガチな削り合いではなく、お互いの好プレイを称え合う空気感です。</p>
+              <p class="trend-callout__title">フェアプレー度が高め</p>
+              <p class="trend-callout__text">勝敗を楽しみつつ、お互いの好プレイを称え合う空気感です。</p>
             </div>
           </div>
         </div>
@@ -715,6 +813,62 @@
 
   </main>
 
+  <dialog id="social-proof-sheet" class="bottom-sheet" aria-labelledby="social-proof-sheet-title">
+    <div class="sheet-handle" aria-hidden="true"></div>
+    <div class="sheet-header">
+      <h2 id="social-proof-sheet-title" class="sheet-title">過去に一緒だったユーザー</h2>
+      <button class="sheet-close" id="social-proof-close" type="button" aria-label="閉じる">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M6 6L18 18M18 6L6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </button>
+    </div>
+    <div class="sheet-body">
+      <div class="social-proof-user-list">
+        <div class="social-proof-user" data-prev-same="true" data-prev-label="前回も一緒！">
+          <img class="social-proof-user__avatar" src="../material/user-icon/Toshinari.Asahi_旭俊成.png" alt="旭俊成">
+          <div class="social-proof-user__body">
+            <p class="social-proof-user__name">旭 俊成</p>
+            <p class="social-proof-user__team">チームA</p>
+            <p class="social-proof-user__history">前回も同じチーム</p>
+          </div>
+          <div class="social-proof-user__meta">
+          </div>
+        </div>
+        <div class="social-proof-user" data-prev-same="true" data-prev-label="昨日も一緒">
+          <img class="social-proof-user__avatar" src="../material/user-icon/Yusaku.Takasugi_高杉優作.png" alt="高杉優作">
+          <div class="social-proof-user__body">
+            <p class="social-proof-user__name">高杉 優作</p>
+            <p class="social-proof-user__team">チームB</p>
+            <p class="social-proof-user__history">前回のイベントで一緒</p>
+          </div>
+          <div class="social-proof-user__meta">
+          </div>
+        </div>
+        <div class="social-proof-user" data-prev-same="false">
+          <img class="social-proof-user__avatar" src="../material/user-icon/Nanami.Tanahashi_棚橋七海.png" alt="棚橋七海">
+          <div class="social-proof-user__body">
+            <p class="social-proof-user__name">棚橋 七海</p>
+            <p class="social-proof-user__team">チームC</p>
+            <p class="social-proof-user__history">過去の大会で2回一緒</p>
+          </div>
+          <div class="social-proof-user__meta">
+          </div>
+        </div>
+        <div class="social-proof-user" data-prev-same="true" data-prev-label="前回も一緒！">
+          <img class="social-proof-user__avatar" src="../material/user-icon/Mana.Kurita_栗田茉奈.png" alt="栗田茉奈">
+          <div class="social-proof-user__body">
+            <p class="social-proof-user__name">栗田 茉奈</p>
+            <p class="social-proof-user__team">チームA</p>
+            <p class="social-proof-user__history">前回のイベントで一緒</p>
+          </div>
+          <div class="social-proof-user__meta">
+          </div>
+        </div>
+      </div>
+    </div>
+  </dialog>
+
   <div class="fixed-footer booking-footer">
     <button class="booking-footer__keep" type="button" aria-label="このイベントをキープ">
       <svg class="booking-footer__keep-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
@@ -723,7 +877,7 @@
       <span>キープ</span>
     </button>
     <a href="#" class="booking-footer__cta" aria-label="予約へ進む">
-      <span class="booking-footer__price">参加費 ¥750</span>
+      <span class="booking-footer__price">参加費 ¥1,500</span>
       <span class="booking-footer__divider" aria-hidden="true"></span>
       <span class="booking-footer__action">
         予約へ進む
@@ -738,6 +892,28 @@
     const carouselImages = Array.from(document.querySelectorAll('[data-carousel-thumb]'));
     const carouselMain = document.querySelector('[data-carousel-main]');
     let carouselIndex = 0;
+
+    const socialProofOpen = document.getElementById('social-proof-open');
+    const socialProofSheet = document.getElementById('social-proof-sheet');
+    const socialProofClose = document.getElementById('social-proof-close');
+
+    socialProofOpen?.addEventListener('click', () => {
+      socialProofSheet?.showModal();
+    });
+    socialProofClose?.addEventListener('click', () => {
+      socialProofSheet?.close();
+    });
+    socialProofSheet?.addEventListener('click', (event) => {
+      if (event.target === socialProofSheet) socialProofSheet.close();
+    });
+    document.querySelectorAll('.social-proof-user[data-prev-same="true"]').forEach((user) => {
+      const meta = user.querySelector('.social-proof-user__meta');
+      if (!meta || meta.querySelector('.social-proof-user__badge')) return;
+      const badge = document.createElement('span');
+      badge.className = 'social-proof-user__badge';
+      badge.textContent = user.dataset.prevLabel || '前回も一緒！';
+      meta.appendChild(badge);
+    });
 
     function setCarouselImage(index) {
       if (!carouselMain || carouselImages.length === 0) return;

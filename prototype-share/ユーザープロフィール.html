@@ -61,6 +61,14 @@
       text-align: center;
       margin: 0;
     }
+    .profile-follow-count {
+      color: var(--color-neutral-white);
+      font-size: 13px;
+      font-weight: 700;
+      line-height: 1.5;
+      margin: -8px 0 0;
+      text-align: center;
+    }
 
     /* ── プロフィール詳細 ── */
     .profile-detail {
@@ -115,6 +123,13 @@
 
     .event-history-card__text strong {
       font-weight: 700;
+    }
+    .follow-button.dads-button {
+      width: 100%;
+      justify-content: center;
+      --button-color: var(--color-neutral-solid-gray-900);
+      --button-hover-color: var(--color-neutral-solid-gray-700);
+      --button-active-color: var(--color-neutral-solid-gray-600);
     }
 
     /* ── スタッツ・最近のイベント ── */
@@ -305,11 +320,14 @@
            src="../material/user-icon/Yusaku.Takasugi_高杉優作.png"
            alt="高杉優作">
       <p class="profile-hero__name-text">高杉優作</p>
+      <p class="profile-follow-count">フォロー数 128</p>
     </div>
   </section>
 
   <!-- プロフィール詳細 -->
   <section class="profile-detail" aria-label="プロフィール詳細">
+    <button class="dads-button follow-button" data-type="solid-fill" data-size="md" type="button">フォローする</button>
+
     <p class="bio-card">「バスケとランニングが好きです。週2〜3回活動しています。試合になると本気出します。初めての方も気軽に声かけてください！」</p>
 
     <div class="event-history-card">

@@ -22,8 +22,9 @@ const _AUTH = (function () {
   }
 
   // インデックス以外のページで未認証ならリダイレクト
-  if (!location.pathname.endsWith('00_index.html') && !isAuthenticated()) {
-    location.replace('00_index.html');
+  const isIndexPage = location.pathname.endsWith('/index.html') || location.pathname.endsWith('/prototype-share/');
+  if (!isIndexPage && !isAuthenticated()) {
+    location.replace('index.html');
   }
 
   return { isAuthenticated, login };
