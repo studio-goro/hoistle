@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>忘れ物返送依頼</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100..900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../design-system/design-system-example-components-html-main/src/global.css">
+  <link rel="stylesheet" href="../design-system/design-system-example-components-html-main/src/components/button/button.css">
+  <link rel="stylesheet" href="../design-system/design-system-example-components-html-main/src/components/form-control-label/form-control-label.css">
+  <link rel="stylesheet" href="../design-system/design-system-example-components-html-main/src/components/input-text/input-text.css">
+  <link rel="stylesheet" href="../design-system/design-system-example-components-html-main/src/components/checkbox/checkbox.css">
+  <link rel="stylesheet" href="prototype.css">
+  <style>
+    body {
+      color: var(--color-neutral-solid-gray-800);
+      background: var(--color-neutral-solid-gray-50);
+      padding-bottom: 104px;
+    }
+    .lost-detail-card {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      padding: 16px;
+      background: var(--color-neutral-white);
+      border: 1px solid var(--color-neutral-solid-gray-200);
+      border-radius: 8px;
+    }
+    .lost-detail-card__image {
+      aspect-ratio: 1 / 1;
+      border-radius: 6px;
+      background: var(--color-neutral-solid-gray-100);
+      border: 1px solid var(--color-neutral-solid-gray-200);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--color-neutral-solid-gray-500);
+    }
+    .lost-detail-card__image svg {
+      width: 88px;
+      height: 88px;
+    }
+    .lost-detail-card__title {
+      margin: 0;
+      color: var(--color-neutral-solid-gray-900);
+      font-size: 22px;
+      font-weight: 700;
+      line-height: 1.45;
+    }
+    .lost-detail-card__meta,
+    .lost-detail-card__notice {
+      margin: 0;
+      color: var(--color-neutral-solid-gray-600);
+      font-size: 13px;
+      line-height: 1.7;
+    }
+    .lost-detail-card__notice {
+      padding: 12px;
+      border-radius: 6px;
+      background: var(--color-neutral-solid-gray-100);
+      color: var(--color-neutral-solid-gray-800);
+      font-weight: 700;
+    }
+    .return-form {
+      display: flex;
+      flex-direction: column;
+      gap: 22px;
+    }
+    .return-form .dads-form-control-label,
+    .return-form .dads-input-text,
+    .return-form .dads-input-text__input {
+      width: 100%;
+      display: block;
+    }
+    .agreement-group {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      padding: 4px 0 0;
+    }
+    .agreement-group .dads-checkbox {
+      align-items: flex-start;
+    }
+    .return-footer {
+      position: fixed;
+      left: 50%;
+      bottom: 0;
+      transform: translateX(-50%);
+      width: 100%;
+      max-width: 390px;
+      padding: 12px 16px calc(12px + env(safe-area-inset-bottom));
+      background: var(--color-neutral-white);
+      border-top: 1px solid var(--color-neutral-solid-gray-200);
+      box-shadow: 0 -8px 20px rgba(0,0,0,0.08);
+      z-index: 100;
+    }
+    .return-footer .dads-button {
+      width: 100%;
+      justify-content: center;
+      border-radius: 8px;
+    }
+  </style>
+</head>
+<body>
+  <header class="nav-bar">
+    <a class="nav-back" href="忘れ物一覧.html" aria-label="忘れ物一覧へ戻る">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+        <polyline points="15 18 9 12 15 6"/>
+      </svg>
+      戻る
+    </a>
+    <h1 class="nav-title">返送依頼</h1>
+    <span class="nav-spacer" aria-hidden="true"></span>
+  </header>
+
+  <main class="main">
+    <section class="lost-detail-card" aria-labelledby="lost-item-title">
+      <div class="lost-detail-card__image" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="8" stroke="currentColor" stroke-width="1.8"/><path d="M4.8 9h14.4M4.8 15h14.4M12 4c2.2 2.2 3.2 4.8 3.2 8s-1 5.8-3.2 8M12 4C9.8 6.2 8.8 8.8 8.8 12s1 5.8 3.2 8" stroke="currentColor" stroke-width="1.4"/></svg>
+      </div>
+      <div>
+        <h2 class="lost-detail-card__title" id="lost-item-title">バスケットボール（Spalding）</h2>
+        <p class="lost-detail-card__meta">保管期限：2026年6月10日まで<br>発見場所：高津スポーツセンター 入口横</p>
+      </div>
+      <p class="lost-detail-card__notice">返送は着払いです。入力内容をスタッフが確認後、順次発送手続きを行います。</p>
+    </section>
+
+    <form class="return-form" id="return-form">
+      <div class="dads-form-control-label" data-size="md">
+        <label class="dads-form-control-label__label" for="name">氏名</label>
+        <div>
+          <span class="dads-input-text"><input id="name" class="dads-input-text__input" type="text" data-size="md" autocomplete="name" placeholder="例：山田 太郎"></span>
+        </div>
+      </div>
+
+      <div class="dads-form-control-label" data-size="md">
+        <label class="dads-form-control-label__label" for="postal-code">郵便番号</label>
+        <div>
+          <span class="dads-input-text"><input id="postal-code" class="dads-input-text__input" type="text" data-size="md" inputmode="numeric" autocomplete="postal-code" placeholder="例：000-0000"></span>
+        </div>
+      </div>
+
+      <div class="dads-form-control-label" data-size="md">
+        <label class="dads-form-control-label__label" for="address">住所</label>
+        <div>
+          <span class="dads-input-text"><input id="address" class="dads-input-text__input" type="text" data-size="md" autocomplete="street-address" placeholder="例：東京都渋谷区1-2-3 ホイッスルマンション101"></span>
+        </div>
+      </div>
+
+      <div class="dads-form-control-label" data-size="md">
+        <label class="dads-form-control-label__label" for="phone">電話番号</label>
+        <div>
+          <span class="dads-input-text"><input id="phone" class="dads-input-text__input" type="tel" data-size="md" autocomplete="tel" placeholder="例：090-1234-5678"></span>
+        </div>
+      </div>
+
+      <div class="agreement-group">
+        <label class="dads-checkbox" data-size="md">
+          <span class="dads-checkbox__checkbox"><input class="dads-checkbox__input" type="checkbox"></span>
+          <span class="dads-checkbox__label">返送が着払いであることに同意します</span>
+        </label>
+        <label class="dads-checkbox" data-size="md">
+          <span class="dads-checkbox__checkbox"><input class="dads-checkbox__input" type="checkbox"></span>
+          <span class="dads-checkbox__label">返送手続きのため、スタッフへ個人情報を提供することに同意します</span>
+        </label>
+        <label class="dads-checkbox" data-size="md">
+          <span class="dads-checkbox__checkbox"><input class="dads-checkbox__input" type="checkbox"></span>
+          <span class="dads-checkbox__label">返送中の破損・紛失に関する免責事項に同意します</span>
+        </label>
+      </div>
+      <footer class="return-footer">
+        <button class="dads-button" data-size="lg" data-type="solid-fill" type="submit">返送を依頼する</button>
+      </footer>
+    </form>
+  </main>
+
+  <script>
+    document.getElementById('return-form').addEventListener('submit', function(event) {
+      event.preventDefault();
+      window.location.href = '参加者専用_エンジョイ-開催後.html?lostItem=completed';
+    });
+  </script>
+  <script src="prototype-map.js"></script>
+</body>
+</html>

@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>忘れ物一覧</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100..900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../design-system/design-system-example-components-html-main/src/global.css">
+  <link rel="stylesheet" href="../design-system/design-system-example-components-html-main/src/components/button/button.css">
+  <link rel="stylesheet" href="prototype.css">
+  <style>
+    body {
+      color: var(--color-neutral-solid-gray-800);
+      background: var(--color-neutral-solid-gray-50);
+      padding-bottom: 32px;
+    }
+    .lost-event-card {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      padding: 16px;
+      background: var(--color-neutral-white);
+      border: 1px solid var(--color-neutral-solid-gray-200);
+      border-radius: 8px;
+    }
+    .lost-event-card__title {
+      margin: 0;
+      color: var(--color-neutral-solid-gray-900);
+      font-size: 18px;
+      font-weight: 700;
+      line-height: 1.45;
+    }
+    .lost-event-card__title-label {
+      margin: 0 0 -6px;
+      color: var(--color-neutral-solid-gray-600);
+      font-size: 11px;
+      line-height: 1.4;
+    }
+    .lost-event-card__meta {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 8px;
+      margin: 0;
+    }
+    .lost-event-card__meta div {
+      padding: 10px;
+      border-radius: 6px;
+      background: var(--color-neutral-solid-gray-50);
+    }
+    .lost-event-card__meta dt {
+      margin: 0 0 3px;
+      color: var(--color-neutral-solid-gray-600);
+      font-size: 11px;
+      line-height: 1.4;
+    }
+    .lost-event-card__meta dd {
+      margin: 0;
+      color: var(--color-neutral-solid-gray-900);
+      font-size: 13px;
+      font-weight: 700;
+      line-height: 1.5;
+    }
+    .lost-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .lost-card {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      padding: 16px;
+      background: var(--color-neutral-white);
+      border: 1px solid var(--color-neutral-solid-gray-200);
+      border-radius: 8px;
+    }
+    .lost-card__body {
+      display: flex;
+      gap: 14px;
+      min-width: 0;
+    }
+    .lost-card__image {
+      width: 92px;
+      height: 92px;
+      flex: 0 0 92px;
+      border-radius: 6px;
+      background: var(--color-neutral-solid-gray-100);
+      border: 1px solid var(--color-neutral-solid-gray-200);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+    .lost-card__image svg {
+      width: 40px;
+      height: 40px;
+      color: var(--color-neutral-solid-gray-500);
+    }
+    .lost-card__content {
+      flex: 1;
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .lost-card__status {
+      width: fit-content;
+      padding: 3px 9px;
+      border-radius: 999px;
+      background: var(--color-neutral-solid-gray-800);
+      color: var(--color-neutral-white);
+      font-size: 12px;
+      font-weight: 700;
+      line-height: 1.4;
+    }
+    .lost-card__status[data-status="発送済み"] {
+      background: var(--color-neutral-solid-gray-500);
+    }
+    .lost-card__status[data-status="廃棄済み"] {
+      background: var(--color-neutral-solid-gray-200);
+      color: var(--color-neutral-solid-gray-700);
+    }
+    .lost-card__title {
+      margin: 0;
+      color: var(--color-neutral-solid-gray-900);
+      font-size: 16px;
+      font-weight: 700;
+      line-height: 1.45;
+    }
+    .lost-card__meta {
+      margin: 0;
+      color: var(--color-neutral-solid-gray-600);
+      font-size: 12px;
+      line-height: 1.6;
+    }
+    .lost-card__note {
+      margin: 0;
+      color: var(--color-neutral-solid-gray-700);
+      font-size: 13px;
+      line-height: 1.6;
+    }
+    .lost-card__action.dads-button {
+      width: 100%;
+      justify-content: center;
+      border-radius: 8px;
+    }
+    .lost-card__action[hidden] {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <header class="nav-bar">
+    <a class="nav-back" href="参加者専用_エンジョイ-開催後.html" aria-label="参加者専用ページへ戻る">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+        <polyline points="15 18 9 12 15 6"/>
+      </svg>
+      戻る
+    </a>
+    <h1 class="nav-title">忘れ物</h1>
+    <span class="nav-spacer" aria-hidden="true"></span>
+  </header>
+
+  <main class="main">
+    <section class="lost-event-card" aria-labelledby="lost-event-title">
+      <p class="lost-event-card__title-label">イベント名</p>
+      <h2 class="lost-event-card__title" id="lost-event-title">バスケ エンジョイ交流戦 初心者・未経験者歓迎</h2>
+      <dl class="lost-event-card__meta">
+        <div>
+          <dt>開催日</dt>
+          <dd>4/12(土)</dd>
+        </div>
+        <div>
+          <dt>会場</dt>
+          <dd>スポーツセンター</dd>
+        </div>
+      </dl>
+    </section>
+
+    <section class="lost-list" aria-label="忘れ物一覧">
+      <article class="lost-card" data-status="保管中">
+        <div class="lost-card__body">
+          <div class="lost-card__image" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="8" stroke="currentColor" stroke-width="1.8"/><path d="M4.8 9h14.4M4.8 15h14.4M12 4c2.2 2.2 3.2 4.8 3.2 8s-1 5.8-3.2 8M12 4C9.8 6.2 8.8 8.8 8.8 12s1 5.8 3.2 8" stroke="currentColor" stroke-width="1.4"/></svg>
+          </div>
+          <div class="lost-card__content">
+            <span class="lost-card__status" data-status="保管中">保管中</span>
+            <h3 class="lost-card__title">バスケットボール（Spalding）</h3>
+            <p class="lost-card__meta">保管期限：2026年6月10日</p>
+            <p class="lost-card__note">体育館入口横の荷物置き場で見つかりました。</p>
+          </div>
+        </div>
+        <a class="dads-button lost-card__action" data-size="md" data-type="outline" href="忘れ物返送依頼.html?item=LF-2026-089">返送を依頼する</a>
+      </article>
+
+      <article class="lost-card" data-status="発送済み">
+        <div class="lost-card__body">
+          <div class="lost-card__image" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none"><path d="M4 8h10v8H4zM14 11h3.2l2.8 2.8V16h-6z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><circle cx="8" cy="18" r="1.5" stroke="currentColor" stroke-width="1.6"/><circle cx="17" cy="18" r="1.5" stroke="currentColor" stroke-width="1.6"/></svg>
+          </div>
+          <div class="lost-card__content">
+            <span class="lost-card__status" data-status="発送済み">発送済み</span>
+            <h3 class="lost-card__title">黒いスポーツタオル</h3>
+            <p class="lost-card__meta">保管期限：2026年6月10日</p>
+            <p class="lost-card__note">すでに返送手続きが進んでいます。</p>
+          </div>
+        </div>
+        <button class="dads-button lost-card__action" data-size="md" data-type="outline" type="button">返送を依頼する</button>
+      </article>
+
+      <article class="lost-card" data-status="廃棄済み">
+        <div class="lost-card__body">
+          <div class="lost-card__image" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none"><path d="M8 7h8M10 7V5h4v2M6.5 9h11l-.7 10H7.2z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M10 12v4M14 12v4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+          </div>
+          <div class="lost-card__content">
+            <span class="lost-card__status" data-status="廃棄済み">廃棄済み</span>
+            <h3 class="lost-card__title">ネイビーのスポーツバッグ</h3>
+            <p class="lost-card__meta">保管期限：2026年6月10日</p>
+            <p class="lost-card__note">保管期限が切れたため</p>
+          </div>
+        </div>
+        <button class="dads-button lost-card__action" data-size="md" data-type="outline" type="button">返送を依頼する</button>
+      </article>
+    </section>
+  </main>
+
+  <script>
+    document.querySelectorAll('.lost-card').forEach(function(card) {
+      var status = card.dataset.status;
+      var action = card.querySelector('.lost-card__action');
+      if (!action) return;
+      if (status === '発送済み') {
+        action.setAttribute('disabled', '');
+        action.setAttribute('aria-disabled', 'true');
+        action.setAttribute('tabindex', '-1');
+      }
+      if (status === '廃棄済み') {
+        action.hidden = true;
+      }
+    });
+  </script>
+  <script src="prototype-map.js"></script>
+</body>
+</html>
