@@ -490,8 +490,109 @@
     <!-- 参加者の傾向 -->
     <section id="section-trend" class="section">
       <h2 class="section-title">参加者の傾向</h2>
-      <div id="participant-trend-container">
-        <img src="../material/screen/参加者傾向.png" alt="参加者の傾向" style="width: 100%; display: block; height: auto;">
+      <div class="participant-trends">
+        <div class="trend-block">
+          <p class="trend-block__label">参加者のプレイスタイル・価値観の傾向</p>
+          <div class="trend-radar" aria-label="コミュ力、連携度、エンジョイ度、熱量、柔軟性の傾向">
+            <svg viewBox="0 0 320 320" role="img" aria-labelledby="trend-radar-title">
+              <title id="trend-radar-title">参加者のプレイスタイル傾向</title>
+              <polygon class="trend-radar__grid" points="160,32 281,120 235,264 85,264 39,120"/>
+              <polygon class="trend-radar__grid" points="160,64 251,130 217,238 103,238 69,130"/>
+              <polygon class="trend-radar__grid" points="160,96 221,141 198,211 122,211 99,141"/>
+              <polygon class="trend-radar__grid" points="160,128 190,152 179,185 141,185 130,152"/>
+              <polygon class="trend-radar__shape" points="160,56 256,128 216,240 100,224 64,136"/>
+              <text x="160" y="22" text-anchor="middle">コミュ力</text>
+              <text x="292" y="124" text-anchor="start">連携度</text>
+              <text x="236" y="292" text-anchor="start">エンジョイ度</text>
+              <text x="70" y="292" text-anchor="middle">熱量</text>
+              <text x="24" y="124" text-anchor="middle">柔軟性</text>
+            </svg>
+          </div>
+          <div class="trend-callouts">
+            <div class="trend-callout">
+              <p class="trend-callout__title">連携度が高め</p>
+              <p class="trend-callout__text">個人技での突破より、パス回しやチームプレイを好む人が集まっています。</p>
+            </div>
+            <div class="trend-callout">
+              <p class="trend-callout__title">エンジョイ度が高め</p>
+              <p class="trend-callout__text">ガチな削り合いではなく、お互いの好プレイを称え合う空気感です。</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="trend-block">
+          <p class="trend-block__label">年齢層</p>
+          <div class="age-trend">
+            <div class="age-trend__track" aria-hidden="true"></div>
+            <div class="age-trend__items">
+              <div class="age-item">
+                <span class="age-item__dot"></span>
+                <span class="age-item__label">10代</span>
+              </div>
+              <div class="age-item">
+                <span class="age-item__dot age-item__dot--active"></span>
+                <span class="age-item__label age-item__label--active">20代</span>
+              </div>
+              <div class="age-item">
+                <span class="age-item__dot age-item__dot--active"></span>
+                <span class="age-item__label age-item__label--active">30代</span>
+              </div>
+              <div class="age-item">
+                <span class="age-item__dot"></span>
+                <span class="age-item__label">40代</span>
+              </div>
+              <div class="age-item">
+                <span class="age-item__dot"></span>
+                <span class="age-item__label">50代</span>
+              </div>
+              <div class="age-item">
+                <span class="age-item__dot"></span>
+                <span class="age-item__label">60代</span>
+              </div>
+              <div class="age-item">
+                <span class="age-item__dot"></span>
+                <span class="age-item__label">70代〜</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="trend-block">
+          <p class="trend-block__label">男女比</p>
+          <div class="gender-ratio" aria-label="男性寄りの参加傾向">
+            <span class="gender-ratio__label">男性</span>
+            <span class="gender-ratio__track">
+              <span class="gender-ratio__dot"></span>
+            </span>
+            <span class="gender-ratio__label">女性</span>
+          </div>
+        </div>
+
+        <div class="trend-block">
+          <p class="trend-block__label">レベル分布</p>
+          <div class="level-distribution">
+            <div class="level-donut" role="img" aria-label="初心者55%、中級者15%、経験者30%">
+              <span class="level-donut__center">初心者<br>多め</span>
+            </div>
+            <div class="level-legend">
+              <div class="level-legend__row">
+                <span class="level-legend__dot level-legend__dot--beginner"></span>
+                <span class="level-legend__label">初心者</span>
+                <span class="level-legend__value">55%</span>
+              </div>
+              <div class="level-legend__row">
+                <span class="level-legend__dot level-legend__dot--middle"></span>
+                <span class="level-legend__label">中級者</span>
+                <span class="level-legend__value">15%</span>
+              </div>
+              <div class="level-legend__row">
+                <span class="level-legend__dot level-legend__dot--experienced"></span>
+                <span class="level-legend__label">経験者</span>
+                <span class="level-legend__value">30%</span>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -681,6 +782,10 @@
         <svg xmlns="http://www.w3.org/2000/svg" height="16" viewBox="0 -960 960 960" width="10" fill="var(--color-neutral-solid-gray-400)" aria-hidden="true" style="flex-shrink:0">
           <path d="m321-80-71-71 329-329-329-329 71-71 400 400L321-80Z"/>
         </svg>
+      </a>
+      <a href="#" style="display:flex;align-items:center;gap:4px;font-size:12px;color:var(--color-neutral-solid-gray-500);text-decoration:none;padding:4px 0;margin-top:4px;">
+        <svg xmlns="http://www.w3.org/2000/svg" height="14" viewBox="0 -960 960 960" width="10" fill="var(--color-neutral-solid-gray-400)" aria-hidden="true" style="flex-shrink:0"><path d="m321-80-71-71 329-329-329-329 71-71 400 400L321-80Z"/></svg>
+        <span>迷惑行為・規約違反ユーザーの通報はこちら</span>
       </a>
     </section>
 
@@ -919,6 +1024,35 @@
     const participantsSheet = document.getElementById('participants-sheet');
     document.getElementById('participants-close').addEventListener('click', () => participantsSheet.close());
     participantsSheet.addEventListener('click', e => { if (e.target === participantsSheet) participantsSheet.close(); });
+
+
+    const trendRadars = document.querySelectorAll('.trend-radar');
+    if ('IntersectionObserver' in window) {
+      const trendRadarObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (!entry.isIntersecting) return;
+          entry.target.classList.add('trend-radar--visible');
+          trendRadarObserver.unobserve(entry.target);
+        });
+      }, { threshold: 0.35 });
+      trendRadars.forEach(radar => trendRadarObserver.observe(radar));
+    } else {
+      trendRadars.forEach(radar => radar.classList.add('trend-radar--visible'));
+    }
+
+    const trendGraphics = document.querySelectorAll('.age-trend, .gender-ratio, .level-distribution');
+    if ('IntersectionObserver' in window) {
+      const trendGraphicObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (!entry.isIntersecting) return;
+          entry.target.classList.add('trend-graphic--visible');
+          trendGraphicObserver.unobserve(entry.target);
+        });
+      }, { threshold: 0.35 });
+      trendGraphics.forEach(graphic => trendGraphicObserver.observe(graphic));
+    } else {
+      trendGraphics.forEach(graphic => graphic.classList.add('trend-graphic--visible'));
+    }
 
     // スクロール位置に連動してチップをアクティブ化
     const sectionEls = Array.from(chips).map(c => document.getElementById(c.dataset.target)).filter(Boolean);

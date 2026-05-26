@@ -190,6 +190,11 @@ body {
 .booking-footer__keep-icon {
   width: 22px;
   height: 24px;
+  display: block;
+}
+.booking-footer__keep.is-active {
+  border-color: var(--color-neutral-solid-gray-900);
+  background: var(--color-neutral-solid-gray-50);
 }
 .booking-footer__keep span {
   color: var(--color-neutral-black);
@@ -244,6 +249,31 @@ body {
   width: 18px;
   height: 18px;
   flex-shrink: 0;
+}
+.toast {
+  position: fixed;
+  left: 50%;
+  bottom: 96px;
+  transform: translate(-50%, 12px);
+  z-index: 200;
+  width: calc(100% - 32px);
+  max-width: 358px;
+  padding: 12px 16px;
+  border-radius: 8px;
+  background: var(--color-neutral-solid-gray-900);
+  color: var(--color-neutral-white);
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.5;
+  text-align: center;
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.24);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+.toast.is-visible {
+  opacity: 1;
+  transform: translate(-50%, 0);
 }
 
 /* === ハーフモーダル（ボトムシート）===

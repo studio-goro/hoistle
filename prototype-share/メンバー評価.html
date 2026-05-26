@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>メンバーを評価</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100..900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../design-system/design-system-example-components-html-main/src/global.css">
+  <link rel="stylesheet" href="../design-system/design-system-example-components-html-main/src/components/button/button.css">
+  <link rel="stylesheet" href="../design-system/design-system-example-components-html-main/src/components/chip-label/chip-label.css">
+  <link rel="stylesheet" href="prototype.css">
+  <style>
+    body {
+      --color-primitive-blue-50: var(--color-neutral-solid-gray-50);
+      --color-primitive-blue-100: var(--color-neutral-solid-gray-100);
+      --color-primitive-blue-200: var(--color-neutral-solid-gray-100);
+      --color-primitive-blue-300: var(--color-neutral-solid-gray-200);
+      --color-primitive-blue-900: var(--color-neutral-solid-gray-900);
+      --color-primitive-blue-1000: var(--color-neutral-solid-gray-800);
+      --color-primitive-blue-1200: var(--color-neutral-solid-gray-700);
+      background: var(--color-neutral-white);
+      color: var(--color-neutral-solid-gray-800);
+      padding-bottom: 92px;
+    }
+    .main {
+      padding: 20px 16px 28px;
+      gap: 18px;
+    }
+    .intro {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .intro__title {
+      margin: 0;
+      font-size: 20px;
+      font-weight: 700;
+      line-height: 1.4;
+      color: var(--color-neutral-solid-gray-900);
+    }
+    .intro__text {
+      margin: 0;
+      font-size: 13px;
+      line-height: 1.7;
+      color: var(--color-neutral-solid-gray-600);
+    }
+    .step-panel[hidden] {
+      display: none;
+    }
+    .step-panel {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+    .step-label {
+      display: inline-flex;
+      width: fit-content;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: var(--color-neutral-solid-gray-100);
+      color: var(--color-neutral-solid-gray-700);
+      font-size: 12px;
+      font-weight: 700;
+      line-height: 1.4;
+    }
+    .member-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      background: var(--color-neutral-white);
+      border-top: 1px solid var(--color-neutral-solid-gray-200);
+      border-bottom: 1px solid var(--color-neutral-solid-gray-200);
+    }
+    .member-evaluation {
+      padding: 18px 0;
+      border-bottom: 1px solid var(--color-neutral-solid-gray-100);
+    }
+    .member-evaluation:last-child {
+      border-bottom: none;
+    }
+    .member-evaluation__profile {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+    .member-evaluation__avatar {
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      overflow: hidden;
+      flex-shrink: 0;
+      background: var(--color-neutral-solid-gray-100);
+      box-shadow: 0 0 0 1px var(--color-neutral-solid-gray-200);
+    }
+    .member-evaluation__avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      filter: grayscale(100%);
+    }
+    .member-evaluation__name {
+      margin: 0;
+      font-size: 16px;
+      font-weight: 700;
+      line-height: 1.4;
+      color: var(--color-neutral-solid-gray-900);
+    }
+    .member-evaluation__meta {
+      margin: 2px 0 0;
+      font-size: 12px;
+      line-height: 1.5;
+      color: var(--color-neutral-solid-gray-500);
+    }
+    .rating-groups {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .rating-group {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .rating-group__label {
+      margin: 0;
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--color-neutral-solid-gray-600);
+    }
+    .rating-chip:active {
+      transform: scale(0.97);
+    }
+    .rating-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .rating-chip.dads-chip-label {
+      min-height: 36px;
+      border: 1.5px solid var(--color-neutral-solid-gray-300);
+      background: var(--color-neutral-white);
+      color: var(--color-neutral-solid-gray-700);
+      border-radius: 999px;
+      cursor: pointer;
+      font-family: inherit;
+      transition: background 0.18s ease, border-color 0.18s ease, color 0.18s ease, transform 0.18s ease;
+    }
+    .rating-chip[aria-pressed="true"] {
+      background: var(--color-neutral-solid-gray-900);
+      border-color: var(--color-neutral-solid-gray-900);
+      color: var(--color-neutral-white);
+    }
+    .fixed-footer {
+      padding: 14px 16px max(18px, env(safe-area-inset-bottom));
+    }
+    .footer-actions {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
+    }
+    .footer-actions.is-survey {
+      grid-template-columns: minmax(96px, 0.38fr) minmax(0, 1fr);
+    }
+    .footer-actions .dads-button {
+      width: 100%;
+      min-width: 0;
+      padding-inline: 12px;
+      white-space: nowrap;
+    }
+    .footer-actions .dads-button[hidden] {
+      display: none;
+    }
+    .survey-card {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+      padding: 18px 0;
+      border-top: 1px solid var(--color-neutral-solid-gray-200);
+      border-bottom: 1px solid var(--color-neutral-solid-gray-200);
+    }
+    .survey-question {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .survey-question__title {
+      margin: 0;
+      font-size: 15px;
+      font-weight: 700;
+      line-height: 1.5;
+      color: var(--color-neutral-solid-gray-900);
+    }
+    .survey-question__text {
+      margin: 0;
+      font-size: 13px;
+      line-height: 1.7;
+      color: var(--color-neutral-solid-gray-600);
+    }
+    .survey-options {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .survey-textarea {
+      width: 100%;
+      min-height: 120px;
+      padding: 12px 14px;
+      border: 1.5px solid var(--color-neutral-solid-gray-300);
+      border-radius: 8px;
+      background: var(--color-neutral-white);
+      color: var(--color-neutral-solid-gray-800);
+      font: inherit;
+      line-height: 1.6;
+      resize: vertical;
+    }
+    .survey-textarea:focus {
+      outline: 3px solid var(--color-neutral-solid-gray-200);
+      border-color: var(--color-neutral-solid-gray-800);
+    }
+    .member-trigger {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex: 1;
+      min-width: 0;
+      background: none;
+      border: none;
+      padding: 0;
+      cursor: pointer;
+      text-align: left;
+      font: inherit;
+    }
+    .follow-btn.dads-button {
+      margin-left: auto;
+      flex-shrink: 0;
+      border-radius: 999px;
+    }
+    .profile-sheet-profile {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 4px 0 20px;
+      border-bottom: 1px solid var(--color-neutral-solid-gray-100);
+    }
+    .profile-sheet-avatar {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      overflow: hidden;
+      flex-shrink: 0;
+      background: var(--color-neutral-solid-gray-100);
+      box-shadow: 0 0 0 1px var(--color-neutral-solid-gray-200);
+    }
+    .profile-sheet-avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      filter: grayscale(100%);
+    }
+    .profile-sheet-name {
+      margin: 0;
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--color-neutral-solid-gray-900);
+      line-height: 1.4;
+    }
+    .profile-sheet-meta {
+      margin: 4px 0 0;
+      font-size: 13px;
+      color: var(--color-neutral-solid-gray-500);
+      line-height: 1.6;
+    }
+    .survey-skip {
+      text-align: center;
+    }
+    .survey-skip__btn {
+      background: none;
+      border: none;
+      padding: 8px;
+      cursor: pointer;
+      font: inherit;
+      font-size: 13px;
+      color: var(--color-neutral-solid-gray-500);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+  </style>
+</head>
+<body>
+  <script src="auth.js"></script>
+
+  <div class="nav-bar">
+    <a class="nav-back" id="close-link" href="参加者専用_エンジョイ-開催後.html" aria-label="閉じる">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+        <path d="M6 6l12 12M18 6 6 18" stroke-linecap="round"/>
+      </svg>
+    </a>
+    <p class="nav-title" id="screen-title">メンバーを評価</p>
+    <div class="nav-spacer"></div>
+  </div>
+
+  <main class="main">
+    <div class="step-panel" id="member-step">
+      <section class="intro" aria-labelledby="intro-title">
+        <span class="step-label">Step 1 / 2</span>
+        <h1 class="intro__title" id="intro-title">一緒にプレーしたメンバーを評価しましょう</h1>
+        <p class="intro__text">評価は匿名で送信されます。相手にあなたの名前は表示されず、今後のイベント体験をよくするために使われます。</p>
+      </section>
+
+      <section class="member-list" aria-label="評価する参加者">
+        <article class="member-evaluation">
+          <div class="member-evaluation__profile">
+            <button class="member-trigger" type="button" data-member-index="0" aria-label="旭俊成のプロフィールを見る">
+              <div class="member-evaluation__avatar">
+                <img src="../material/user-icon/Toshinari.Asahi_旭俊成.png" alt="旭俊成">
+              </div>
+              <div>
+                <h2 class="member-evaluation__name">旭 俊成</h2>
+                <p class="member-evaluation__meta">チームA · 背番号7 · 今日一緒にプレー</p>
+              </div>
+            </button>
+            <button class="dads-button follow-btn" data-size="sm" data-type="outline" type="button">フォロー</button>
+          </div>
+          <div class="rating-groups">
+            <div class="rating-group">
+              <p class="rating-group__label">よかったところ</p>
+              <div class="rating-chips" role="group" aria-label="旭俊成のよかったところ">
+                <button class="dads-chip-label rating-chip" data-style="outline" data-color="gray" type="button" aria-pressed="false">また一緒にやりたい</button>
+                <button class="dads-chip-label rating-chip" data-style="outline" data-color="gray" type="button" aria-pressed="false">ありがとう</button>
+                <button class="dads-chip-label rating-chip" data-style="outline" data-color="gray" type="button" aria-pressed="false">マナーが良い</button>
+                <button class="dads-chip-label rating-chip" data-style="outline" data-color="gray" type="button" aria-pressed="false">声かけがよい</button>
+                <button class="dads-chip-label rating-chip" data-style="outline" data-color="gray" type="button" aria-pressed="false">パスが上手い</button>
+                <button class="dads-chip-label rating-chip" data-style="outline" data-color="gray" type="button" aria-pressed="false">盛り上げ上手</button>
+                <button class="dads-chip-label rating-chip" data-style="outline" data-color="gray" type="button" aria-pressed="false">ナイスアシスト</button>
+                <button class="dads-chip-label rating-chip" data-style="outline" data-color="gray" type="button" aria-pressed="false">フェアプレー</button>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="member-evaluation">
+          <div class="member-evaluation__profile">
+            <button class="member-trigger" type="button" data-member-index="1" aria-label="棚橋七海のプロフィールを見る">
+              <div class="member-evaluation__avatar">
+                <img src="../material/user-icon/Nanami.Tanahashi_棚橋七海.png" alt="棚橋七海">
+              </div>
+              <div>
+                <h2 class="member-evaluation__name">棚橋 七海</h2>
+                <p class="member-evaluation__meta">チームB · 背番号12 · 試合で対戦</p>
+              </div>
+            </button>
+            <button class="dads-button follow-btn" data-size="sm" data-type="outline" type="button">フォロー</button>
+          </div>
+          <div class="rating-groups">
+            <div class="rating-group">
+              <p class="rating-group__label">よかったところ</p>
+              <div class="rating-chips" role="group" aria-label="棚橋七海のよかったところ">
+                <button class="dads-chip-label rating-chip" data-style="outline" data-color="gray" type="button" aria-pressed="false">また一緒にやりたい</button>
+                <button class="dads-chip-label rating-chip" data-style="outline" data-color="gray" type="button" aria-pressed="false">ありがとう</button>
+                <button class="dads-chip-label rating-chip" data-style="outline" data-color="gray" type="button" aria-pressed="false">マナーが良い</button>
+                <button class="dads-chip-label rating-chip" data-style="outline" data-color="gray" type="button" aria-pressed="false">声かけがよい</button>
+                <button class="dads-chip-label rating-chip" data-style="outline" data-color="gray" type="button" aria-pressed="false">パスが上手い</button>
+                <button class="dads-chip-label rating-chip" data-style="outline" data-color="gray" type="button" aria-pressed="false">盛り上げ上手</button>
+                <button class="dads-chip-label rating-chip" data-style="outline" data-color="gray" type="button" aria-pressed="false">ナイスアシスト</button>
+                <button class="dads-chip-label rating-chip" data-style="outline" data-color="gray" type="button" aria-pressed="false">フェアプレー</button>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="member-evaluation">
+          <div class="member-evaluation__profile">
+            <button class="member-trigger" type="button" data-member-index="2" aria-label="高杉優作のプロフィールを見る">
+              <div class="member-evaluation__avatar">
+                <img src="../material/user-icon/Yusaku.Takasugi_高杉優作.png" alt="高杉優作">
+              </div>
+              <div>
+                <h2 class="member-evaluation__name">高杉 優作</h2>
+                <p class="member-evaluation__meta">チームC · 背番号23 · 試合で対戦</p>
+              </div>
+            </button>
+            <button class="dads-button follow-btn" data-size="sm" data-type="outline" type="button">フォロー</button>
+          </div>
+          <div class="rating-groups">
+            <div class="rating-group">
+              <p class="rating-group__label">よかったところ</p>
+              <div class="rating-chips" role="group" aria-label="高杉優作のよかったところ">
+                <button class="dads-chip-label rating-chip" data-style="outline" data-color="gray" type="button" aria-pressed="false">また一緒にやりたい</button>
+                <button class="dads-chip-label rating-chip" data-style="outline" data-color="gray" type="button" aria-pressed="false">ありがとう</button>
+                <button class="dads-chip-label rating-chip" data-style="outline" data-color="gray" type="button" aria-pressed="false">マナーが良い</button>
+                <button class="dads-chip-label rating-chip" data-style="outline" data-color="gray" type="button" aria-pressed="false">声かけがよい</button>
+                <button class="dads-chip-label rating-chip" data-style="outline" data-color="gray" type="button" aria-pressed="false">パスが上手い</button>
+                <button class="dads-chip-label rating-chip" data-style="outline" data-color="gray" type="button" aria-pressed="false">盛り上げ上手</button>
+                <button class="dads-chip-label rating-chip" data-style="outline" data-color="gray" type="button" aria-pressed="false">ナイスアシスト</button>
+                <button class="dads-chip-label rating-chip" data-style="outline" data-color="gray" type="button" aria-pressed="false">フェアプレー</button>
+              </div>
+            </div>
+          </div>
+        </article>
+      </section>
+    </div>
+
+    <div class="step-panel" id="survey-step" hidden>
+      <section class="intro" aria-labelledby="survey-title">
+        <span class="step-label">Step 2 / 2</span>
+        <h1 class="intro__title" id="survey-title">イベント後アンケート</h1>
+        <p class="intro__text">今日のイベントについて教えてください。回答はサービス改善のために利用します。</p>
+      </section>
+
+      <section class="survey-card" aria-label="イベント後アンケート">
+        <div class="survey-question">
+          <h2 class="survey-question__title">今日のイベントはどうでしたか？</h2>
+          <div class="survey-options" role="group" aria-label="今日のイベント満足度">
+            <button class="dads-chip-label rating-chip survey-chip" data-style="outline" data-color="gray" type="button" aria-pressed="false">とても楽しかった</button>
+            <button class="dads-chip-label rating-chip survey-chip" data-style="outline" data-color="gray" type="button" aria-pressed="false">ちょうどよかった</button>
+            <button class="dads-chip-label rating-chip survey-chip" data-style="outline" data-color="gray" type="button" aria-pressed="false">少し疲れた</button>
+            <button class="dads-chip-label rating-chip survey-chip" data-style="outline" data-color="gray" type="button" aria-pressed="false">次も参加したい</button>
+          </div>
+        </div>
+
+        <div class="survey-question">
+          <h2 class="survey-question__title">次回に向けて改善してほしいことはありますか？</h2>
+          <p class="survey-question__text">未入力でも送信できます。</p>
+          <textarea class="survey-textarea" aria-label="改善してほしいこと" placeholder="例：チーム替えの回数をもう少し増やしてほしい"></textarea>
+        </div>
+      </section>
+
+      <div class="survey-skip">
+        <button class="survey-skip__btn" type="button" id="skip-survey">このアンケートをスキップ</button>
+      </div>
+    </div>
+  </main>
+
+  <dialog id="profile-sheet" class="bottom-sheet" aria-labelledby="profile-sheet-title">
+    <div class="sheet-handle" aria-hidden="true"></div>
+    <div class="sheet-header">
+      <p class="sheet-title" id="profile-sheet-title">プロフィール</p>
+      <button class="sheet-close" type="button" id="profile-sheet-close" aria-label="閉じる">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <path d="M6 6l12 12M18 6 6 18" stroke-linecap="round"/>
+        </svg>
+      </button>
+    </div>
+    <div class="sheet-body">
+      <div class="profile-sheet-profile">
+        <div class="profile-sheet-avatar">
+          <img id="profile-sheet-img" src="" alt="">
+        </div>
+        <div>
+          <p class="profile-sheet-name" id="profile-sheet-name"></p>
+          <p class="profile-sheet-meta" id="profile-sheet-meta"></p>
+        </div>
+      </div>
+    </div>
+  </dialog>
+
+  <footer class="fixed-footer">
+    <div class="footer-actions" id="footer-actions">
+      <button class="dads-button" data-size="lg" data-type="outline" type="button" id="back-action" hidden>戻る</button>
+      <button class="dads-button" data-size="lg" data-type="solid-fill" type="button" id="primary-action">次へ</button>
+    </div>
+  </footer>
+
+  <script>
+    var params = new URLSearchParams(window.location.search);
+    var returnUrl = params.get('return') || '参加者専用_エンジョイ-開催後.html';
+    var currentStep = 'member';
+    document.getElementById('close-link').href = returnUrl;
+    var screenTitle = document.getElementById('screen-title');
+    var memberStep = document.getElementById('member-step');
+    var surveyStep = document.getElementById('survey-step');
+    var primaryAction = document.getElementById('primary-action');
+    var backAction = document.getElementById('back-action');
+    var footerActions = document.getElementById('footer-actions');
+
+    function showSurveyStep() {
+      currentStep = 'survey';
+      memberStep.hidden = true;
+      surveyStep.hidden = false;
+      screenTitle.textContent = 'アンケート';
+      primaryAction.textContent = 'アンケートを送信する';
+      backAction.hidden = false;
+      footerActions.classList.add('is-survey');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function showMemberStep() {
+      currentStep = 'member';
+      memberStep.hidden = false;
+      surveyStep.hidden = true;
+      screenTitle.textContent = 'メンバーを評価';
+      primaryAction.textContent = '次へ';
+      backAction.hidden = true;
+      footerActions.classList.remove('is-survey');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function completeFlow() {
+      var url = new URL(returnUrl, window.location.href);
+      url.searchParams.set('rating', 'completed');
+      window.location.href = url.href;
+    }
+
+    document.querySelectorAll('.rating-chip, .survey-chip').forEach(function (chip) {
+      chip.addEventListener('click', function () {
+        var pressed = chip.getAttribute('aria-pressed') === 'true';
+        chip.setAttribute('aria-pressed', pressed ? 'false' : 'true');
+      });
+    });
+
+    primaryAction.addEventListener('click', function () {
+      if (currentStep === 'member') {
+        showSurveyStep();
+        return;
+      }
+      completeFlow();
+    });
+
+    backAction.addEventListener('click', showMemberStep);
+
+    document.getElementById('skip-survey').addEventListener('click', completeFlow);
+
+    var memberData = [
+      { avatar: '../material/user-icon/Toshinari.Asahi_旭俊成.png', name: '旭 俊成', meta: 'チームA · 背番号7 · 今日一緒にプレー' },
+      { avatar: '../material/user-icon/Nanami.Tanahashi_棚橋七海.png', name: '棚橋 七海', meta: 'チームB · 背番号12 · 試合で対戦' },
+      { avatar: '../material/user-icon/Yusaku.Takasugi_高杉優作.png', name: '高杉 優作', meta: 'チームC · 背番号23 · 試合で対戦' }
+    ];
+    var profileSheet = document.getElementById('profile-sheet');
+    var profileSheetImg = document.getElementById('profile-sheet-img');
+    var profileSheetName = document.getElementById('profile-sheet-name');
+    var profileSheetMeta = document.getElementById('profile-sheet-meta');
+
+    document.querySelectorAll('.member-trigger').forEach(function(trigger) {
+      trigger.addEventListener('click', function() {
+        var m = memberData[parseInt(trigger.dataset.memberIndex)];
+        profileSheetImg.src = m.avatar;
+        profileSheetImg.alt = m.name;
+        profileSheetName.textContent = m.name;
+        profileSheetMeta.textContent = m.meta;
+        profileSheet.showModal();
+      });
+    });
+
+    document.getElementById('profile-sheet-close').addEventListener('click', function() {
+      profileSheet.close();
+    });
+
+    profileSheet.addEventListener('click', function(e) {
+      if (e.target === profileSheet) profileSheet.close();
+    });
+  </script>
+  <script src="prototype-map.js"></script>
+</body>
+</html>

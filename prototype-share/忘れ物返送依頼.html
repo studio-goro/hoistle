@@ -74,14 +74,31 @@
       width: 100%;
       display: block;
     }
+    .return-form textarea.dads-input-text__input {
+      min-height: 112px;
+      resize: vertical;
+      line-height: 1.6;
+    }
     .agreement-group {
       display: flex;
       flex-direction: column;
       gap: 12px;
       padding: 4px 0 0;
     }
+    .agreement-group__title {
+      margin: 0;
+      color: var(--color-neutral-solid-gray-900);
+      font-size: 15px;
+      font-weight: 700;
+      line-height: 1.6;
+    }
     .agreement-group .dads-checkbox {
       align-items: flex-start;
+    }
+    .agreement-group .dads-checkbox__label a {
+      color: inherit;
+      text-decoration: underline;
+      text-underline-offset: 3px;
     }
     .return-footer {
       position: fixed;
@@ -156,18 +173,26 @@
         </div>
       </div>
 
+      <div class="dads-form-control-label" data-size="md">
+        <label class="dads-form-control-label__label" for="item-feature">忘れ物の特徴</label>
+        <div>
+          <span class="dads-input-text"><textarea id="item-feature" class="dads-input-text__input" data-size="md" placeholder="荷物が本人のものだとわかるように、色や形など忘れ物の特徴を記載してください"></textarea></span>
+        </div>
+      </div>
+
       <div class="agreement-group">
+        <p class="agreement-group__title">ご返送依頼の前に、以下の内容をご確認ください</p>
         <label class="dads-checkbox" data-size="md">
           <span class="dads-checkbox__checkbox"><input class="dads-checkbox__input" type="checkbox"></span>
-          <span class="dads-checkbox__label">返送が着払いであることに同意します</span>
+          <span class="dads-checkbox__label">返送時の送料は着払いとなりますことをご了承ください</span>
         </label>
         <label class="dads-checkbox" data-size="md">
           <span class="dads-checkbox__checkbox"><input class="dads-checkbox__input" type="checkbox"></span>
-          <span class="dads-checkbox__label">返送手続きのため、スタッフへ個人情報を提供することに同意します</span>
+          <span class="dads-checkbox__label">返送手配のため、スタッフが配送先情報を使用させていただきます</span>
         </label>
         <label class="dads-checkbox" data-size="md">
           <span class="dads-checkbox__checkbox"><input class="dads-checkbox__input" type="checkbox"></span>
-          <span class="dads-checkbox__label">返送中の破損・紛失に関する免責事項に同意します</span>
+          <span class="dads-checkbox__label">輸送中の破損・紛失等に関する<a href="#">注意事項</a>をご確認ください</span>
         </label>
       </div>
       <footer class="return-footer">

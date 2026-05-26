@@ -19,11 +19,20 @@
     .lost-event-card {
       display: flex;
       flex-direction: column;
-      gap: 12px;
+      gap: 19px;
       padding: 16px;
       background: var(--color-neutral-white);
       border: 1px solid var(--color-neutral-solid-gray-200);
       border-radius: 8px;
+    }
+    .lost-event-card__summary,
+    .lost-event-card__deadline {
+      display: flex;
+      flex-direction: column;
+      gap: 11px;
+    }
+    .lost-event-card__deadline {
+      gap: 6px;
     }
     .lost-event-card__title {
       margin: 0;
@@ -32,34 +41,43 @@
       font-weight: 700;
       line-height: 1.45;
     }
-    .lost-event-card__title-label {
-      margin: 0 0 -6px;
-      color: var(--color-neutral-solid-gray-600);
-      font-size: 11px;
-      line-height: 1.4;
-    }
-    .lost-event-card__meta {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
+    .lost-event-card__row {
+      display: flex;
+      align-items: flex-start;
       gap: 8px;
       margin: 0;
+      color: var(--color-neutral-solid-gray-900);
+      font-size: 14px;
+      font-weight: 400;
+      line-height: 1.5;
     }
-    .lost-event-card__meta div {
-      padding: 10px;
-      border-radius: 6px;
-      background: var(--color-neutral-solid-gray-50);
+    .lost-event-card__icon {
+      width: 18px;
+      height: 18px;
+      flex: 0 0 18px;
+      margin-top: 2px;
+      filter: brightness(0);
+      opacity: 0.9;
     }
-    .lost-event-card__meta dt {
-      margin: 0 0 3px;
-      color: var(--color-neutral-solid-gray-600);
-      font-size: 11px;
-      line-height: 1.4;
-    }
-    .lost-event-card__meta dd {
+    .lost-event-card__deadline-title {
       margin: 0;
       color: var(--color-neutral-solid-gray-900);
-      font-size: 13px;
+      font-size: 14px;
       font-weight: 700;
+      line-height: 1.5;
+    }
+    .lost-event-card__deadline-date {
+      margin: 0;
+      color: var(--color-neutral-solid-gray-900);
+      font-size: 14px;
+      font-weight: 400;
+      line-height: 1.5;
+    }
+    .lost-event-card__notice {
+      margin: 0;
+      color: var(--color-neutral-solid-gray-900);
+      font-size: 12px;
+      font-weight: 400;
       line-height: 1.5;
     }
     .lost-list {
@@ -129,12 +147,6 @@
       font-weight: 700;
       line-height: 1.45;
     }
-    .lost-card__meta {
-      margin: 0;
-      color: var(--color-neutral-solid-gray-600);
-      font-size: 12px;
-      line-height: 1.6;
-    }
     .lost-card__note {
       margin: 0;
       color: var(--color-neutral-solid-gray-700);
@@ -165,18 +177,22 @@
 
   <main class="main">
     <section class="lost-event-card" aria-labelledby="lost-event-title">
-      <p class="lost-event-card__title-label">イベント名</p>
-      <h2 class="lost-event-card__title" id="lost-event-title">バスケ エンジョイ交流戦 初心者・未経験者歓迎</h2>
-      <dl class="lost-event-card__meta">
-        <div>
-          <dt>開催日</dt>
-          <dd>4/12(土)</dd>
-        </div>
-        <div>
-          <dt>会場</dt>
-          <dd>スポーツセンター</dd>
-        </div>
-      </dl>
+      <div class="lost-event-card__summary">
+        <h2 class="lost-event-card__title" id="lost-event-title">バスケ エンジョイ交流戦 初心者・未経験者歓迎</h2>
+        <p class="lost-event-card__row">
+          <img class="lost-event-card__icon" src="../material/icon/date.svg" alt="" aria-hidden="true">
+          <span>4/12(土)</span>
+        </p>
+        <p class="lost-event-card__row">
+          <img class="lost-event-card__icon" src="../material/icon/pin.svg" alt="" aria-hidden="true">
+          <span>神奈川県藤沢市本藤沢４丁目２−１ スポーツセンター</span>
+        </p>
+      </div>
+      <div class="lost-event-card__deadline">
+        <p class="lost-event-card__deadline-title">保管期限</p>
+        <p class="lost-event-card__deadline-date">2026/6月/10</p>
+        <p class="lost-event-card__notice">忘れ物の保管期限は2週間になります。それ以降は利用規約に基づき、運営側で処分させていただきます。</p>
+      </div>
     </section>
 
     <section class="lost-list" aria-label="忘れ物一覧">
@@ -188,7 +204,6 @@
           <div class="lost-card__content">
             <span class="lost-card__status" data-status="保管中">保管中</span>
             <h3 class="lost-card__title">バスケットボール（Spalding）</h3>
-            <p class="lost-card__meta">保管期限：2026年6月10日</p>
             <p class="lost-card__note">体育館入口横の荷物置き場で見つかりました。</p>
           </div>
         </div>
@@ -203,7 +218,6 @@
           <div class="lost-card__content">
             <span class="lost-card__status" data-status="発送済み">発送済み</span>
             <h3 class="lost-card__title">黒いスポーツタオル</h3>
-            <p class="lost-card__meta">保管期限：2026年6月10日</p>
             <p class="lost-card__note">すでに返送手続きが進んでいます。</p>
           </div>
         </div>
@@ -218,8 +232,7 @@
           <div class="lost-card__content">
             <span class="lost-card__status" data-status="廃棄済み">廃棄済み</span>
             <h3 class="lost-card__title">ネイビーのスポーツバッグ</h3>
-            <p class="lost-card__meta">保管期限：2026年6月10日</p>
-            <p class="lost-card__note">保管期限が切れたため</p>
+            <p class="lost-card__note">利用規約に基づき処分済みです。</p>
           </div>
         </div>
         <button class="dads-button lost-card__action" data-size="md" data-type="outline" type="button">返送を依頼する</button>

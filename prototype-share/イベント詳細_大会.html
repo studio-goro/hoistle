@@ -870,10 +870,8 @@
   </dialog>
 
   <div class="fixed-footer booking-footer">
-    <button class="booking-footer__keep" type="button" aria-label="このイベントをキープ">
-      <svg class="booking-footer__keep-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-        <path d="M7 4.5C7 3.67 7.67 3 8.5 3h7c.83 0 1.5.67 1.5 1.5v16l-5-3.2-5 3.2v-16Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
-      </svg>
+    <button class="booking-footer__keep" type="button" aria-label="このイベントをキープ" data-keep-button data-icon-default="icon/bookmark.svg" data-icon-active="icon/bookmark-filled.svg">
+      <img class="booking-footer__keep-icon" src="icon/bookmark.svg" alt="" aria-hidden="true" data-keep-icon>
       <span>キープ</span>
     </button>
     <a href="#" class="booking-footer__cta" aria-label="予約へ進む">
@@ -887,6 +885,7 @@
       </span>
     </a>
   </div>
+  <div class="toast" role="status" aria-live="polite" aria-atomic="true" data-toast></div>
 
   <script>
     const carouselImages = Array.from(document.querySelectorAll('[data-carousel-thumb]'));
@@ -913,6 +912,28 @@
       badge.className = 'social-proof-user__badge';
       badge.textContent = user.dataset.prevLabel || '前回も一緒！';
       meta.appendChild(badge);
+    });
+
+    const keepButton = document.querySelector('[data-keep-button]');
+    const keepIcon = document.querySelector('[data-keep-icon]');
+    const toast = document.querySelector('[data-toast]');
+    let toastTimer;
+
+    function showToast(message) {
+      if (!toast) return;
+      toast.textContent = message;
+      toast.classList.add('is-visible');
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => {
+        toast.classList.remove('is-visible');
+      }, 2400);
+    }
+
+    keepButton?.addEventListener('click', () => {
+      const isActive = keepButton.classList.toggle('is-active');
+      keepButton.setAttribute('aria-label', isActive ? 'キープ済みのイベント' : 'このイベントをキープ');
+      if (keepIcon) keepIcon.src = isActive ? keepButton.dataset.iconActive : keepButton.dataset.iconDefault;
+      showToast(isActive ? 'イベントをキープに追加しました' : 'イベントのキープを解除しました');
     });
 
     function setCarouselImage(index) {
