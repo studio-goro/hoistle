@@ -12,7 +12,7 @@
   <link rel="stylesheet" href="../design-system/design-system-example-components-html-main/src/components/form-control-label/form-control-label.css">
   <link rel="stylesheet" href="../design-system/design-system-example-components-html-main/src/components/input-text/input-text.css">
   <link rel="stylesheet" href="../design-system/design-system-example-components-html-main/src/components/checkbox/checkbox.css">
-  <link rel="stylesheet" href="prototype.css">
+  <link rel="stylesheet" href="./prototype.css">
   <style>
     body {
       color: var(--color-neutral-solid-gray-800);
@@ -37,10 +37,13 @@
       align-items: center;
       justify-content: center;
       color: var(--color-neutral-solid-gray-500);
+      overflow: hidden;
     }
-    .lost-detail-card__image svg {
-      width: 88px;
-      height: 88px;
+    .lost-detail-card__image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
     }
     .lost-detail-card__title {
       margin: 0;
@@ -122,7 +125,7 @@
 </head>
 <body>
   <header class="nav-bar">
-    <a class="nav-back" href="忘れ物一覧.html" aria-label="忘れ物一覧へ戻る">
+    <a class="nav-back" href="./忘れ物一覧.html" aria-label="忘れ物一覧へ戻る">
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
         <polyline points="15 18 9 12 15 6"/>
       </svg>
@@ -135,11 +138,11 @@
   <main class="main">
     <section class="lost-detail-card" aria-labelledby="lost-item-title">
       <div class="lost-detail-card__image" aria-hidden="true">
-        <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="8" stroke="currentColor" stroke-width="1.8"/><path d="M4.8 9h14.4M4.8 15h14.4M12 4c2.2 2.2 3.2 4.8 3.2 8s-1 5.8-3.2 8M12 4C9.8 6.2 8.8 8.8 8.8 12s1 5.8 3.2 8" stroke="currentColor" stroke-width="1.4"/></svg>
+        <img src="../material/screen/忘れ物01.png" alt="">
       </div>
       <div>
-        <h2 class="lost-detail-card__title" id="lost-item-title">バスケットボール（Spalding）</h2>
-        <p class="lost-detail-card__meta">保管期限：2026年6月10日まで<br>発見場所：高津スポーツセンター 入口横</p>
+        <h2 class="lost-detail-card__title" id="lost-item-title">シューズ</h2>
+        <p class="lost-detail-card__meta">保管期限：2026/6/10まで<br>発見場所：スポーツセンター 入口横</p>
       </div>
       <p class="lost-detail-card__notice">返送は着払いです。入力内容をスタッフが確認後、順次発送手続きを行います。</p>
     </section>
@@ -204,9 +207,9 @@
   <script>
     document.getElementById('return-form').addEventListener('submit', function(event) {
       event.preventDefault();
-      window.location.href = '参加者専用_エンジョイ-開催後.html?lostItem=completed';
+      window.location.href = './参加者専用_エンジョイ-開催後.html?lostItem=completed';
     });
   </script>
-  <script src="prototype-map.js"></script>
+  <script src="./prototype-map.js"></script>
 </body>
 </html>

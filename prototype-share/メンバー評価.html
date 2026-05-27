@@ -10,7 +10,7 @@
   <link rel="stylesheet" href="../design-system/design-system-example-components-html-main/src/global.css">
   <link rel="stylesheet" href="../design-system/design-system-example-components-html-main/src/components/button/button.css">
   <link rel="stylesheet" href="../design-system/design-system-example-components-html-main/src/components/chip-label/chip-label.css">
-  <link rel="stylesheet" href="prototype.css">
+  <link rel="stylesheet" href="./prototype.css">
   <style>
     body {
       --color-primitive-blue-50: var(--color-neutral-solid-gray-50);
@@ -234,10 +234,23 @@
       text-align: left;
       font: inherit;
     }
-    .follow-btn.dads-button {
-      margin-left: auto;
-      flex-shrink: 0;
-      border-radius: 999px;
+    .nav-skip {
+      min-width: 44px;
+      background: none;
+      border: none;
+      padding: 4px 0;
+      color: var(--color-neutral-solid-gray-700);
+      cursor: pointer;
+      font: inherit;
+      font-size: 14px;
+      line-height: 1.5;
+      text-align: right;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+    .nav-skip.is-hidden {
+      display: block;
+      visibility: hidden;
     }
     .profile-sheet-profile {
       display: flex;
@@ -275,33 +288,19 @@
       color: var(--color-neutral-solid-gray-500);
       line-height: 1.6;
     }
-    .survey-skip {
-      text-align: center;
-    }
-    .survey-skip__btn {
-      background: none;
-      border: none;
-      padding: 8px;
-      cursor: pointer;
-      font: inherit;
-      font-size: 13px;
-      color: var(--color-neutral-solid-gray-500);
-      text-decoration: underline;
-      text-underline-offset: 3px;
-    }
   </style>
 </head>
 <body>
-  <script src="auth.js"></script>
+  <script src="./auth.js"></script>
 
   <div class="nav-bar">
-    <a class="nav-back" id="close-link" href="参加者専用_エンジョイ-開催後.html" aria-label="閉じる">
+    <a class="nav-back" id="close-link" href="./参加者専用_エンジョイ-開催後.html" aria-label="閉じる">
       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
         <path d="M6 6l12 12M18 6 6 18" stroke-linecap="round"/>
       </svg>
     </a>
     <p class="nav-title" id="screen-title">メンバーを評価</p>
-    <div class="nav-spacer"></div>
+    <button class="nav-skip is-hidden" type="button" id="skip-survey" aria-hidden="true" tabindex="-1">スキップ</button>
   </div>
 
   <main class="main">
@@ -324,7 +323,6 @@
                 <p class="member-evaluation__meta">チームA · 背番号7 · 今日一緒にプレー</p>
               </div>
             </button>
-            <button class="dads-button follow-btn" data-size="sm" data-type="outline" type="button">フォロー</button>
           </div>
           <div class="rating-groups">
             <div class="rating-group">
@@ -354,7 +352,6 @@
                 <p class="member-evaluation__meta">チームB · 背番号12 · 試合で対戦</p>
               </div>
             </button>
-            <button class="dads-button follow-btn" data-size="sm" data-type="outline" type="button">フォロー</button>
           </div>
           <div class="rating-groups">
             <div class="rating-group">
@@ -384,7 +381,6 @@
                 <p class="member-evaluation__meta">チームC · 背番号23 · 試合で対戦</p>
               </div>
             </button>
-            <button class="dads-button follow-btn" data-size="sm" data-type="outline" type="button">フォロー</button>
           </div>
           <div class="rating-groups">
             <div class="rating-group">
@@ -429,10 +425,6 @@
           <textarea class="survey-textarea" aria-label="改善してほしいこと" placeholder="例：チーム替えの回数をもう少し増やしてほしい"></textarea>
         </div>
       </section>
-
-      <div class="survey-skip">
-        <button class="survey-skip__btn" type="button" id="skip-survey">このアンケートをスキップ</button>
-      </div>
     </div>
   </main>
 
@@ -468,7 +460,7 @@
 
   <script>
     var params = new URLSearchParams(window.location.search);
-    var returnUrl = params.get('return') || '参加者専用_エンジョイ-開催後.html';
+    var returnUrl = params.get('return') || './参加者専用_エンジョイ-開催後.html';
     var currentStep = 'member';
     document.getElementById('close-link').href = returnUrl;
     var screenTitle = document.getElementById('screen-title');
@@ -477,6 +469,7 @@
     var primaryAction = document.getElementById('primary-action');
     var backAction = document.getElementById('back-action');
     var footerActions = document.getElementById('footer-actions');
+    var skipSurvey = document.getElementById('skip-survey');
 
     function showSurveyStep() {
       currentStep = 'survey';
@@ -485,6 +478,9 @@
       screenTitle.textContent = 'アンケート';
       primaryAction.textContent = 'アンケートを送信する';
       backAction.hidden = false;
+      skipSurvey.classList.remove('is-hidden');
+      skipSurvey.removeAttribute('aria-hidden');
+      skipSurvey.removeAttribute('tabindex');
       footerActions.classList.add('is-survey');
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
@@ -496,6 +492,9 @@
       screenTitle.textContent = 'メンバーを評価';
       primaryAction.textContent = '次へ';
       backAction.hidden = true;
+      skipSurvey.classList.add('is-hidden');
+      skipSurvey.setAttribute('aria-hidden', 'true');
+      skipSurvey.setAttribute('tabindex', '-1');
       footerActions.classList.remove('is-survey');
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
@@ -523,7 +522,7 @@
 
     backAction.addEventListener('click', showMemberStep);
 
-    document.getElementById('skip-survey').addEventListener('click', completeFlow);
+    skipSurvey.addEventListener('click', completeFlow);
 
     var memberData = [
       { avatar: '../material/user-icon/Toshinari.Asahi_旭俊成.png', name: '旭 俊成', meta: 'チームA · 背番号7 · 今日一緒にプレー' },
@@ -554,6 +553,6 @@
       if (e.target === profileSheet) profileSheet.close();
     });
   </script>
-  <script src="prototype-map.js"></script>
+  <script src="./prototype-map.js"></script>
 </body>
 </html>
