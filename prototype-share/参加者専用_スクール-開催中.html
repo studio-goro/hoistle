@@ -69,44 +69,273 @@
     .participant-teams .participant-avatars { flex-wrap: nowrap; overflow-x: auto; gap: 8px; }
     .participant-teams .participant-avatar { width: 40px; height: 40px; box-shadow: none; outline: 1px solid var(--color-neutral-solid-gray-200); outline-offset: -1px; }
     .member-review-link {
-      margin-top: 14px;
-      padding: 16px 18px;
-      border-radius: 12px;
-      background: var(--color-neutral-solid-gray-50);
-      border: 1px solid var(--color-neutral-solid-gray-100);
+      margin-top: 12px;
+      padding: 12px 14px;
+      border-radius: 10px;
+      background: var(--color-neutral-white);
+      border: 1px solid var(--color-neutral-solid-gray-200);
       color: inherit;
       text-decoration: none;
       display: flex;
-      flex-direction: column;
       align-items: center;
-      gap: 6px;
+      justify-content: space-between;
+      gap: 12px;
     }
     .member-review-link__label {
       color: var(--color-neutral-solid-gray-600);
-      font-size: 12px;
-      font-weight: 700;
-      line-height: 1;
-      letter-spacing: 0.05em;
-      text-align: center;
-      text-transform: uppercase;
+      font-size: 13px;
+      font-weight: 500;
+      line-height: 1.55;
+      text-align: left;
       margin: 0;
+      flex: 1;
+      min-width: 0;
     }
     .member-review-link__action {
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      gap: 8px;
+      gap: 6px;
       color: var(--color-neutral-black);
-      font-size: 18px;
+      font-size: 14px;
       font-weight: 700;
       line-height: 1.3;
-      text-align: center;
+      text-align: right;
+      white-space: nowrap;
+      flex-shrink: 0;
+      min-height: 36px;
+      padding: 0 12px;
+      border-radius: 999px;
+      border: 1.5px solid var(--color-neutral-black);
+      background: var(--color-neutral-white);
     }
     .member-review-link__icon {
       width: 15px;
       height: 15px;
       flex-shrink: 0;
       color: var(--color-neutral-black);
+    }
+    .event-survey-card {
+      margin: 16px 16px 0;
+      padding: 18px;
+      border-radius: 16px;
+      background: var(--color-neutral-white);
+      border: 1px solid var(--color-neutral-solid-gray-200);
+      box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+    .event-survey-card__eyebrow {
+      margin: 0 0 6px;
+      color: var(--color-neutral-solid-gray-500);
+      font-size: 12px;
+      font-weight: 700;
+      line-height: 1;
+    }
+    .event-survey-card__title {
+      margin: 0;
+      color: var(--color-neutral-solid-gray-900);
+      font-size: 18px;
+      font-weight: 700;
+      line-height: 1.45;
+    }
+    .event-survey-card__text {
+      margin: 4px 0 0;
+      color: var(--color-neutral-solid-gray-600);
+      font-size: 13px;
+      font-weight: 500;
+      line-height: 1.6;
+    }
+    .event-survey-card__action {
+      width: 100%;
+      border: 0;
+      border-radius: 12px;
+      padding: 13px 14px;
+      background: var(--color-neutral-solid-gray-900);
+      color: var(--color-neutral-white);
+      font: inherit;
+      font-size: 15px;
+      font-weight: 700;
+      line-height: 1.4;
+      cursor: pointer;
+    }
+    .event-survey-card__complete {
+      display: none;
+      align-items: center;
+      gap: 8px;
+      color: var(--color-neutral-solid-gray-800);
+      font-size: 16px;
+      font-weight: 700;
+      line-height: 1.4;
+    }
+    .event-survey-card.is-complete {
+      display: none;
+    }
+    .event-survey-card.is-complete .event-survey-stars,
+    .event-survey-card.is-complete .event-survey-card__action {
+      display: none;
+    }
+    .event-survey-card.is-complete .event-survey-card__complete {
+      display: inline-flex;
+    }
+    .event-survey-stars {
+      display: inline-flex;
+      gap: 6px;
+      align-items: center;
+    }
+    .event-survey-star {
+      width: 42px;
+      height: 42px;
+      border: 0;
+      border-radius: 10px;
+      background: var(--color-neutral-solid-gray-50);
+      color: var(--color-neutral-solid-gray-300);
+      font: inherit;
+      font-size: 30px;
+      line-height: 1;
+      cursor: pointer;
+      transition: background 0.16s ease, color 0.16s ease, transform 0.16s ease;
+    }
+    .event-survey-star.is-selected,
+    .event-survey-star.is-filled {
+      color: var(--color-neutral-solid-gray-900);
+      background: var(--color-neutral-solid-gray-100);
+    }
+    .event-survey-star:active {
+      transform: scale(0.94);
+    }
+    .event-survey-star:disabled {
+      cursor: wait;
+      opacity: 0.64;
+    }
+    .event-survey-modal {
+      position: fixed;
+      inset: 0;
+      width: 342px;
+      margin: auto;
+      height: fit-content;
+      border: 0;
+      border-radius: 20px;
+      padding: 0;
+      background: var(--color-neutral-white);
+      color: var(--color-neutral-solid-gray-900);
+      box-shadow: 0 24px 56px rgba(0,0,0,0.24);
+    }
+    .event-survey-modal::backdrop {
+      background: rgba(0,0,0,0.48);
+    }
+    .event-survey-modal:not([open]) {
+      display: none;
+    }
+    .event-survey-modal__header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 22px 20px 8px;
+    }
+    .event-survey-modal__title {
+      margin: 0;
+      font-size: 22px;
+      font-weight: 700;
+      line-height: 1.35;
+    }
+    .event-survey-modal__subtitle {
+      margin: 6px 0 0;
+      color: var(--color-neutral-solid-gray-600);
+      font-size: 14px;
+      font-weight: 500;
+      line-height: 1.6;
+    }
+    .event-survey-modal__close {
+      width: 36px;
+      height: 36px;
+      border: 0;
+      border-radius: 50%;
+      background: var(--color-neutral-solid-gray-100);
+      color: var(--color-neutral-solid-gray-700);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+    .event-survey-modal__body {
+      padding: 10px 20px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+    .event-survey-modal__stars {
+      justify-content: center;
+      padding: 4px 0 2px;
+    }
+    .event-survey-extra {
+      display: none;
+      flex-direction: column;
+      gap: 18px;
+      padding-top: 18px;
+      border-top: 1px solid var(--color-neutral-solid-gray-200);
+    }
+    .event-survey-modal.has-rating .event-survey-extra {
+      display: flex;
+    }
+    .event-survey-question {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .event-survey-question__title {
+      margin: 0;
+      font-size: 15px;
+      font-weight: 700;
+      line-height: 1.5;
+      color: var(--color-neutral-solid-gray-900);
+    }
+    .event-survey-options {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .event-survey-option {
+      border: 1px solid var(--color-neutral-solid-gray-300);
+      border-radius: 999px;
+      padding: 8px 12px;
+      background: var(--color-neutral-white);
+      color: var(--color-neutral-solid-gray-800);
+      font: inherit;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    .event-survey-option[aria-pressed="true"] {
+      background: var(--color-neutral-solid-gray-900);
+      border-color: var(--color-neutral-solid-gray-900);
+      color: var(--color-neutral-white);
+    }
+    .event-survey-textarea {
+      width: 100%;
+      min-height: 104px;
+      padding: 12px 14px;
+      border: 1.5px solid var(--color-neutral-solid-gray-300);
+      border-radius: 10px;
+      background: var(--color-neutral-white);
+      color: var(--color-neutral-solid-gray-800);
+      font: inherit;
+      line-height: 1.6;
+      resize: vertical;
+      box-sizing: border-box;
+    }
+    .event-survey-modal__actions {
+      display: flex;
+      gap: 10px;
+    }
+    .event-survey-modal__actions .dads-button {
+      width: 100%;
+      min-width: 0;
+      border-radius: 10px;
+      white-space: nowrap;
     }
     .rating-complete-toast {
       position: fixed;
@@ -333,6 +562,7 @@
   <!-- フィルターチップ -->
   <div class="filter-chips-wrap">
     <div class="filter-chips-scroll" role="navigation" aria-label="セクション">
+      <button class="filter-chip" data-target="event-survey-card" id="chip-survey">アンケート</button>
       <button class="filter-chip filter-chip--active" data-target="section-participants">参加者</button>
       <button class="filter-chip" data-target="section-venue">開催時間・場所</button>
       <button class="filter-chip" data-target="section-equipment">設備・持ち物</button>
@@ -345,6 +575,17 @@
 
   <!-- コンテンツ -->
   <main class="content">
+
+    <section class="event-survey-card" id="event-survey-card" aria-labelledby="event-survey-card-title">
+      <div>
+        <p class="event-survey-card__eyebrow">イベントアンケート</p>
+        <h2 class="event-survey-card__title" id="event-survey-card-title" data-survey-card-title>今日のイベントはいかがでしたか？</h2>
+        <p class="event-survey-card__text" data-survey-card-text>星をタップするだけで回答できます。</p>
+      </div>
+      <div class="event-survey-stars" data-survey-stars="card" role="radiogroup" aria-label="今日のイベント満足度"></div>
+      <button class="event-survey-card__action" type="button" data-survey-card-action>感想を追加する</button>
+      <div class="event-survey-card__complete" data-survey-card-complete>✓ 回答ありがとうございました！</div>
+    </section>
 
     <!-- 参加者エリア -->
     <div class="participant-section" id="section-participants">
@@ -372,13 +613,11 @@
           <a href="./ユーザープロフィール.html" class="participant-avatar"><img src="../material/user-icon/Akiko.Nagashima_長島明子.png" alt="長島明子" style="width:100%;height:100%;object-fit:cover;display:block;"></a>
         </div>
       </div>
-      <a class="member-review-link" href="./メンバー評価.html?return=.%2F%E5%8F%82%E5%8A%A0%E8%80%85%E5%B0%82%E7%94%A8_%E3%82%B9%E3%82%AF%E3%83%BC%E3%83%AB-%E9%96%8B%E5%82%AC%E4%B8%AD.html" aria-label="メンバー評価とアンケートへ進む">
-        <p class="member-review-link__label">今日のレッスンはどうでしたか？</p>
+      <a class="member-review-link" href="./メンバー評価.html?survey=skip&amp;return=.%2F%E5%8F%82%E5%8A%A0%E8%80%85%E5%B0%82%E7%94%A8_%E3%82%B9%E3%82%AF%E3%83%BC%E3%83%AB-%E9%96%8B%E5%82%AC%E4%B8%AD.html" aria-label="ナイスを送る">
+        <p class="member-review-link__label">一緒にプレイした人に<br>感謝を気軽に伝えれます</p>
         <span class="member-review-link__action">
-          メンバーレビューに回答する
-          <svg class="member-review-link__icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-            <path d="M5 12h13m-5-5 5 5-5 5" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
+          ナイスを送る
+          <svg class="member-review-link__icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h13m-5-5 5 5-5 5" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </span>
       </a>
     </div>
@@ -576,107 +815,99 @@
       <h2 class="section-title">参加者の傾向</h2>
       <div class="participant-trends">
         <div class="trend-block">
-          <p class="trend-block__label">参加者のプレイスタイル・価値観の傾向</p>
-          <div class="trend-radar" aria-label="コミュ力、連携度、エンジョイ度、熱量、柔軟性の傾向">
-            <svg viewBox="0 0 320 320" role="img" aria-labelledby="trend-radar-title">
-              <title id="trend-radar-title">参加者のプレイスタイル傾向</title>
-              <polygon class="trend-radar__grid" points="160,32 281,120 235,264 85,264 39,120"/>
-              <polygon class="trend-radar__grid" points="160,64 251,130 217,238 103,238 69,130"/>
-              <polygon class="trend-radar__grid" points="160,96 221,141 198,211 122,211 99,141"/>
-              <polygon class="trend-radar__grid" points="160,128 190,152 179,185 141,185 130,152"/>
-              <polygon class="trend-radar__shape" points="160,48 245,130 205,245 110,235 74,128"/>
-              <text x="160" y="22" text-anchor="middle">コミュ力</text>
-              <text x="292" y="124" text-anchor="start">連携度</text>
-              <text x="236" y="292" text-anchor="start">エンジョイ度</text>
-              <text x="70" y="292" text-anchor="middle">熱量</text>
-              <text x="24" y="124" text-anchor="middle">柔軟性</text>
-            </svg>
-          </div>
-          <div class="trend-callouts">
-            <div class="trend-callout">
-              <p class="trend-callout__title">エンジョイ度が高め</p>
-              <p class="trend-callout__text">上達を楽しみながら参加する人が多く、和やかな雰囲気です。</p>
+          <p class="trend-block__label">参加者タイプ（見え方１）</p>
+          <div class="event-vibe participant-type-motion">
+            <div class="event-vibe-card">
+              <div class="event-vibe-card__character">
+                <img src="../material/screen/16タイプ診断結果.png" alt="ワイワイ連携タイプのキャラクター">
+              </div>
+              <div class="event-vibe-card__body">
+                <h3 class="event-vibe-card__title">ワイワイ連携タイプ</h3>
+                <ul class="event-vibe-card__points">
+                  <li>声をかけ合いながら楽しめる</li>
+                  <li>初参加でも輪に入りやすい</li>
+                  <li>自分のペースで参加しやすい</li>
+                </ul>
+              </div>
             </div>
-            <div class="trend-callout">
-              <p class="trend-callout__title">柔軟性が高め</p>
-              <p class="trend-callout__text">初心者が多く、コーチの指示を素直に吸収しようとする姿勢が見られます。</p>
+
+            <div class="event-vibe-axes" aria-label="イベントの雰囲気の目安">
+              <div class="event-vibe-axis" style="--vibe-position: 34%;">
+                <span class="event-vibe-axis__label">にぎやか</span>
+                <span class="event-vibe-axis__track" aria-hidden="true"><span class="event-vibe-axis__dot"></span></span>
+                <span class="event-vibe-axis__label event-vibe-axis__label--right">落ち着き</span>
+              </div>
+              <div class="event-vibe-axis" style="--vibe-position: 38%;">
+                <span class="event-vibe-axis__label">連携重視</span>
+                <span class="event-vibe-axis__track" aria-hidden="true"><span class="event-vibe-axis__dot"></span></span>
+                <span class="event-vibe-axis__label event-vibe-axis__label--right">自由プレー</span>
+              </div>
+              <div class="event-vibe-axis" style="--vibe-position: 24%;">
+                <span class="event-vibe-axis__label">エンジョイ</span>
+                <span class="event-vibe-axis__track" aria-hidden="true"><span class="event-vibe-axis__dot"></span></span>
+                <span class="event-vibe-axis__label event-vibe-axis__label--right">勝負志向</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="trend-block">
+          <p class="trend-block__label">参加者タイプ（見え方２）</p>
+          <div class="mbti-vibe participant-type-motion">
+            <ul class="mbti-vibe__summary-points">
+              <li>みんなで楽しむタイプの参加者が多い</li>
+              <li>声をかけ合う雰囲気がある</li>
+              <li>落ち着いて参加しやすい</li>
+            </ul>
+
+            <div class="mbti-vibe__bar" aria-label="参加者タイプのざっくり分布。領事25%、提唱者20%、主人公15%、その他40%">
+              <span class="mbti-vibe__segment mbti-vibe__segment--esfj" style="--mbti-width: 25%;"></span>
+              <span class="mbti-vibe__segment mbti-vibe__segment--infj" style="--mbti-width: 20%;"></span>
+              <span class="mbti-vibe__segment mbti-vibe__segment--enfj" style="--mbti-width: 15%;"></span>
+              <span class="mbti-vibe__segment mbti-vibe__segment--other" style="--mbti-width: 40%;"></span>
+            </div>
+
+            <div class="mbti-vibe__types">
+              <div class="mbti-vibe-type">
+                <span class="mbti-vibe-type__image"><img src="../material/screen/16タイプ診断結果_領事.png" alt="領事タイプの画像"></span>
+                <div><p class="mbti-vibe-type__name">領事 <span>ESFJ</span><button class="mbti-vibe-type__help" type="button" aria-expanded="false" aria-controls="school-live-mbti-note-esfj">?</button></p><p class="mbti-vibe-type__note" id="school-live-mbti-note-esfj" hidden>声かけや場づくりが自然な人が多め</p></div>
+                <span class="mbti-vibe-type__ratio">25%</span>
+              </div>
+              <div class="mbti-vibe-type">
+                <span class="mbti-vibe-type__image"><img src="../material/screen/16タイプ診断結果_提唱者.png" alt="提唱者タイプの画像"></span>
+                <div><p class="mbti-vibe-type__name">提唱者 <span>INFJ</span><button class="mbti-vibe-type__help" type="button" aria-expanded="false" aria-controls="school-live-mbti-note-infj">?</button></p><p class="mbti-vibe-type__note" id="school-live-mbti-note-infj" hidden>周りを見ながら落ち着いて楽しむ人もいます</p></div>
+                <span class="mbti-vibe-type__ratio">20%</span>
+              </div>
+              <div class="mbti-vibe-type">
+                <span class="mbti-vibe-type__image"><img src="../material/screen/16タイプ診断結果_主人公.png" alt="主人公タイプの画像"></span>
+                <div><p class="mbti-vibe-type__name">主人公 <span>ENFJ</span><button class="mbti-vibe-type__help" type="button" aria-expanded="false" aria-controls="school-live-mbti-note-enfj">?</button></p><p class="mbti-vibe-type__note" id="school-live-mbti-note-enfj" hidden>チームで盛り上がるプレーを楽しみやすい</p></div>
+                <span class="mbti-vibe-type__ratio">15%</span>
+              </div>
+              <div class="mbti-vibe-type mbti-vibe-type--other">
+                <span class="mbti-vibe-type__image mbti-vibe-type__image--other" aria-hidden="true">他</span>
+                <div><p class="mbti-vibe-type__name">その他<button class="mbti-vibe-type__help" type="button" aria-expanded="false" aria-controls="school-live-mbti-note-other">?</button></p><p class="mbti-vibe-type__note" id="school-live-mbti-note-other" hidden>いろいろな楽しみ方の参加者がいます</p></div>
+                <span class="mbti-vibe-type__ratio">40%</span>
+              </div>
             </div>
           </div>
         </div>
 
         <div class="trend-block">
           <p class="trend-block__label">年齢層</p>
-          <div class="age-trend">
-            <div class="age-trend__track" aria-hidden="true"></div>
-            <div class="age-trend__items">
-              <div class="age-item">
-                <span class="age-item__dot age-item__dot--active"></span>
-                <span class="age-item__label age-item__label--active">10代</span>
-              </div>
-              <div class="age-item">
-                <span class="age-item__dot age-item__dot--active"></span>
-                <span class="age-item__label age-item__label--active">20代</span>
-              </div>
-              <div class="age-item">
-                <span class="age-item__dot"></span>
-                <span class="age-item__label">30代</span>
-              </div>
-              <div class="age-item">
-                <span class="age-item__dot"></span>
-                <span class="age-item__label">40代</span>
-              </div>
-              <div class="age-item">
-                <span class="age-item__dot"></span>
-                <span class="age-item__label">50代</span>
-              </div>
-              <div class="age-item">
-                <span class="age-item__dot"></span>
-                <span class="age-item__label">60代</span>
-              </div>
-              <div class="age-item">
-                <span class="age-item__dot"></span>
-                <span class="age-item__label">70代〜</span>
-              </div>
-            </div>
-          </div>
+          <div class="age-trend"><div class="age-trend__track" aria-hidden="true"></div><div class="age-trend__items">
+            <div class="age-item"><span class="age-item__dot"></span><span class="age-item__label">10代</span></div>
+            <div class="age-item"><span class="age-item__dot age-item__dot--active"></span><span class="age-item__label age-item__label--active">20代</span></div>
+            <div class="age-item"><span class="age-item__dot age-item__dot--active"></span><span class="age-item__label age-item__label--active">30代</span></div>
+            <div class="age-item"><span class="age-item__dot"></span><span class="age-item__label">40代</span></div>
+            <div class="age-item"><span class="age-item__dot"></span><span class="age-item__label">50代</span></div>
+            <div class="age-item"><span class="age-item__dot"></span><span class="age-item__label">60代</span></div>
+            <div class="age-item"><span class="age-item__dot"></span><span class="age-item__label">70代〜</span></div>
+          </div></div>
         </div>
 
-        <div class="trend-block">
-          <p class="trend-block__label">男女比</p>
-          <div class="gender-ratio" aria-label="男女比：ほぼ同数">
-            <span class="gender-ratio__label">男性</span>
-            <span class="gender-ratio__track">
-              <span class="gender-ratio__dot" style="left:50%"></span>
-            </span>
-            <span class="gender-ratio__label">女性</span>
-          </div>
-        </div>
+        <div class="trend-block"><p class="trend-block__label">男女比</p><div class="gender-ratio" aria-label="男性寄りの参加傾向"><span class="gender-ratio__label">男性</span><span class="gender-ratio__track"><span class="gender-ratio__dot"></span></span><span class="gender-ratio__label">女性</span></div></div>
 
-        <div class="trend-block">
-          <p class="trend-block__label">レベル分布</p>
-          <div class="level-distribution">
-            <div class="level-donut" role="img" aria-label="初心者70%、中級者20%、経験者10%">
-              <span class="level-donut__center">初心者<br>多め</span>
-            </div>
-            <div class="level-legend">
-              <div class="level-legend__row">
-                <span class="level-legend__dot level-legend__dot--beginner"></span>
-                <span class="level-legend__label">初心者</span>
-                <span class="level-legend__value">70%</span>
-              </div>
-              <div class="level-legend__row">
-                <span class="level-legend__dot level-legend__dot--middle"></span>
-                <span class="level-legend__label">中級者</span>
-                <span class="level-legend__value">20%</span>
-              </div>
-              <div class="level-legend__row">
-                <span class="level-legend__dot level-legend__dot--experienced"></span>
-                <span class="level-legend__label">経験者</span>
-                <span class="level-legend__value">10%</span>
-              </div>
-            </div>
-          </div>
-        </div>
+        <div class="trend-block"><p class="trend-block__label">レベル分布</p><div class="level-volume-card" aria-label="ユーザーレベル分布。Lv.1からLv.5までの相対的な傾向。Lv.2が初心者多めです。"><div class="level-volume-chart"><div class="level-volume-chart__body"><div class="level-volume-chart__grid" aria-hidden="true"><span></span><span></span><span></span><span></span></div><div class="level-volume-chart__plot"><div class="level-volume-column"><div class="level-volume-column__bar" style="--level-volume-height: 64px;" aria-hidden="true"></div><span class="level-volume-column__label">初心者<br>Lv.1</span></div><div class="level-volume-column level-volume-column--focus"><div class="level-volume-tooltip">初心者多め!</div><div class="level-volume-column__bar" style="--level-volume-height: 132px;" aria-hidden="true"></div><span class="level-volume-column__label">Lv.2</span></div><div class="level-volume-column"><div class="level-volume-column__bar" style="--level-volume-height: 104px;" aria-hidden="true"></div><span class="level-volume-column__label">Lv.3</span></div><div class="level-volume-column"><div class="level-volume-column__bar" style="--level-volume-height: 85px;" aria-hidden="true"></div><span class="level-volume-column__label">Lv.4</span></div><div class="level-volume-column"><div class="level-volume-column__bar" style="--level-volume-height: 74px;" aria-hidden="true"></div><span class="level-volume-column__label">ガチ<br>Lv.5</span></div></div></div></div></div></div>
       </div>
     </section>
 
@@ -931,24 +1162,279 @@
     </section>
   </dialog>
 
+  <!-- イベントアンケートモーダル -->
+  <dialog class="event-survey-modal" id="event-survey-modal" aria-labelledby="event-survey-modal-title">
+    <div class="event-survey-modal__header">
+      <div>
+        <h2 class="event-survey-modal__title" id="event-survey-modal-title" data-survey-modal-title>今日はありがとうございました！</h2>
+        <p class="event-survey-modal__subtitle" data-survey-modal-subtitle>今日のイベントはいかがでしたか？</p>
+      </div>
+      <button class="event-survey-modal__close" id="event-survey-modal-close" type="button" aria-label="閉じる">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M18 6L6 18M6 6L18 18"/></svg>
+      </button>
+    </div>
+    <div class="event-survey-modal__body">
+      <div class="event-survey-stars event-survey-modal__stars" data-survey-stars="modal" role="radiogroup" aria-label="今日のイベント満足度"></div>
+      <div class="event-survey-extra" data-survey-extra>
+        <div class="event-survey-question">
+          <p class="event-survey-question__title">スタッフの対応はいかがでしたか？</p>
+          <div class="event-survey-options" role="group" aria-label="スタッフの対応">
+            <button class="event-survey-option" type="button" data-survey-option="staff" aria-pressed="false">よかった</button>
+            <button class="event-survey-option" type="button" data-survey-option="staff" aria-pressed="false">普通</button>
+            <button class="event-survey-option" type="button" data-survey-option="staff" aria-pressed="false">気になった</button>
+          </div>
+        </div>
+        <div class="event-survey-question">
+          <p class="event-survey-question__title">また参加したいですか？</p>
+          <div class="event-survey-options" role="group" aria-label="また参加したいか">
+            <button class="event-survey-option" type="button" data-survey-option="rejoin" aria-pressed="false">また参加したい</button>
+            <button class="event-survey-option" type="button" data-survey-option="rejoin" aria-pressed="false">都合が合えば参加したい</button>
+            <button class="event-survey-option" type="button" data-survey-option="rejoin" aria-pressed="false">今回のみ</button>
+          </div>
+        </div>
+        <div class="event-survey-question">
+          <label class="event-survey-question__title" for="event-survey-comment">改善してほしい点があれば教えてください</label>
+          <textarea class="event-survey-textarea" id="event-survey-comment" data-survey-comment placeholder="未入力でも送信できます"></textarea>
+        </div>
+        <div class="event-survey-modal__actions">
+          <button class="dads-button" data-size="md" data-type="solid-fill" type="button" data-survey-submit>送信</button>
+        </div>
+      </div>
+    </div>
+  </dialog>
   <div class="rating-complete-toast" id="rating-complete-toast" role="status" aria-live="polite" aria-atomic="true">
     <svg class="rating-complete-toast__icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
       <circle cx="12" cy="12" r="10" fill="currentColor" opacity="0.22"/>
       <path d="m7 12.2 3.1 3.1L17.4 8" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
     </svg>
-    <p class="rating-complete-toast__text">メンバー評価とアンケートを送信しました</p>
+    <p class="rating-complete-toast__text">ナイスを送りました</p>
   </div>
 
   <script>
     (function () {
       const params = new URLSearchParams(window.location.search);
-      if (params.get('rating') !== 'completed') return;
+      const isRatingCompleted = params.get('rating') === 'completed';
+      const isLostItemCompleted = params.get('lostItem') === 'completed';
+      const isMemberReviewCompleted = params.get('memberReview') === 'completed';
+      const isThanksCompleted = params.get('thanks') === 'completed';
+      if (!isRatingCompleted && !isLostItemCompleted && !isMemberReviewCompleted && !isThanksCompleted) return;
       const toast = document.getElementById('rating-complete-toast');
+      const toastText = toast.querySelector('.rating-complete-toast__text');
+      toastText.textContent = isLostItemCompleted
+        ? '返送依頼を送信しました。担当スタッフが確認します'
+        : isThanksCompleted || isMemberReviewCompleted
+          ? 'ナイスを送りました'
+          : 'アンケートを送信しました';
       toast.classList.add('is-visible');
       params.delete('rating');
+      params.delete('lostItem');
+      params.delete('memberReview');
+      params.delete('thanks');
       const cleanUrl = window.location.pathname + (params.toString() ? '?' + params.toString() : '') + window.location.hash;
       window.history.replaceState({}, '', cleanUrl);
       setTimeout(() => toast.classList.remove('is-visible'), 2800);
+    })();
+
+    (function () {
+      const storageKeys = {
+        rating: 'whistle:event-survey:school:rating',
+        detailsSubmitted: 'whistle:event-survey:school:detailsSubmitted',
+        autoPromptDismissed: 'whistle:event-survey:school:autoPromptDismissed',
+        details: 'whistle:event-survey:school:details'
+      };
+      const card = document.getElementById('event-survey-card');
+      const cardTitle = document.querySelector('[data-survey-card-title]');
+      const cardText = document.querySelector('[data-survey-card-text]');
+      const cardAction = document.querySelector('[data-survey-card-action]');
+      const cardComplete = document.querySelector('[data-survey-card-complete]');
+      const modal = document.getElementById('event-survey-modal');
+      const modalTitle = document.querySelector('[data-survey-modal-title]');
+      const modalSubtitle = document.querySelector('[data-survey-modal-subtitle]');
+      const closeButton = document.getElementById('event-survey-modal-close');
+      const secondaryCloseButton = document.querySelector('[data-survey-close]');
+      const submitButton = document.querySelector('[data-survey-submit]');
+      const optionButtons = document.querySelectorAll('[data-survey-option]');
+      const commentInput = document.querySelector('[data-survey-comment]');
+      const toast = document.getElementById('rating-complete-toast');
+      const toastText = toast?.querySelector('.rating-complete-toast__text');
+      let rating = Number(readStorage(storageKeys.rating) || 0);
+      let detailsSubmitted = readStorage(storageKeys.detailsSubmitted) === 'true';
+      let isSavingRating = false;
+      let isSubmittingDetails = false;
+
+      function readStorage(key) {
+        try {
+          return window.localStorage.getItem(key);
+        } catch (error) {
+          return null;
+        }
+      }
+
+      function writeStorage(key, value) {
+        try {
+          window.localStorage.setItem(key, value);
+          return true;
+        } catch (error) {
+          return false;
+        }
+      }
+
+      function showToast(message) {
+        if (!toast || !toastText) return;
+        toastText.textContent = message;
+        toast.classList.add('is-visible');
+        window.setTimeout(() => toast.classList.remove('is-visible'), 2800);
+      }
+
+      function buildStars(target, selectedRating) {
+        const container = document.querySelector('[data-survey-stars="' + target + '"]');
+        if (!container) return;
+        container.innerHTML = '';
+        for (let value = 1; value <= 5; value += 1) {
+          const button = document.createElement('button');
+          button.className = 'event-survey-star';
+          button.type = 'button';
+          button.textContent = '★';
+          button.dataset.surveyRating = String(value);
+          button.setAttribute('role', 'radio');
+          button.setAttribute('aria-label', value + 'つ星');
+          button.setAttribute('aria-checked', String(selectedRating === value));
+          button.classList.toggle('is-filled', selectedRating >= value);
+          button.classList.toggle('is-selected', selectedRating === value);
+          button.disabled = isSavingRating;
+          button.addEventListener('click', () => saveRating(value, target === 'card'));
+          container.appendChild(button);
+        }
+      }
+
+      function renderSurvey() {
+        const isComplete = rating > 0 && detailsSubmitted;
+        card?.classList.toggle('is-complete', isComplete);
+        modal?.classList.toggle('has-rating', rating > 0);
+        const surveyChip = document.getElementById('chip-survey');
+        if (surveyChip) {
+          surveyChip.hidden = isComplete;
+          if (!isComplete && card) {
+            const rect = card.getBoundingClientRect();
+            const inView = rect.top < window.innerHeight && rect.bottom > 0;
+            if (inView) {
+              document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('filter-chip--active'));
+              surveyChip.classList.add('filter-chip--active');
+            }
+          }
+        }
+        buildStars('card', rating);
+        buildStars('modal', rating);
+        if (!cardTitle || !cardText || !cardAction || !cardComplete) return;
+        if (isComplete) {
+          cardTitle.textContent = 'イベントアンケート';
+          cardText.textContent = 'ご協力ありがとうございます。';
+          cardAction.hidden = true;
+          cardComplete.hidden = false;
+          return;
+        }
+        cardComplete.hidden = true;
+        if (rating > 0) {
+          cardTitle.textContent = 'イベントの感想を追加で教えてください';
+          cardText.textContent = '星は保存済みです。追加質問は任意です。';
+          cardAction.hidden = false;
+          cardAction.textContent = '追加質問に答える';
+          modalTitle.textContent = 'ありがとうございます！';
+          modalSubtitle.textContent = 'よければ、追加で感想を教えてください。';
+          return;
+        }
+        cardTitle.textContent = '今日のイベントはいかがでしたか？';
+        cardText.textContent = '星をタップするだけで回答できます。';
+        cardAction.hidden = true;
+        modalTitle.textContent = '今日はありがとうございました！';
+        modalSubtitle.textContent = '今日のイベントはいかがでしたか？';
+      }
+
+      function openSurveyModal(forceExtra) {
+        if (!modal) return;
+        modal.classList.toggle('has-rating', forceExtra || rating > 0);
+        if (typeof modal.showModal === 'function') {
+          modal.showModal();
+        } else {
+          modal.setAttribute('open', '');
+        }
+      }
+
+      function closeSurveyModal() {
+        if (!modal) return;
+        if (!rating) writeStorage(storageKeys.autoPromptDismissed, 'true');
+        if (typeof modal.close === 'function') {
+          modal.close();
+        } else {
+          modal.removeAttribute('open');
+        }
+      }
+
+      function saveRating(value, openExtraAfterSave) {
+        if (isSavingRating) return;
+        isSavingRating = true;
+        renderSurvey();
+        window.setTimeout(() => {
+          const didSave = writeStorage(storageKeys.rating, String(value));
+          isSavingRating = false;
+          if (!didSave) {
+            showToast('保存できませんでした。もう一度お試しください');
+            renderSurvey();
+            return;
+          }
+          rating = value;
+          writeStorage(storageKeys.autoPromptDismissed, 'true');
+          renderSurvey();
+          if (openExtraAfterSave) openSurveyModal(true);
+        }, 180);
+      }
+
+      optionButtons.forEach((button) => {
+        button.addEventListener('click', () => {
+          const group = button.dataset.surveyOption;
+          document.querySelectorAll('[data-survey-option="' + group + '"]').forEach((option) => {
+            option.setAttribute('aria-pressed', String(option === button));
+          });
+        });
+      });
+
+      cardAction?.addEventListener('click', () => openSurveyModal(true));
+      closeButton?.addEventListener('click', closeSurveyModal);
+      secondaryCloseButton?.addEventListener('click', closeSurveyModal);
+      modal?.addEventListener('click', (event) => {
+        if (event.target === modal) closeSurveyModal();
+      });
+      submitButton?.addEventListener('click', () => {
+        if (isSubmittingDetails) return;
+        isSubmittingDetails = true;
+        submitButton.disabled = true;
+        window.setTimeout(() => {
+          const details = {};
+          optionButtons.forEach((button) => {
+            if (button.getAttribute('aria-pressed') === 'true') {
+              details[button.dataset.surveyOption] = button.textContent.trim();
+            }
+          });
+          details.comment = commentInput?.value || '';
+          const didSaveDetails = writeStorage(storageKeys.details, JSON.stringify(details));
+          const didSaveStatus = writeStorage(storageKeys.detailsSubmitted, 'true');
+          isSubmittingDetails = false;
+          submitButton.disabled = false;
+          if (!didSaveDetails || !didSaveStatus) {
+            showToast('保存できませんでした。もう一度お試しください');
+            return;
+          }
+          detailsSubmitted = true;
+          renderSurvey();
+          closeSurveyModal();
+          showToast('回答ありがとうございます！');
+        }, 260);
+      });
+
+      renderSurvey();
+      if (!rating && readStorage(storageKeys.autoPromptDismissed) !== 'true') {
+        window.setTimeout(() => openSurveyModal(false), 500);
+      }
     })();
 
     // フィルターチップのクリック → スクロール
@@ -984,21 +1470,31 @@
       }, 2000);
     });
 
-    const trendRadars = document.querySelectorAll('.trend-radar');
+    document.querySelectorAll('.mbti-vibe-type__help[aria-controls]').forEach((button) => {
+      button.addEventListener('click', () => {
+        const note = document.getElementById(button.getAttribute('aria-controls'));
+        if (!note) return;
+        const isOpen = button.getAttribute('aria-expanded') === 'true';
+        button.setAttribute('aria-expanded', String(!isOpen));
+        note.hidden = isOpen;
+      });
+    });
+
+    const participantTypeMotions = document.querySelectorAll('.participant-type-motion');
     if ('IntersectionObserver' in window) {
-      const trendRadarObserver = new IntersectionObserver((entries) => {
+      const participantTypeObserver = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
           if (!entry.isIntersecting) return;
-          entry.target.classList.add('trend-radar--visible');
-          trendRadarObserver.unobserve(entry.target);
+          entry.target.classList.add('participant-type-motion--visible');
+          participantTypeObserver.unobserve(entry.target);
         });
-      }, { threshold: 0.35 });
-      trendRadars.forEach(radar => trendRadarObserver.observe(radar));
+      }, { threshold: 0.28, rootMargin: '0px 0px -12% 0px' });
+      participantTypeMotions.forEach(item => participantTypeObserver.observe(item));
     } else {
-      trendRadars.forEach(radar => radar.classList.add('trend-radar--visible'));
+      participantTypeMotions.forEach(item => item.classList.add('participant-type-motion--visible'));
     }
 
-    const trendGraphics = document.querySelectorAll('.age-trend, .gender-ratio, .level-distribution');
+    const trendGraphics = document.querySelectorAll('.age-trend, .gender-ratio, .level-distribution, .level-volume-card');
     if ('IntersectionObserver' in window) {
       const trendGraphicObserver = new IntersectionObserver((entries) => {
         entries.forEach(entry => {

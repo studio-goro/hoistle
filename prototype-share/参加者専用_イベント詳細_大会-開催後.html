@@ -319,30 +319,97 @@
       <h2 class="section-title">参加者の傾向</h2>
       <div class="participant-trends">
         <div class="trend-block">
-          <p class="trend-block__label">参加者のプレイスタイル・価値観の傾向</p>
-          <div class="trend-radar" aria-label="コミュ力、連携度、フェアプレー度、熱量、柔軟性の傾向">
-            <svg viewBox="0 0 320 320" role="img" aria-labelledby="trend-radar-title">
-              <title id="trend-radar-title">参加者のプレイスタイル傾向</title>
-              <polygon class="trend-radar__grid" points="160,32 281,120 235,264 85,264 39,120"/>
-              <polygon class="trend-radar__grid" points="160,64 251,130 217,238 103,238 69,130"/>
-              <polygon class="trend-radar__grid" points="160,96 221,141 198,211 122,211 99,141"/>
-              <polygon class="trend-radar__grid" points="160,128 190,152 179,185 141,185 130,152"/>
-              <polygon class="trend-radar__shape" points="160,56 256,128 216,240 100,224 64,136"/>
-              <text x="160" y="22" text-anchor="middle">コミュ力</text>
-              <text x="292" y="124" text-anchor="start">連携度</text>
-              <text x="236" y="292" text-anchor="start">フェアプレー度</text>
-              <text x="70" y="292" text-anchor="middle">熱量</text>
-              <text x="24" y="124" text-anchor="middle">柔軟性</text>
-            </svg>
-          </div>
-          <div class="trend-callouts">
-            <div class="trend-callout">
-              <p class="trend-callout__title">連携度が高め</p>
-              <p class="trend-callout__text">個人技での突破より、パス回しやチームプレイを好む人が集まっています。</p>
+          <p class="trend-block__label">参加者タイプ（見え方１）</p>
+          <div class="event-vibe participant-type-motion">
+            <div class="event-vibe-card">
+              <div class="event-vibe-card__character">
+                <img src="../material/screen/16タイプ診断結果.png" alt="ワイワイ連携タイプのキャラクター">
+              </div>
+              <div class="event-vibe-card__body">
+                <h3 class="event-vibe-card__title">ワイワイ連携タイプ</h3>
+                <ul class="event-vibe-card__points">
+                  <li>声をかけ合いながら楽しめる</li>
+                  <li>初参加でも輪に入りやすい</li>
+                  <li>自分のペースで参加しやすい</li>
+                </ul>
+              </div>
             </div>
-            <div class="trend-callout">
-              <p class="trend-callout__title">フェアプレー度が高め</p>
-              <p class="trend-callout__text">勝敗を楽しみつつ、お互いの好プレイを称え合う空気感です。</p>
+
+            <div class="event-vibe-axes" aria-label="イベントの雰囲気の目安">
+              <div class="event-vibe-axis" style="--vibe-position: 34%;">
+                <span class="event-vibe-axis__label">にぎやか</span>
+                <span class="event-vibe-axis__track" aria-hidden="true"><span class="event-vibe-axis__dot"></span></span>
+                <span class="event-vibe-axis__label event-vibe-axis__label--right">落ち着き</span>
+              </div>
+              <div class="event-vibe-axis" style="--vibe-position: 38%;">
+                <span class="event-vibe-axis__label">連携重視</span>
+                <span class="event-vibe-axis__track" aria-hidden="true"><span class="event-vibe-axis__dot"></span></span>
+                <span class="event-vibe-axis__label event-vibe-axis__label--right">自由プレー</span>
+              </div>
+              <div class="event-vibe-axis" style="--vibe-position: 24%;">
+                <span class="event-vibe-axis__label">エンジョイ</span>
+                <span class="event-vibe-axis__track" aria-hidden="true"><span class="event-vibe-axis__dot"></span></span>
+                <span class="event-vibe-axis__label event-vibe-axis__label--right">勝負志向</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="trend-block">
+          <p class="trend-block__label">参加者タイプ（見え方２）</p>
+          <div class="mbti-vibe participant-type-motion">
+            <ul class="mbti-vibe__summary-points">
+              <li>みんなで楽しむタイプの参加者が多い</li>
+              <li>声をかけ合う雰囲気がある</li>
+              <li>落ち着いて参加しやすい</li>
+            </ul>
+
+            <div class="mbti-vibe__bar" aria-label="参加者タイプのざっくり分布。領事25%、提唱者20%、主人公15%、その他40%">
+              <span class="mbti-vibe__segment mbti-vibe__segment--esfj" style="--mbti-width: 25%;"></span>
+              <span class="mbti-vibe__segment mbti-vibe__segment--infj" style="--mbti-width: 20%;"></span>
+              <span class="mbti-vibe__segment mbti-vibe__segment--enfj" style="--mbti-width: 15%;"></span>
+              <span class="mbti-vibe__segment mbti-vibe__segment--other" style="--mbti-width: 40%;"></span>
+            </div>
+
+            <div class="mbti-vibe__types">
+              <div class="mbti-vibe-type">
+                <span class="mbti-vibe-type__image">
+                  <img src="../material/screen/16タイプ診断結果_領事.png" alt="領事タイプの画像">
+                </span>
+                <div>
+                  <p class="mbti-vibe-type__name">領事 <span>ESFJ</span><button class="mbti-vibe-type__help" type="button" aria-expanded="false" aria-controls="member-tournament-detail-mbti-note-esfj">?</button></p>
+                  <p class="mbti-vibe-type__note" id="member-tournament-detail-mbti-note-esfj" hidden>声かけや場づくりが自然な人が多め</p>
+                </div>
+                <span class="mbti-vibe-type__ratio">25%</span>
+              </div>
+              <div class="mbti-vibe-type">
+                <span class="mbti-vibe-type__image">
+                  <img src="../material/screen/16タイプ診断結果_提唱者.png" alt="提唱者タイプの画像">
+                </span>
+                <div>
+                  <p class="mbti-vibe-type__name">提唱者 <span>INFJ</span><button class="mbti-vibe-type__help" type="button" aria-expanded="false" aria-controls="member-tournament-detail-mbti-note-infj">?</button></p>
+                  <p class="mbti-vibe-type__note" id="member-tournament-detail-mbti-note-infj" hidden>周りを見ながら落ち着いて楽しむ人もいます</p>
+                </div>
+                <span class="mbti-vibe-type__ratio">20%</span>
+              </div>
+              <div class="mbti-vibe-type">
+                <span class="mbti-vibe-type__image">
+                  <img src="../material/screen/16タイプ診断結果_主人公.png" alt="主人公タイプの画像">
+                </span>
+                <div>
+                  <p class="mbti-vibe-type__name">主人公 <span>ENFJ</span><button class="mbti-vibe-type__help" type="button" aria-expanded="false" aria-controls="member-tournament-detail-mbti-note-enfj">?</button></p>
+                  <p class="mbti-vibe-type__note" id="member-tournament-detail-mbti-note-enfj" hidden>チームで盛り上がるプレーを楽しみやすい</p>
+                </div>
+                <span class="mbti-vibe-type__ratio">15%</span>
+              </div>
+              <div class="mbti-vibe-type mbti-vibe-type--other">
+                <span class="mbti-vibe-type__image mbti-vibe-type__image--other" aria-hidden="true">他</span>
+                <div>
+                  <p class="mbti-vibe-type__name">その他<button class="mbti-vibe-type__help" type="button" aria-expanded="false" aria-controls="member-tournament-detail-mbti-note-other">?</button></p>
+                  <p class="mbti-vibe-type__note" id="member-tournament-detail-mbti-note-other" hidden>いろいろな楽しみ方の参加者がいます</p>
+                </div>
+                <span class="mbti-vibe-type__ratio">40%</span>
+              </div>
             </div>
           </div>
         </div>
@@ -352,34 +419,13 @@
           <div class="age-trend">
             <div class="age-trend__track" aria-hidden="true"></div>
             <div class="age-trend__items">
-              <div class="age-item">
-                <span class="age-item__dot"></span>
-                <span class="age-item__label">10代</span>
-              </div>
-              <div class="age-item">
-                <span class="age-item__dot age-item__dot--active"></span>
-                <span class="age-item__label age-item__label--active">20代</span>
-              </div>
-              <div class="age-item">
-                <span class="age-item__dot age-item__dot--active"></span>
-                <span class="age-item__label age-item__label--active">30代</span>
-              </div>
-              <div class="age-item">
-                <span class="age-item__dot"></span>
-                <span class="age-item__label">40代</span>
-              </div>
-              <div class="age-item">
-                <span class="age-item__dot"></span>
-                <span class="age-item__label">50代</span>
-              </div>
-              <div class="age-item">
-                <span class="age-item__dot"></span>
-                <span class="age-item__label">60代</span>
-              </div>
-              <div class="age-item">
-                <span class="age-item__dot"></span>
-                <span class="age-item__label">70代〜</span>
-              </div>
+              <div class="age-item"><span class="age-item__dot"></span><span class="age-item__label">10代</span></div>
+              <div class="age-item"><span class="age-item__dot age-item__dot--active"></span><span class="age-item__label age-item__label--active">20代</span></div>
+              <div class="age-item"><span class="age-item__dot age-item__dot--active"></span><span class="age-item__label age-item__label--active">30代</span></div>
+              <div class="age-item"><span class="age-item__dot"></span><span class="age-item__label">40代</span></div>
+              <div class="age-item"><span class="age-item__dot"></span><span class="age-item__label">50代</span></div>
+              <div class="age-item"><span class="age-item__dot"></span><span class="age-item__label">60代</span></div>
+              <div class="age-item"><span class="age-item__dot"></span><span class="age-item__label">70代〜</span></div>
             </div>
           </div>
         </div>
@@ -388,34 +434,24 @@
           <p class="trend-block__label">男女比</p>
           <div class="gender-ratio" aria-label="男性寄りの参加傾向">
             <span class="gender-ratio__label">男性</span>
-            <span class="gender-ratio__track">
-              <span class="gender-ratio__dot"></span>
-            </span>
+            <span class="gender-ratio__track"><span class="gender-ratio__dot"></span></span>
             <span class="gender-ratio__label">女性</span>
           </div>
         </div>
 
         <div class="trend-block">
           <p class="trend-block__label">レベル分布</p>
-          <div class="level-distribution">
-            <div class="level-donut" role="img" aria-label="初心者55%、中級者15%、経験者30%">
-              <span class="level-donut__center">初心者<br>多め</span>
-            </div>
-            <div class="level-legend">
-              <div class="level-legend__row">
-                <span class="level-legend__dot level-legend__dot--beginner"></span>
-                <span class="level-legend__label">初心者</span>
-                <span class="level-legend__value">55%</span>
-              </div>
-              <div class="level-legend__row">
-                <span class="level-legend__dot level-legend__dot--middle"></span>
-                <span class="level-legend__label">中級者</span>
-                <span class="level-legend__value">15%</span>
-              </div>
-              <div class="level-legend__row">
-                <span class="level-legend__dot level-legend__dot--experienced"></span>
-                <span class="level-legend__label">経験者</span>
-                <span class="level-legend__value">30%</span>
+          <div class="level-volume-card" aria-label="ユーザーレベル分布。Lv.1からLv.5までの相対的な傾向。Lv.2が初心者多めです。">
+            <div class="level-volume-chart">
+              <div class="level-volume-chart__body">
+                <div class="level-volume-chart__grid" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
+                <div class="level-volume-chart__plot">
+                  <div class="level-volume-column"><div class="level-volume-column__bar" style="--level-volume-height: 64px;" aria-hidden="true"></div><span class="level-volume-column__label">初心者<br>Lv.1</span></div>
+                  <div class="level-volume-column level-volume-column--focus"><div class="level-volume-tooltip">初心者多め!</div><div class="level-volume-column__bar" style="--level-volume-height: 132px;" aria-hidden="true"></div><span class="level-volume-column__label">Lv.2</span></div>
+                  <div class="level-volume-column"><div class="level-volume-column__bar" style="--level-volume-height: 104px;" aria-hidden="true"></div><span class="level-volume-column__label">Lv.3</span></div>
+                  <div class="level-volume-column"><div class="level-volume-column__bar" style="--level-volume-height: 85px;" aria-hidden="true"></div><span class="level-volume-column__label">Lv.4</span></div>
+                  <div class="level-volume-column"><div class="level-volume-column__bar" style="--level-volume-height: 74px;" aria-hidden="true"></div><span class="level-volume-column__label">ガチ<br>Lv.5</span></div>
+                </div>
               </div>
             </div>
           </div>
@@ -802,21 +838,31 @@
     participantsSheet.addEventListener('click', e => { if (e.target === participantsSheet) participantsSheet.close(); });
 
 
-    const trendRadars = document.querySelectorAll('.trend-radar');
+    document.querySelectorAll('.mbti-vibe-type__help[aria-controls]').forEach((button) => {
+      button.addEventListener('click', () => {
+        const note = document.getElementById(button.getAttribute('aria-controls'));
+        if (!note) return;
+        const isOpen = button.getAttribute('aria-expanded') === 'true';
+        button.setAttribute('aria-expanded', String(!isOpen));
+        note.hidden = isOpen;
+      });
+    });
+
+    const participantTypeMotions = document.querySelectorAll('.participant-type-motion');
     if ('IntersectionObserver' in window) {
-      const trendRadarObserver = new IntersectionObserver((entries) => {
+      const participantTypeObserver = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
           if (!entry.isIntersecting) return;
-          entry.target.classList.add('trend-radar--visible');
-          trendRadarObserver.unobserve(entry.target);
+          entry.target.classList.add('participant-type-motion--visible');
+          participantTypeObserver.unobserve(entry.target);
         });
-      }, { threshold: 0.35 });
-      trendRadars.forEach(radar => trendRadarObserver.observe(radar));
+      }, { threshold: 0.28, rootMargin: '0px 0px -12% 0px' });
+      participantTypeMotions.forEach(item => participantTypeObserver.observe(item));
     } else {
-      trendRadars.forEach(radar => radar.classList.add('trend-radar--visible'));
+      participantTypeMotions.forEach(item => item.classList.add('participant-type-motion--visible'));
     }
 
-    const trendGraphics = document.querySelectorAll('.age-trend, .gender-ratio, .level-distribution');
+    const trendGraphics = document.querySelectorAll('.age-trend, .gender-ratio, .level-distribution, .level-volume-card');
     if ('IntersectionObserver' in window) {
       const trendGraphicObserver = new IntersectionObserver((entries) => {
         entries.forEach(entry => {

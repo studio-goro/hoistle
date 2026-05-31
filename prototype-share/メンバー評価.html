@@ -3,13 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>メンバーを評価</title>
+  <title>ナイスを送る</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100..900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../design-system/design-system-example-components-html-main/src/global.css">
   <link rel="stylesheet" href="../design-system/design-system-example-components-html-main/src/components/button/button.css">
   <link rel="stylesheet" href="../design-system/design-system-example-components-html-main/src/components/chip-label/chip-label.css">
+  <link rel="stylesheet" href="../design-system/design-system-example-components-html-main/src/components/textarea/textarea.css">
   <link rel="stylesheet" href="./prototype.css">
   <style>
     body {
@@ -22,29 +23,15 @@
       --color-primitive-blue-1200: var(--color-neutral-solid-gray-700);
       background: var(--color-neutral-white);
       color: var(--color-neutral-solid-gray-800);
-      padding-bottom: 92px;
+      padding-bottom: 96px;
     }
     .main {
       padding: 20px 16px 28px;
-      gap: 18px;
+      gap: 20px;
     }
-    .intro {
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-    }
-    .intro__title {
-      margin: 0;
-      font-size: 20px;
-      font-weight: 700;
-      line-height: 1.4;
-      color: var(--color-neutral-solid-gray-900);
-    }
-    .intro__text {
-      margin: 0;
-      font-size: 13px;
-      line-height: 1.7;
-      color: var(--color-neutral-solid-gray-600);
+    .nav-spacer {
+      width: 24px;
+      flex-shrink: 0;
     }
     .step-panel[hidden] {
       display: none;
@@ -52,7 +39,12 @@
     .step-panel {
       display: flex;
       flex-direction: column;
-      gap: 18px;
+      gap: 16px;
+    }
+    .intro {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
     }
     .step-label {
       display: inline-flex;
@@ -65,150 +57,184 @@
       font-weight: 700;
       line-height: 1.4;
     }
+    .intro__title,
+    .completion-title {
+      margin: 0;
+      font-size: 22px;
+      font-weight: 700;
+      line-height: 1.4;
+      color: var(--color-neutral-solid-gray-900);
+    }
+    .empty-note {
+      margin: 0;
+      font-size: 13px;
+      line-height: 1.7;
+      color: var(--color-neutral-solid-gray-600);
+    }
     .member-list {
       display: flex;
       flex-direction: column;
-      gap: 0;
+      gap: 10px;
+    }
+    .member-card {
+      width: 100%;
+      border: 1px solid var(--color-neutral-solid-gray-200);
+      border-radius: 10px;
       background: var(--color-neutral-white);
-      border-top: 1px solid var(--color-neutral-solid-gray-200);
-      border-bottom: 1px solid var(--color-neutral-solid-gray-200);
-    }
-    .member-evaluation {
-      padding: 18px 0;
-      border-bottom: 1px solid var(--color-neutral-solid-gray-100);
-    }
-    .member-evaluation:last-child {
-      border-bottom: none;
-    }
-    .member-evaluation__profile {
+      padding: 12px;
       display: flex;
       align-items: center;
       gap: 12px;
-      margin-bottom: 14px;
+      text-align: left;
+      color: inherit;
+      font: inherit;
+      cursor: pointer;
+      transition: background 0.16s ease, border-color 0.16s ease, box-shadow 0.16s ease;
     }
-    .member-evaluation__avatar {
-      width: 52px;
-      height: 52px;
+    .member-card[aria-pressed="true"] {
+      border-color: var(--color-neutral-solid-gray-900);
+      background: var(--color-neutral-solid-gray-50);
+      box-shadow: inset 0 0 0 1px var(--color-neutral-solid-gray-900);
+    }
+    .member-card__avatar,
+    .thanks-card__avatar,
+    .completion-avatar {
+      width: 44px;
+      height: 44px;
       border-radius: 50%;
       overflow: hidden;
       flex-shrink: 0;
       background: var(--color-neutral-solid-gray-100);
       box-shadow: 0 0 0 1px var(--color-neutral-solid-gray-200);
     }
-    .member-evaluation__avatar img {
+    .member-card__avatar img,
+    .thanks-card__avatar img,
+    .completion-avatar img {
       width: 100%;
       height: 100%;
       object-fit: cover;
       display: block;
       filter: grayscale(100%);
     }
-    .member-evaluation__name {
+    .member-card__body,
+    .thanks-card__body {
+      flex: 1;
+      min-width: 0;
+    }
+    .member-card__name,
+    .thanks-card__name {
       margin: 0;
       font-size: 16px;
       font-weight: 700;
       line-height: 1.4;
       color: var(--color-neutral-solid-gray-900);
     }
-    .member-evaluation__meta {
-      margin: 2px 0 0;
+    .member-card__meta,
+    .thanks-card__meta {
+      margin: 3px 0 0;
       font-size: 12px;
       line-height: 1.5;
       color: var(--color-neutral-solid-gray-500);
     }
-    .rating-groups {
+    .member-card__state {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      border: 1.5px solid var(--color-neutral-solid-gray-300);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      color: transparent;
+      font-size: 14px;
+      font-weight: 700;
+    }
+    .member-card[aria-pressed="true"] .member-card__state {
+      background: var(--color-neutral-solid-gray-900);
+      border-color: var(--color-neutral-solid-gray-900);
+      color: var(--color-neutral-white);
+    }
+    .thanks-list {
       display: flex;
       flex-direction: column;
       gap: 12px;
     }
-    .rating-group {
+    .thanks-card {
+      border: 1px solid var(--color-neutral-solid-gray-200);
+      border-radius: 12px;
+      padding: 12px;
       display: flex;
       flex-direction: column;
-      gap: 8px;
+      gap: 10px;
+      background: var(--color-neutral-white);
     }
-    .rating-group__label {
+    .thanks-card__profile {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .reaction-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .reaction-group__label,
+    .message-label {
       margin: 0;
       font-size: 12px;
       font-weight: 700;
       color: var(--color-neutral-solid-gray-600);
     }
-    .rating-chip:active {
-      transform: scale(0.97);
-    }
-    .rating-chips {
-      display: flex;
-      flex-wrap: wrap;
+    .reaction-chips {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
       gap: 8px;
     }
-    .rating-chip.dads-chip-label {
-      min-height: 36px;
+    .reaction-chip.dads-chip-label {
+      min-height: 62px;
+      width: 100%;
+      padding: 7px 4px;
       border: 1.5px solid var(--color-neutral-solid-gray-300);
       background: var(--color-neutral-white);
       color: var(--color-neutral-solid-gray-700);
       border-radius: 999px;
       cursor: pointer;
       font-family: inherit;
+      font-size: 11px;
+      font-weight: 700;
+      line-height: 1.25;
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 3px;
+      white-space: normal;
       transition: background 0.18s ease, border-color 0.18s ease, color 0.18s ease, transform 0.18s ease;
     }
-    .rating-chip[aria-pressed="true"] {
+    .reaction-chip__icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      line-height: 1;
+    }
+    .reaction-chip[aria-pressed="true"] {
       background: var(--color-neutral-solid-gray-900);
       border-color: var(--color-neutral-solid-gray-900);
       color: var(--color-neutral-white);
     }
-    .fixed-footer {
-      padding: 14px 16px max(18px, env(safe-area-inset-bottom));
+    .reaction-chip:active {
+      transform: scale(0.97);
     }
-    .footer-actions {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 12px;
-    }
-    .footer-actions.is-survey {
-      grid-template-columns: minmax(96px, 0.38fr) minmax(0, 1fr);
-    }
-    .footer-actions .dads-button {
-      width: 100%;
-      min-width: 0;
-      padding-inline: 12px;
-      white-space: nowrap;
-    }
-    .footer-actions .dads-button[hidden] {
-      display: none;
-    }
-    .survey-card {
+    .message-field {
       display: flex;
       flex-direction: column;
-      gap: 18px;
-      padding: 18px 0;
-      border-top: 1px solid var(--color-neutral-solid-gray-200);
-      border-bottom: 1px solid var(--color-neutral-solid-gray-200);
+      gap: 6px;
     }
-    .survey-question {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-    .survey-question__title {
-      margin: 0;
-      font-size: 15px;
-      font-weight: 700;
-      line-height: 1.5;
-      color: var(--color-neutral-solid-gray-900);
-    }
-    .survey-question__text {
-      margin: 0;
-      font-size: 13px;
-      line-height: 1.7;
-      color: var(--color-neutral-solid-gray-600);
-    }
-    .survey-options {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-    }
-    .survey-textarea {
+    .message-textarea {
       width: 100%;
-      min-height: 120px;
-      padding: 12px 14px;
+      min-height: 72px;
+      padding: 10px 12px;
       border: 1.5px solid var(--color-neutral-solid-gray-300);
       border-radius: 8px;
       background: var(--color-neutral-white);
@@ -216,77 +242,259 @@
       font: inherit;
       line-height: 1.6;
       resize: vertical;
+      box-sizing: border-box;
     }
-    .survey-textarea:focus {
+    .message-textarea:focus {
       outline: 3px solid var(--color-neutral-solid-gray-200);
       border-color: var(--color-neutral-solid-gray-800);
     }
-    .member-trigger {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      flex: 1;
-      min-width: 0;
-      background: none;
-      border: none;
-      padding: 0;
-      cursor: pointer;
-      text-align: left;
-      font: inherit;
+    .error-box {
+      display: none;
+      padding: 12px;
+      border-radius: 10px;
+      background: var(--color-neutral-solid-gray-50);
+      border: 1px solid var(--color-neutral-solid-gray-300);
+      color: var(--color-neutral-solid-gray-800);
+      font-size: 13px;
+      line-height: 1.6;
     }
-    .nav-skip {
-      min-width: 44px;
-      background: none;
-      border: none;
-      padding: 4px 0;
-      color: var(--color-neutral-solid-gray-700);
-      cursor: pointer;
-      font: inherit;
-      font-size: 14px;
-      line-height: 1.5;
-      text-align: right;
-      text-decoration: underline;
-      text-underline-offset: 3px;
-    }
-    .nav-skip.is-hidden {
+    .error-box.is-visible {
       display: block;
-      visibility: hidden;
     }
-    .profile-sheet-profile {
+    .completion-panel {
+      min-height: calc(100vh - 160px);
+      justify-content: center;
+      text-align: center;
+      gap: 20px;
+    }
+    .completion-visual {
+      position: relative;
       display: flex;
       align-items: center;
-      gap: 16px;
-      padding: 4px 0 20px;
-      border-bottom: 1px solid var(--color-neutral-solid-gray-100);
+      justify-content: center;
+      gap: 12px;
+      margin: 0 auto 4px;
     }
-    .profile-sheet-avatar {
-      width: 72px;
-      height: 72px;
+    .completion-from {
+      width: 56px;
+      height: 56px;
       border-radius: 50%;
-      overflow: hidden;
-      flex-shrink: 0;
       background: var(--color-neutral-solid-gray-100);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      overflow: hidden;
       box-shadow: 0 0 0 1px var(--color-neutral-solid-gray-200);
     }
-    .profile-sheet-avatar img {
+    .completion-from img {
       width: 100%;
       height: 100%;
       object-fit: cover;
       display: block;
       filter: grayscale(100%);
     }
-    .profile-sheet-name {
-      margin: 0;
-      font-size: 18px;
-      font-weight: 700;
-      color: var(--color-neutral-solid-gray-900);
-      line-height: 1.4;
-    }
-    .profile-sheet-meta {
-      margin: 4px 0 0;
-      font-size: 13px;
+    .completion-arrow {
       color: var(--color-neutral-solid-gray-500);
-      line-height: 1.6;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .completion-signal {
+      position: absolute;
+      left: calc(50% - 26px);
+      top: 50%;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: var(--color-neutral-solid-gray-900);
+      color: var(--color-neutral-white);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      line-height: 1;
+      transform: translate(-50%, -50%) scale(0);
+      opacity: 0;
+      pointer-events: none;
+      z-index: 2;
+    }
+    .completion-receivers {
+      position: relative;
+      width: 108px;
+      height: 56px;
+      flex-shrink: 0;
+    }
+    .completion-receivers .completion-avatar {
+      position: absolute;
+      top: 0;
+      width: 56px;
+      height: 56px;
+      box-shadow: 0 0 0 3px var(--color-neutral-white), 0 0 0 4px var(--color-neutral-solid-gray-200);
+    }
+    .completion-receivers .completion-avatar:nth-child(1) { left: 0; }
+    .completion-receivers .completion-avatar:nth-child(2) { left: 26px; }
+    .completion-receivers .completion-avatar:nth-child(3) { left: 52px; }
+    .completion-extra {
+      position: absolute;
+      right: 0;
+      bottom: 0;
+      min-width: 24px;
+      height: 24px;
+      border-radius: 999px;
+      background: var(--color-neutral-solid-gray-900);
+      color: var(--color-neutral-white);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      font-weight: 700;
+      box-shadow: 0 0 0 3px var(--color-neutral-white);
+    }
+    .completion-avatar {
+      width: 28px;
+      height: 28px;
+    }
+    .fixed-footer {
+      padding: 14px 16px max(18px, env(safe-area-inset-bottom));
+    }
+    .footer-actions {
+      display: grid;
+      grid-template-columns: minmax(88px, auto) minmax(0, 1fr);
+      align-items: center;
+      gap: 12px;
+    }
+    .footer-actions.has-back {
+      grid-template-columns: minmax(76px, 0.34fr) minmax(0, 1fr);
+    }
+    .footer-count {
+      color: var(--color-neutral-solid-gray-800);
+      font-size: 14px;
+      font-weight: 700;
+      line-height: 1.5;
+      white-space: nowrap;
+    }
+    .footer-actions .dads-button {
+      width: 100%;
+      min-width: 0;
+      padding-inline: 12px;
+      white-space: nowrap;
+    }
+    .footer-actions .dads-button[hidden],
+    .footer-count[hidden],
+    .fixed-footer[hidden] {
+      display: none;
+    }
+    .completion-panel .dads-button {
+      align-self: center;
+      width: auto;
+      min-width: 180px;
+      border-radius: 999px;
+    }
+    .completion-panel:not([hidden]) .completion-from {
+      animation: completion-pop 0.42s cubic-bezier(.2, .8, .2, 1) both;
+    }
+    .completion-panel:not([hidden]) .completion-arrow {
+      animation: completion-fade-slide 0.36s ease-out 0.16s both;
+    }
+    .completion-panel:not([hidden]) .completion-signal {
+      animation: completion-send 0.82s cubic-bezier(.25, .8, .25, 1) 0.22s both;
+    }
+    .completion-panel:not([hidden]) .completion-receivers {
+      animation: completion-pop 0.44s cubic-bezier(.2, .8, .2, 1) 0.72s both;
+    }
+    .completion-panel:not([hidden]) .completion-receivers .completion-avatar {
+      animation: completion-receive 0.42s cubic-bezier(.2, .8, .2, 1) 0.82s both;
+    }
+    .completion-panel:not([hidden]) .completion-receivers .completion-avatar:nth-child(2) {
+      animation-delay: 0.88s;
+    }
+    .completion-panel:not([hidden]) .completion-receivers .completion-avatar:nth-child(3) {
+      animation-delay: 0.94s;
+    }
+    .completion-panel:not([hidden]) .completion-title {
+      animation: completion-fade-up 0.4s ease-out 0.9s both;
+    }
+    .completion-panel:not([hidden]) .dads-button {
+      animation: completion-fade-up 0.4s ease-out 1.02s both;
+    }
+    @keyframes completion-pop {
+      0% {
+        opacity: 0;
+        transform: scale(0.82);
+      }
+      70% {
+        opacity: 1;
+        transform: scale(1.04);
+      }
+      100% {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+    @keyframes completion-fade-slide {
+      0% {
+        opacity: 0;
+        transform: translateX(-8px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+    @keyframes completion-send {
+      0% {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0.4);
+      }
+      18% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+      }
+      78% {
+        opacity: 1;
+        transform: translate(54px, -50%) scale(1);
+      }
+      100% {
+        opacity: 0;
+        transform: translate(66px, -50%) scale(0.7);
+      }
+    }
+    @keyframes completion-receive {
+      0% {
+        transform: scale(1);
+      }
+      42% {
+        transform: scale(1.12) translateY(-2px);
+      }
+      100% {
+        transform: scale(1) translateY(0);
+      }
+    }
+    @keyframes completion-fade-up {
+      0% {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .completion-panel:not([hidden]) .completion-from,
+      .completion-panel:not([hidden]) .completion-arrow,
+      .completion-panel:not([hidden]) .completion-signal,
+      .completion-panel:not([hidden]) .completion-receivers,
+      .completion-panel:not([hidden]) .completion-receivers .completion-avatar,
+      .completion-panel:not([hidden]) .completion-title,
+      .completion-panel:not([hidden]) .dads-button {
+        animation: none;
+      }
+      .completion-signal {
+        display: none;
+      }
     }
   </style>
 </head>
@@ -299,259 +507,333 @@
         <path d="M6 6l12 12M18 6 6 18" stroke-linecap="round"/>
       </svg>
     </a>
-    <p class="nav-title" id="screen-title">メンバーを評価</p>
-    <button class="nav-skip is-hidden" type="button" id="skip-survey" aria-hidden="true" tabindex="-1">スキップ</button>
+    <p class="nav-title" id="screen-title">ナイスを送る</p>
+    <span class="nav-spacer" aria-hidden="true"></span>
   </div>
 
   <main class="main">
-    <div class="step-panel" id="member-step">
-      <section class="intro" aria-labelledby="intro-title">
+    <div class="step-panel" id="select-step">
+      <section class="intro" aria-labelledby="select-title">
         <span class="step-label">Step 1 / 2</span>
-        <h1 class="intro__title" id="intro-title">一緒にプレーしたメンバーを評価しましょう</h1>
-        <p class="intro__text">評価は匿名で送信されます。相手にあなたの名前は表示されず、今後のイベント体験をよくするために使われます。</p>
+        <h1 class="intro__title" id="select-title">送る人を選んでください</h1>
       </section>
 
-      <section class="member-list" aria-label="評価する参加者">
-        <article class="member-evaluation">
-          <div class="member-evaluation__profile">
-            <button class="member-trigger" type="button" data-member-index="0" aria-label="旭俊成のプロフィールを見る">
-              <div class="member-evaluation__avatar">
-                <img src="../material/user-icon/Toshinari.Asahi_旭俊成.png" alt="旭俊成">
-              </div>
-              <div>
-                <h2 class="member-evaluation__name">旭 俊成</h2>
-                <p class="member-evaluation__meta">チームA · 背番号7 · 今日一緒にプレー</p>
-              </div>
-            </button>
-          </div>
-          <div class="rating-groups">
-            <div class="rating-group">
-              <p class="rating-group__label">よかったところ</p>
-              <div class="rating-chips" role="group" aria-label="旭俊成のよかったところ">
-                <button class="dads-chip-label rating-chip" data-style="outline" data-color="gray" type="button" aria-pressed="false">また一緒にやりたい</button>
-                <button class="dads-chip-label rating-chip" data-style="outline" data-color="gray" type="button" aria-pressed="false">ありがとう</button>
-                <button class="dads-chip-label rating-chip" data-style="outline" data-color="gray" type="button" aria-pressed="false">マナーが良い</button>
-                <button class="dads-chip-label rating-chip" data-style="outline" data-color="gray" type="button" aria-pressed="false">声かけがよい</button>
-                <button class="dads-chip-label rating-chip" data-style="outline" data-color="gray" type="button" aria-pressed="false">パスが上手い</button>
-                <button class="dads-chip-label rating-chip" data-style="outline" data-color="gray" type="button" aria-pressed="false">盛り上げ上手</button>
-                <button class="dads-chip-label rating-chip" data-style="outline" data-color="gray" type="button" aria-pressed="false">ナイスアシスト</button>
-                <button class="dads-chip-label rating-chip" data-style="outline" data-color="gray" type="button" aria-pressed="false">フェアプレー</button>
-              </div>
-            </div>
-          </div>
-        </article>
-
-        <article class="member-evaluation">
-          <div class="member-evaluation__profile">
-            <button class="member-trigger" type="button" data-member-index="1" aria-label="棚橋七海のプロフィールを見る">
-              <div class="member-evaluation__avatar">
-                <img src="../material/user-icon/Nanami.Tanahashi_棚橋七海.png" alt="棚橋七海">
-              </div>
-              <div>
-                <h2 class="member-evaluation__name">棚橋 七海</h2>
-                <p class="member-evaluation__meta">チームB · 背番号12 · 試合で対戦</p>
-              </div>
-            </button>
-          </div>
-          <div class="rating-groups">
-            <div class="rating-group">
-              <p class="rating-group__label">よかったところ</p>
-              <div class="rating-chips" role="group" aria-label="棚橋七海のよかったところ">
-                <button class="dads-chip-label rating-chip" data-style="outline" data-color="gray" type="button" aria-pressed="false">また一緒にやりたい</button>
-                <button class="dads-chip-label rating-chip" data-style="outline" data-color="gray" type="button" aria-pressed="false">ありがとう</button>
-                <button class="dads-chip-label rating-chip" data-style="outline" data-color="gray" type="button" aria-pressed="false">マナーが良い</button>
-                <button class="dads-chip-label rating-chip" data-style="outline" data-color="gray" type="button" aria-pressed="false">声かけがよい</button>
-                <button class="dads-chip-label rating-chip" data-style="outline" data-color="gray" type="button" aria-pressed="false">パスが上手い</button>
-                <button class="dads-chip-label rating-chip" data-style="outline" data-color="gray" type="button" aria-pressed="false">盛り上げ上手</button>
-                <button class="dads-chip-label rating-chip" data-style="outline" data-color="gray" type="button" aria-pressed="false">ナイスアシスト</button>
-                <button class="dads-chip-label rating-chip" data-style="outline" data-color="gray" type="button" aria-pressed="false">フェアプレー</button>
-              </div>
-            </div>
-          </div>
-        </article>
-
-        <article class="member-evaluation">
-          <div class="member-evaluation__profile">
-            <button class="member-trigger" type="button" data-member-index="2" aria-label="高杉優作のプロフィールを見る">
-              <div class="member-evaluation__avatar">
-                <img src="../material/user-icon/Yusaku.Takasugi_高杉優作.png" alt="高杉優作">
-              </div>
-              <div>
-                <h2 class="member-evaluation__name">高杉 優作</h2>
-                <p class="member-evaluation__meta">チームC · 背番号23 · 試合で対戦</p>
-              </div>
-            </button>
-          </div>
-          <div class="rating-groups">
-            <div class="rating-group">
-              <p class="rating-group__label">よかったところ</p>
-              <div class="rating-chips" role="group" aria-label="高杉優作のよかったところ">
-                <button class="dads-chip-label rating-chip" data-style="outline" data-color="gray" type="button" aria-pressed="false">また一緒にやりたい</button>
-                <button class="dads-chip-label rating-chip" data-style="outline" data-color="gray" type="button" aria-pressed="false">ありがとう</button>
-                <button class="dads-chip-label rating-chip" data-style="outline" data-color="gray" type="button" aria-pressed="false">マナーが良い</button>
-                <button class="dads-chip-label rating-chip" data-style="outline" data-color="gray" type="button" aria-pressed="false">声かけがよい</button>
-                <button class="dads-chip-label rating-chip" data-style="outline" data-color="gray" type="button" aria-pressed="false">パスが上手い</button>
-                <button class="dads-chip-label rating-chip" data-style="outline" data-color="gray" type="button" aria-pressed="false">盛り上げ上手</button>
-                <button class="dads-chip-label rating-chip" data-style="outline" data-color="gray" type="button" aria-pressed="false">ナイスアシスト</button>
-                <button class="dads-chip-label rating-chip" data-style="outline" data-color="gray" type="button" aria-pressed="false">フェアプレー</button>
-              </div>
-            </div>
-          </div>
-        </article>
-      </section>
+      <section class="member-list" id="member-list" aria-label="送る人を選んでください"></section>
     </div>
 
-    <div class="step-panel" id="survey-step" hidden>
-      <section class="intro" aria-labelledby="survey-title">
+    <div class="step-panel" id="thanks-step" hidden>
+      <section class="intro" aria-labelledby="thanks-title">
         <span class="step-label">Step 2 / 2</span>
-        <h1 class="intro__title" id="survey-title">イベント後アンケート</h1>
-        <p class="intro__text">今日のイベントについて教えてください。回答はサービス改善のために利用します。</p>
+        <h1 class="intro__title" id="thanks-title">ひとこと選んでください</h1>
       </section>
+      <div class="error-box" id="send-error" role="alert">送信できませんでした。通信状況を確認して、もう一度お試しください。</div>
+      <section class="thanks-list" id="thanks-list" aria-label="届ける内容"></section>
+    </div>
 
-      <section class="survey-card" aria-label="イベント後アンケート">
-        <div class="survey-question">
-          <h2 class="survey-question__title">今日のイベントはどうでしたか？</h2>
-          <div class="survey-options" role="group" aria-label="今日のイベント満足度">
-            <button class="dads-chip-label rating-chip survey-chip" data-style="outline" data-color="gray" type="button" aria-pressed="false">とても楽しかった</button>
-            <button class="dads-chip-label rating-chip survey-chip" data-style="outline" data-color="gray" type="button" aria-pressed="false">ちょうどよかった</button>
-            <button class="dads-chip-label rating-chip survey-chip" data-style="outline" data-color="gray" type="button" aria-pressed="false">少し疲れた</button>
-            <button class="dads-chip-label rating-chip survey-chip" data-style="outline" data-color="gray" type="button" aria-pressed="false">次も参加したい</button>
-          </div>
+    <div class="step-panel completion-panel" id="complete-step" hidden>
+      <div class="completion-visual" aria-hidden="true">
+        <div class="completion-from">
+          <img src="../material/user-icon/Toshinari.Asahi_旭俊成.png" alt="">
         </div>
-
-        <div class="survey-question">
-          <h2 class="survey-question__title">次回に向けて改善してほしいことはありますか？</h2>
-          <p class="survey-question__text">未入力でも送信できます。</p>
-          <textarea class="survey-textarea" aria-label="改善してほしいこと" placeholder="例：チーム替えの回数をもう少し増やしてほしい"></textarea>
-        </div>
+        <svg class="completion-arrow" width="28" height="18" viewBox="0 0 28 18" fill="none">
+          <path d="M1 9h24m-7-7 7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <span class="completion-signal">👍</span>
+        <div class="completion-receivers" id="complete-visual-receivers"></div>
+      </div>
+      <section class="intro" aria-labelledby="complete-title">
+        <h1 class="completion-title" id="complete-title">ナイスを送りました</h1>
       </section>
+      <a class="dads-button" data-size="lg" data-type="outline" id="return-link" href="./参加者専用_エンジョイ-開催後.html">戻る</a>
     </div>
   </main>
 
-  <dialog id="profile-sheet" class="bottom-sheet" aria-labelledby="profile-sheet-title">
-    <div class="sheet-handle" aria-hidden="true"></div>
-    <div class="sheet-header">
-      <p class="sheet-title" id="profile-sheet-title">プロフィール</p>
-      <button class="sheet-close" type="button" id="profile-sheet-close" aria-label="閉じる">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-          <path d="M6 6l12 12M18 6 6 18" stroke-linecap="round"/>
-        </svg>
-      </button>
-    </div>
-    <div class="sheet-body">
-      <div class="profile-sheet-profile">
-        <div class="profile-sheet-avatar">
-          <img id="profile-sheet-img" src="" alt="">
-        </div>
-        <div>
-          <p class="profile-sheet-name" id="profile-sheet-name"></p>
-          <p class="profile-sheet-meta" id="profile-sheet-meta"></p>
-        </div>
-      </div>
-    </div>
-  </dialog>
-
-  <footer class="fixed-footer">
+  <footer class="fixed-footer" id="fixed-footer">
     <div class="footer-actions" id="footer-actions">
       <button class="dads-button" data-size="lg" data-type="outline" type="button" id="back-action" hidden>戻る</button>
-      <button class="dads-button" data-size="lg" data-type="solid-fill" type="button" id="primary-action">次へ</button>
+      <span class="footer-count" id="footer-count" aria-live="polite">0人選択中</span>
+      <button class="dads-button" data-size="lg" data-type="solid-fill" type="button" id="primary-action" disabled>次へ</button>
     </div>
   </footer>
 
   <script>
     var params = new URLSearchParams(window.location.search);
     var returnUrl = params.get('return') || './参加者専用_エンジョイ-開催後.html';
-    var currentStep = 'member';
-    document.getElementById('close-link').href = returnUrl;
+    var eventId = params.get('eventId') || 'enjoy-after-001';
+    var senderUserId = 'current-user-001';
+    var currentStep = 'select';
+    var selectedReceiverIds = [];
+    var isSubmitting = false;
+
+    var reactions = [
+      { label: 'ナイスプレー', icon: '👍' },
+      { label: 'チームプレー最高', icon: '🤝' },
+      { label: '声かけ助かった', icon: '📣' },
+      { label: 'ありがとう', icon: '🙏' },
+      { label: '楽しかった', icon: '😊' },
+      { label: 'また一緒に', icon: '🏀' }
+    ];
+    var members = [
+      { id: 'nanami-tanahashi', avatar: '../material/user-icon/Nanami.Tanahashi_棚橋七海.png', name: '棚橋 七海', meta: 'チームB · 背番号12' },
+      { id: 'yusaku-takasugi', avatar: '../material/user-icon/Yusaku.Takasugi_高杉優作.png', name: '高杉 優作', meta: 'チームC · 背番号23' },
+      { id: 'hayato-akaiwa', avatar: '../material/user-icon/Hayato.Akaiwa_赤岩駿斗.png', name: '赤岩 駿斗', meta: 'チームA · 背番号4' },
+      { id: 'mana-kurita', avatar: '../material/user-icon/Mana.Kurita_栗田茉奈.png', name: '栗田 茉奈', meta: 'チームB · 背番号9' },
+      { id: 'hikaru-tezuka', avatar: '../material/user-icon/Hikaru.Tezuka_手塚光.png', name: '手塚 光', meta: 'チームC · 背番号15' },
+      { id: 'takeru-mukai', avatar: '../material/user-icon/Takeru .Mukai_向井猛.png', name: '向井 猛', meta: 'チームA · 背番号18' },
+      { id: 'yuichi-yoshimura', avatar: '../material/user-icon/Yuichi.Yoshimura_吉村優一.png', name: '吉村 優一', meta: 'チームB · 背番号21' }
+    ];
+    var thanksDrafts = {};
+
+    var closeLink = document.getElementById('close-link');
     var screenTitle = document.getElementById('screen-title');
-    var memberStep = document.getElementById('member-step');
-    var surveyStep = document.getElementById('survey-step');
+    var selectStep = document.getElementById('select-step');
+    var thanksStep = document.getElementById('thanks-step');
+    var completeStep = document.getElementById('complete-step');
+    var memberList = document.getElementById('member-list');
+    var thanksList = document.getElementById('thanks-list');
+    var sendError = document.getElementById('send-error');
     var primaryAction = document.getElementById('primary-action');
     var backAction = document.getElementById('back-action');
     var footerActions = document.getElementById('footer-actions');
-    var skipSurvey = document.getElementById('skip-survey');
+    var fixedFooter = document.getElementById('fixed-footer');
+    var footerCount = document.getElementById('footer-count');
+    var returnLink = document.getElementById('return-link');
+    var completeVisualReceivers = document.getElementById('complete-visual-receivers');
 
-    function showSurveyStep() {
-      currentStep = 'survey';
-      memberStep.hidden = true;
-      surveyStep.hidden = false;
-      screenTitle.textContent = 'アンケート';
-      primaryAction.textContent = 'アンケートを送信する';
-      backAction.hidden = false;
-      skipSurvey.classList.remove('is-hidden');
-      skipSurvey.removeAttribute('aria-hidden');
-      skipSurvey.removeAttribute('tabindex');
-      footerActions.classList.add('is-survey');
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+    closeLink.href = returnUrl;
+    returnLink.href = withThanksCompleted(returnUrl);
+
+    function getMember(id) {
+      return members.find(function (member) { return member.id === id; });
     }
 
-    function showMemberStep() {
-      currentStep = 'member';
-      memberStep.hidden = false;
-      surveyStep.hidden = true;
-      screenTitle.textContent = 'メンバーを評価';
-      primaryAction.textContent = '次へ';
-      backAction.hidden = true;
-      skipSurvey.classList.add('is-hidden');
-      skipSurvey.setAttribute('aria-hidden', 'true');
-      skipSurvey.setAttribute('tabindex', '-1');
-      footerActions.classList.remove('is-survey');
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+    function ensureDraft(receiverUserId) {
+      if (!thanksDrafts[receiverUserId]) {
+        thanksDrafts[receiverUserId] = {
+          eventId: eventId,
+          senderUserId: senderUserId,
+          receiverUserId: receiverUserId,
+          selectedReactions: [],
+          optionalMessage: '',
+          sentAt: null
+        };
+      }
+      return thanksDrafts[receiverUserId];
     }
 
-    function completeFlow() {
-      var url = new URL(returnUrl, window.location.href);
-      url.searchParams.set('rating', 'completed');
-      window.location.href = url.href;
+    function withThanksCompleted(urlValue) {
+      var url = new URL(urlValue, window.location.href);
+      url.searchParams.set('thanks', 'completed');
+      return url.href;
     }
 
-    document.querySelectorAll('.rating-chip, .survey-chip').forEach(function (chip) {
-      chip.addEventListener('click', function () {
-        var pressed = chip.getAttribute('aria-pressed') === 'true';
-        chip.setAttribute('aria-pressed', pressed ? 'false' : 'true');
+    function renderMemberList() {
+      memberList.innerHTML = members.map(function (member) {
+        var selected = selectedReceiverIds.includes(member.id);
+        return [
+          '<button class="member-card" type="button" data-receiver-id="' + member.id + '" aria-pressed="' + selected + '">',
+          '  <span class="member-card__avatar"><img src="' + member.avatar + '" alt="' + member.name + '"></span>',
+          '  <span class="member-card__body">',
+          '    <span class="member-card__name">' + member.name + '</span>',
+          '    <span class="member-card__meta">' + member.meta + '</span>',
+          '  </span>',
+          '  <span class="member-card__state" aria-hidden="true">✓</span>',
+          '</button>'
+        ].join('');
+      }).join('');
+
+      memberList.querySelectorAll('.member-card').forEach(function (card) {
+        card.addEventListener('click', function () {
+          toggleReceiver(card.dataset.receiverId);
+        });
       });
-    });
+      updateSelectFooter();
+    }
+
+    function toggleReceiver(receiverUserId) {
+      if (selectedReceiverIds.includes(receiverUserId)) {
+        selectedReceiverIds = selectedReceiverIds.filter(function (id) { return id !== receiverUserId; });
+      } else {
+        selectedReceiverIds.push(receiverUserId);
+        ensureDraft(receiverUserId);
+      }
+      renderMemberList();
+    }
+
+    function updateSelectFooter() {
+      var count = selectedReceiverIds.length;
+      footerCount.textContent = count + '人選択中';
+      primaryAction.disabled = count === 0;
+      primaryAction.textContent = '次へ';
+    }
+
+    function renderThanksList() {
+      thanksList.innerHTML = selectedReceiverIds.map(function (receiverUserId) {
+        var member = getMember(receiverUserId);
+        var draft = ensureDraft(receiverUserId);
+        var chips = reactions.map(function (reaction) {
+          var pressed = draft.selectedReactions.includes(reaction.label);
+          return [
+            '<button class="dads-chip-label reaction-chip" data-style="outline" data-color="gray" type="button" data-receiver-id="' + receiverUserId + '" data-reaction="' + reaction.label + '" aria-pressed="' + pressed + '">',
+            '  <span class="reaction-chip__icon" aria-hidden="true">' + reaction.icon + '</span>',
+            '  <span>' + reaction.label + '</span>',
+            '</button>'
+          ].join('');
+        }).join('');
+        return [
+          '<article class="thanks-card" data-thanks-card="' + receiverUserId + '">',
+          '  <div class="thanks-card__profile">',
+          '    <div class="thanks-card__avatar"><img src="' + member.avatar + '" alt="' + member.name + '"></div>',
+          '    <div class="thanks-card__body">',
+          '      <h2 class="thanks-card__name">' + member.name + '</h2>',
+          '      <p class="thanks-card__meta">' + member.meta + '</p>',
+          '    </div>',
+          '  </div>',
+          '  <div class="reaction-group">',
+          '    <div class="reaction-chips" role="group" aria-label="' + member.name + 'へ送る一言">' + chips + '</div>',
+          '  </div>',
+          '  <div class="message-field">',
+          '    <label class="message-label" for="message-' + receiverUserId + '">ひとこと添える（任意）</label>',
+          '    <textarea class="message-textarea" id="message-' + receiverUserId + '" data-message-for="' + receiverUserId + '" placeholder="例：声をかけてくれて嬉しかったです">' + draft.optionalMessage + '</textarea>',
+          '  </div>',
+          '</article>'
+        ].join('');
+      }).join('');
+
+      thanksList.querySelectorAll('.reaction-chip').forEach(function (chip) {
+        chip.addEventListener('click', function () {
+          var receiverUserId = chip.dataset.receiverId;
+          var draft = ensureDraft(receiverUserId);
+          if (draft.selectedReactions.includes(chip.dataset.reaction)) {
+            draft.selectedReactions = draft.selectedReactions.filter(function (reaction) {
+              return reaction !== chip.dataset.reaction;
+            });
+          } else {
+            draft.selectedReactions.push(chip.dataset.reaction);
+          }
+          renderThanksList();
+        });
+      });
+      thanksList.querySelectorAll('.message-textarea').forEach(function (textarea) {
+        textarea.addEventListener('input', function () {
+          ensureDraft(textarea.dataset.messageFor).optionalMessage = textarea.value;
+        });
+      });
+    }
+
+    function showSelectStep() {
+      currentStep = 'select';
+      selectStep.hidden = false;
+      thanksStep.hidden = true;
+      completeStep.hidden = true;
+      fixedFooter.hidden = false;
+      screenTitle.textContent = 'ナイスを送る';
+      footerCount.hidden = false;
+      footerCount.textContent = selectedReceiverIds.length + '人選択中';
+      primaryAction.textContent = '次へ';
+      primaryAction.disabled = selectedReceiverIds.length === 0;
+      backAction.hidden = true;
+      footerActions.classList.remove('has-back');
+      sendError.classList.remove('is-visible');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function showThanksStep() {
+      currentStep = 'thanks';
+      selectStep.hidden = true;
+      thanksStep.hidden = false;
+      completeStep.hidden = true;
+      fixedFooter.hidden = false;
+      screenTitle.textContent = 'ひとこと選んでください';
+      footerCount.hidden = true;
+      primaryAction.textContent = '送信する';
+      primaryAction.disabled = false;
+      backAction.hidden = false;
+      footerActions.classList.add('has-back');
+      sendError.classList.remove('is-visible');
+      renderThanksList();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function showCompleteStep(payload) {
+      currentStep = 'complete';
+      selectStep.hidden = true;
+      thanksStep.hidden = true;
+      completeStep.hidden = false;
+      fixedFooter.hidden = true;
+      screenTitle.textContent = '送信完了';
+      closeLink.href = withThanksCompleted(returnUrl);
+      document.getElementById('complete-title').textContent = payload.thanks.length + '人にナイスを送りました';
+      completeVisualReceivers.innerHTML = payload.thanks.slice(0, 3).map(function (item) {
+        var member = getMember(item.receiverUserId);
+        return '<span class="completion-avatar"><img src="' + member.avatar + '" alt=""></span>';
+      }).join('') + (payload.thanks.length > 3 ? '<span class="completion-extra">+' + (payload.thanks.length - 3) + '</span>' : '');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function buildPayload() {
+      var sentAt = new Date().toISOString();
+      return {
+        eventId: eventId,
+        senderUserId: senderUserId,
+        sentAt: sentAt,
+        thanks: selectedReceiverIds.map(function (receiverUserId) {
+          var draft = ensureDraft(receiverUserId);
+          return {
+            eventId: eventId,
+            senderUserId: senderUserId,
+            receiverUserId: receiverUserId,
+            selectedReaction: draft.selectedReactions.slice(),
+            optionalMessage: draft.optionalMessage.trim(),
+            sentAt: sentAt
+          };
+        })
+      };
+    }
+
+    function saveThanks(payload) {
+      return new Promise(function (resolve, reject) {
+        window.setTimeout(function () {
+          try {
+            var key = 'whistle:thanks:' + eventId + ':' + senderUserId;
+            window.localStorage.setItem(key, JSON.stringify(payload));
+            resolve(payload);
+          } catch (error) {
+            reject(error);
+          }
+        }, 520);
+      });
+    }
+
+    function submitThanks() {
+      if (isSubmitting) return;
+      isSubmitting = true;
+      sendError.classList.remove('is-visible');
+      primaryAction.disabled = true;
+      primaryAction.textContent = '送信中...';
+      saveThanks(buildPayload())
+        .then(function (payload) {
+          isSubmitting = false;
+          showCompleteStep(payload);
+        })
+        .catch(function () {
+          isSubmitting = false;
+          primaryAction.disabled = false;
+          primaryAction.textContent = 'もう一度送信する';
+          sendError.classList.add('is-visible');
+        });
+    }
 
     primaryAction.addEventListener('click', function () {
-      if (currentStep === 'member') {
-        showSurveyStep();
+      if (currentStep === 'select') {
+        showThanksStep();
         return;
       }
-      completeFlow();
+      if (currentStep === 'thanks') submitThanks();
     });
 
-    backAction.addEventListener('click', showMemberStep);
-
-    skipSurvey.addEventListener('click', completeFlow);
-
-    var memberData = [
-      { avatar: '../material/user-icon/Toshinari.Asahi_旭俊成.png', name: '旭 俊成', meta: 'チームA · 背番号7 · 今日一緒にプレー' },
-      { avatar: '../material/user-icon/Nanami.Tanahashi_棚橋七海.png', name: '棚橋 七海', meta: 'チームB · 背番号12 · 試合で対戦' },
-      { avatar: '../material/user-icon/Yusaku.Takasugi_高杉優作.png', name: '高杉 優作', meta: 'チームC · 背番号23 · 試合で対戦' }
-    ];
-    var profileSheet = document.getElementById('profile-sheet');
-    var profileSheetImg = document.getElementById('profile-sheet-img');
-    var profileSheetName = document.getElementById('profile-sheet-name');
-    var profileSheetMeta = document.getElementById('profile-sheet-meta');
-
-    document.querySelectorAll('.member-trigger').forEach(function(trigger) {
-      trigger.addEventListener('click', function() {
-        var m = memberData[parseInt(trigger.dataset.memberIndex)];
-        profileSheetImg.src = m.avatar;
-        profileSheetImg.alt = m.name;
-        profileSheetName.textContent = m.name;
-        profileSheetMeta.textContent = m.meta;
-        profileSheet.showModal();
-      });
-    });
-
-    document.getElementById('profile-sheet-close').addEventListener('click', function() {
-      profileSheet.close();
-    });
-
-    profileSheet.addEventListener('click', function(e) {
-      if (e.target === profileSheet) profileSheet.close();
-    });
+    backAction.addEventListener('click', showSelectStep);
+    renderMemberList();
   </script>
   <script src="./prototype-map.js"></script>
 </body>

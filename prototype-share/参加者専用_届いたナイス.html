@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>届いたナイス</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100..900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../design-system/design-system-example-components-html-main/src/global.css">
+  <link rel="stylesheet" href="../design-system/design-system-example-components-html-main/src/components/button/button.css">
+  <link rel="stylesheet" href="./prototype.css">
+  <style>
+    body {
+      color: var(--color-neutral-solid-gray-800);
+      background: var(--color-neutral-white);
+      min-height: 100svh;
+    }
+
+    .view[hidden] {
+      display: none;
+    }
+
+    /* ── 1画面目：ナイス到着 ── */
+    .arrival-view {
+      min-height: 100svh;
+      padding: 32px 20px max(40px, env(safe-area-inset-bottom));
+      background:
+        radial-gradient(circle at 50% 26%, rgba(0,0,0,0.08), transparent 32%),
+        linear-gradient(180deg, var(--color-neutral-solid-gray-50) 0%, var(--color-neutral-white) 56%);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 28px;
+      overflow: hidden;
+      position: relative;
+    }
+    .arrival-view::before,
+    .arrival-view::after {
+      content: "";
+      position: absolute;
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: var(--color-neutral-solid-gray-300);
+      opacity: 0.7;
+      animation: float-dot 3.8s ease-in-out infinite;
+    }
+    .arrival-view::before {
+      left: 48px;
+      top: 118px;
+    }
+    .arrival-view::after {
+      right: 54px;
+      top: 172px;
+      animation-delay: 0.8s;
+    }
+    .arrival-view > .arrival-main,
+    .arrival-view > .arrival-event,
+    .arrival-view > .arrival-actions {
+      position: relative;
+      z-index: 1;
+    }
+    .arrival-confetti {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      overflow: hidden;
+      pointer-events: none;
+    }
+    .arrival-confetti span {
+      position: absolute;
+      top: -48px;
+      left: var(--confetti-left);
+      color: var(--confetti-color, var(--color-neutral-solid-gray-700));
+      font-size: var(--confetti-size, 18px);
+      line-height: 1;
+      opacity: 0;
+      filter: drop-shadow(0 5px 10px rgba(0,0,0,0.12));
+      animation:
+        confetti-fall var(--confetti-duration, 5s) cubic-bezier(.17,.67,.36,1) var(--confetti-delay, 0s) infinite,
+        confetti-sway 1.7s ease-in-out var(--confetti-delay, 0s) infinite alternate;
+    }
+    .arrival-confetti span:nth-child(1) { --confetti-left: 13%; --confetti-delay: 0s; --confetti-duration: 5.8s; --confetti-size: 18px; }
+    .arrival-confetti span:nth-child(2) { --confetti-left: 25%; --confetti-delay: 0.45s; --confetti-duration: 6.4s; --confetti-size: 15px; }
+    .arrival-confetti span:nth-child(3) { --confetti-left: 38%; --confetti-delay: 1.15s; --confetti-duration: 5.6s; --confetti-size: 20px; }
+    .arrival-confetti span:nth-child(4) { --confetti-left: 52%; --confetti-delay: 0.75s; --confetti-duration: 6.1s; --confetti-size: 16px; }
+    .arrival-confetti span:nth-child(5) { --confetti-left: 66%; --confetti-delay: 1.4s; --confetti-duration: 5.9s; --confetti-size: 19px; }
+    .arrival-confetti span:nth-child(6) { --confetti-left: 80%; --confetti-delay: 0.2s; --confetti-duration: 6.6s; --confetti-size: 15px; }
+    .arrival-confetti span:nth-child(7) { --confetti-left: 18%; --confetti-delay: 2.1s; --confetti-duration: 6s; --confetti-size: 17px; }
+    .arrival-confetti span:nth-child(8) { --confetti-left: 72%; --confetti-delay: 2.45s; --confetti-duration: 5.7s; --confetti-size: 21px; }
+    .arrival-confetti span:nth-child(9) { --confetti-left: 45%; --confetti-delay: 2.8s; --confetti-duration: 6.8s; --confetti-size: 14px; }
+    .arrival-confetti span:nth-child(10) { --confetti-left: 88%; --confetti-delay: 3.25s; --confetti-duration: 6.2s; --confetti-size: 18px; }
+    .arrival-event {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      animation: fade-up 0.42s ease-out 0.72s both;
+    }
+    .event-title-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 9px;
+    }
+    .event-place-icon {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: var(--color-neutral-solid-gray-900);
+      color: var(--color-neutral-white);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex: 0 0 auto;
+      margin-top: 2px;
+    }
+    .arrival-event__title,
+    .detail-event__title {
+      margin: 0;
+      color: var(--color-neutral-solid-gray-900);
+      font-size: 18px;
+      font-weight: 800;
+      line-height: 1.45;
+    }
+    .event-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .event-meta__item {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: var(--color-neutral-white);
+      border: 1px solid var(--color-neutral-solid-gray-200);
+      color: var(--color-neutral-solid-gray-700);
+      font-size: 12px;
+      font-weight: 700;
+      line-height: 1.4;
+    }
+    .arrival-event .event-meta {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: nowrap;
+      align-items: center;
+      gap: 14px;
+    }
+    .arrival-event .event-meta__item {
+      display: inline-flex;
+      width: auto;
+      min-width: 0;
+      padding: 0;
+      border: 0;
+      border-radius: 0;
+      background: transparent;
+      box-shadow: none;
+      color: var(--color-neutral-solid-gray-700);
+      white-space: nowrap;
+    }
+    .arrival-main {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 22px;
+      text-align: center;
+      padding: 8px 0 0;
+    }
+    .nice-burst {
+      position: relative;
+      width: 168px;
+      height: 168px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      animation: pop-in 0.58s cubic-bezier(.2, .8, .2, 1) 0.16s both;
+    }
+    .nice-burst::before {
+      content: "";
+      position: absolute;
+      inset: 16px;
+      border-radius: 50%;
+      background: var(--color-neutral-solid-gray-100);
+      box-shadow: 0 0 0 16px rgba(0,0,0,0.03);
+      animation: pulse-ring 2.3s ease-out infinite;
+    }
+    .nice-burst__icon {
+      position: relative;
+      z-index: 1;
+      width: 92px;
+      height: 92px;
+      border-radius: 32px;
+      background: var(--color-neutral-solid-gray-900);
+      color: var(--color-neutral-white);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 42px;
+      box-shadow: 0 18px 34px rgba(0,0,0,0.22);
+      animation: gentle-bounce 1.9s ease-in-out infinite;
+    }
+    .arrival-title {
+      margin: 0;
+      color: var(--color-neutral-solid-gray-900);
+      font-size: 28px;
+      font-weight: 900;
+      line-height: 1.35;
+      animation: fade-up 0.42s ease-out 0.42s both;
+    }
+    .arrival-avatars {
+      display: flex;
+      justify-content: center;
+      animation: fade-up 0.42s ease-out 0.58s both;
+    }
+    .arrival-avatars .participant-avatar {
+      width: 58px;
+      height: 58px;
+      box-shadow: 0 0 0 3px var(--color-neutral-white), 0 4px 14px rgba(0,0,0,0.16);
+    }
+    .arrival-avatars .participant-avatar + .participant-avatar {
+      margin-left: -14px;
+    }
+    .arrival-actions {
+      animation: fade-up 0.42s ease-out 0.86s both;
+    }
+    .arrival-cta.dads-button {
+      width: 100%;
+      min-height: 56px;
+      border-radius: 999px;
+      justify-content: center;
+      font-size: 16px;
+      box-shadow: 0 12px 28px rgba(0,0,0,0.18);
+    }
+
+    /* ── 2画面目：届いたナイス詳細 ── */
+    .detail-view {
+      min-height: 100svh;
+      background: var(--color-neutral-white);
+      padding-bottom: 36px;
+    }
+    .nav-close {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 32px;
+      height: 32px;
+      color: var(--color-neutral-solid-gray-800);
+      text-decoration: none;
+    }
+    .detail-event {
+      padding: 18px 16px 16px;
+      background: var(--color-neutral-solid-gray-50);
+      border-bottom: 1px solid var(--color-neutral-solid-gray-100);
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .detail-event__meta {
+      background: transparent;
+      flex-direction: row;
+      gap: 14px;
+    }
+    .detail-view .detail-event__meta .event-meta__item {
+      display: block;
+      width: auto;
+      min-height: 0;
+      padding: 0;
+      border: 0;
+      border-radius: 0;
+      background: transparent;
+      box-shadow: none;
+      color: var(--color-neutral-solid-gray-700);
+    }
+    .detail-main {
+      padding: 22px 16px 0;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .nice-section-title {
+      margin: 0;
+      color: var(--color-neutral-solid-gray-900);
+      font-size: 18px;
+      font-weight: 800;
+      line-height: 1.45;
+    }
+    .nice-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .nice-card {
+      display: flex;
+      gap: 12px;
+      padding: 14px;
+      border: 1px solid var(--color-neutral-solid-gray-200);
+      border-radius: 12px;
+      background: var(--color-neutral-white);
+    }
+    .nice-card .participant-avatar {
+      width: 48px;
+      height: 48px;
+      flex: 0 0 auto;
+      box-shadow: 0 0 0 1px var(--color-neutral-solid-gray-200);
+    }
+    .nice-card__body {
+      flex: 1;
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 9px;
+    }
+    .nice-card__name {
+      margin: 0;
+      color: var(--color-neutral-solid-gray-900);
+      font-size: 15px;
+      font-weight: 800;
+      line-height: 1.4;
+    }
+    .nice-card__meta {
+      margin: 2px 0 0;
+      color: var(--color-neutral-solid-gray-500);
+      font-size: 12px;
+      font-weight: 700;
+      line-height: 1.5;
+    }
+    .nice-reactions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+    .nice-reaction {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 6px 9px;
+      border-radius: 999px;
+      background: var(--color-neutral-solid-gray-50);
+      border: 1px solid var(--color-neutral-solid-gray-200);
+      color: var(--color-neutral-solid-gray-800);
+      font-size: 12px;
+      font-weight: 700;
+      line-height: 1.4;
+    }
+    .nice-card__message {
+      margin: 0;
+      padding: 10px 12px;
+      border-radius: 10px;
+      background: var(--color-neutral-solid-gray-50);
+      color: var(--color-neutral-solid-gray-700);
+      font-size: 13px;
+      line-height: 1.65;
+    }
+    .detail-actions {
+      padding: 6px 0 0;
+      display: flex;
+      justify-content: center;
+    }
+    .detail-close-button.dads-button {
+      width: 100%;
+      min-height: 48px;
+      border-radius: 999px;
+      justify-content: center;
+      text-decoration: none;
+    }
+
+    @keyframes fade-up {
+      0% { opacity: 0; transform: translateY(14px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes pop-in {
+      0% { opacity: 0; transform: scale(0.76); }
+      70% { opacity: 1; transform: scale(1.04); }
+      100% { opacity: 1; transform: scale(1); }
+    }
+    @keyframes gentle-bounce {
+      0%, 100% { transform: translateY(0) rotate(-2deg); }
+      50% { transform: translateY(-6px) rotate(2deg); }
+    }
+    @keyframes pulse-ring {
+      0% { transform: scale(0.92); opacity: 1; }
+      100% { transform: scale(1.18); opacity: 0.2; }
+    }
+    @keyframes float-dot {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-12px); }
+    }
+    @keyframes confetti-fall {
+      0% { opacity: 0; transform: translate3d(0, -40px, 0) rotate(0deg); }
+      12% { opacity: 0.95; }
+      72% { opacity: 0.95; }
+      100% { opacity: 0; transform: translate3d(0, 92svh, 0) rotate(210deg); }
+    }
+    @keyframes confetti-sway {
+      0% { margin-left: -10px; }
+      100% { margin-left: 12px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .arrival-view::before,
+      .arrival-view::after,
+      .arrival-confetti span,
+      .arrival-event,
+      .nice-burst,
+      .nice-burst::before,
+      .nice-burst__icon,
+      .arrival-title,
+      .arrival-avatars,
+      .arrival-actions {
+        animation: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <section class="view arrival-view" id="arrival-view" aria-labelledby="arrival-title">
+    <div class="arrival-confetti" aria-hidden="true">
+      <span>✨</span>
+      <span>👍</span>
+      <span>🏀</span>
+      <span>🎉</span>
+      <span>👏</span>
+      <span>✨</span>
+      <span>🙌</span>
+      <span>🏀</span>
+      <span>👍</span>
+      <span>🎉</span>
+    </div>
+
+    <div class="arrival-main">
+      <div class="nice-burst" aria-hidden="true">
+        <div class="nice-burst__icon">👍</div>
+      </div>
+      <h1 class="arrival-title" id="arrival-title">ナイスが届いています！</h1>
+      <div class="arrival-avatars" id="arrival-avatars" aria-label="送信者"></div>
+    </div>
+
+    <div class="arrival-event" aria-label="イベント情報">
+      <div class="event-title-row">
+        <span class="event-place-icon" aria-hidden="true">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+            <path d="M12 21s7-5.6 7-12A7 7 0 1 0 5 9c0 6.4 7 12 7 12Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+            <circle cx="12" cy="9" r="2.3" stroke="currentColor" stroke-width="2"/>
+          </svg>
+        </span>
+        <h2 class="arrival-event__title" data-event-title></h2>
+      </div>
+      <div class="event-meta">
+        <span class="event-meta__item" data-event-date></span>
+        <span class="event-meta__item" data-event-place></span>
+      </div>
+    </div>
+
+    <div class="arrival-actions">
+      <button class="dads-button arrival-cta" data-size="lg" data-type="solid-fill" type="button" id="show-detail-button">届いたナイスを見る！</button>
+    </div>
+  </section>
+
+  <section class="view detail-view" id="detail-view" hidden>
+    <header class="nav-bar">
+      <a href="./参加者専用_エンジョイ-開催後.html" class="nav-close" aria-label="閉じる">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true">
+          <path d="M6 6l12 12M18 6 6 18" stroke-linecap="round"/>
+        </svg>
+      </a>
+      <h1 class="nav-title">届いたナイス</h1>
+      <span class="nav-spacer"></span>
+    </header>
+
+    <section class="detail-event" aria-label="イベント情報">
+      <div class="event-title-row">
+        <span class="event-place-icon" aria-hidden="true">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+            <path d="M12 21s7-5.6 7-12A7 7 0 1 0 5 9c0 6.4 7 12 7 12Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+            <circle cx="12" cy="9" r="2.3" stroke="currentColor" stroke-width="2"/>
+          </svg>
+        </span>
+        <h2 class="detail-event__title" data-event-title></h2>
+      </div>
+      <div class="event-meta detail-event__meta">
+        <span class="event-meta__item" data-event-date></span>
+        <span class="event-meta__item" data-event-place></span>
+      </div>
+    </section>
+
+    <main class="detail-main">
+      <h2 class="nice-section-title">一緒にプレーした人からのナイス</h2>
+      <div class="nice-list" id="nice-list"></div>
+      <div class="detail-actions">
+        <a class="dads-button detail-close-button" data-size="lg" data-type="outline" href="./参加者専用_エンジョイ-開催後.html">閉じる</a>
+      </div>
+    </main>
+  </section>
+
+  <script>
+    const nicePageData = {
+      eventTitle: 'バスケ エンジョイ交流戦 初心者・未経験者歓迎',
+      date: '4/12(土)',
+      place: '藤沢市スポーツセンター',
+      senders: [
+        {
+          name: '棚橋 七海',
+          team: 'チームB',
+          number: '12',
+          avatar: '../material/user-icon/Nanami.Tanahashi_棚橋七海.png',
+          reactions: ['ナイスプレー', '声かけ助かった'],
+          message: '最後まで声をかけてくれて心強かったです。'
+        },
+        {
+          name: '高杉 優作',
+          team: 'チームC',
+          number: '23',
+          avatar: '../material/user-icon/Yusaku.Takasugi_高杉優作.png',
+          reactions: ['チームプレー最高', 'また一緒に'],
+          message: ''
+        },
+        {
+          name: '栗田 茉奈',
+          team: 'チームB',
+          number: '9',
+          avatar: '../material/user-icon/Mana.Kurita_栗田茉奈.png',
+          reactions: ['楽しかった', 'また一緒に'],
+          message: '一緒のチームで楽しかったです！'
+        }
+      ]
+    };
+
+    const reactionIcons = {
+      'ナイスプレー': '👍',
+      'チームプレー最高': '🤝',
+      '声かけ助かった': '📣',
+      '楽しかった': '😊',
+      'また一緒に': '🏀'
+    };
+
+    function setEventText() {
+      document.querySelectorAll('[data-event-title]').forEach((node) => {
+        node.textContent = nicePageData.eventTitle;
+      });
+      document.querySelectorAll('[data-event-date]').forEach((node) => {
+        node.textContent = nicePageData.date;
+      });
+      document.querySelectorAll('[data-event-place]').forEach((node) => {
+        node.textContent = nicePageData.place;
+      });
+    }
+
+    function renderArrivalAvatars() {
+      document.getElementById('arrival-avatars').innerHTML = nicePageData.senders.map((sender) => (
+        '<div class="participant-avatar">' +
+          '<img src="' + sender.avatar + '" alt="' + sender.name + '">' +
+        '</div>'
+      )).join('');
+    }
+
+    function renderNiceList() {
+      document.getElementById('nice-list').innerHTML = nicePageData.senders.map((sender) => {
+        const reactions = sender.reactions.map((reaction) => (
+          '<span class="nice-reaction">' +
+            '<span aria-hidden="true">' + (reactionIcons[reaction] || '👍') + '</span>' +
+            '<span>' + reaction + '</span>' +
+          '</span>'
+        )).join('');
+        const message = sender.message
+          ? '<p class="nice-card__message">' + sender.message + '</p>'
+          : '';
+        return [
+          '<article class="nice-card">',
+          '  <div class="participant-avatar">',
+          '    <img src="' + sender.avatar + '" alt="' + sender.name + '">',
+          '  </div>',
+          '  <div class="nice-card__body">',
+          '    <div>',
+          '      <h3 class="nice-card__name">' + sender.name + '</h3>',
+          '      <p class="nice-card__meta">' + sender.team + ' · 背番号' + sender.number + '</p>',
+          '    </div>',
+          '    <div class="nice-reactions">' + reactions + '</div>',
+          message,
+          '  </div>',
+          '</article>'
+        ].join('');
+      }).join('');
+    }
+
+    function showDetail() {
+      document.getElementById('arrival-view').hidden = true;
+      document.getElementById('detail-view').hidden = false;
+      window.location.hash = 'detail';
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    setEventText();
+    renderArrivalAvatars();
+    renderNiceList();
+    document.getElementById('show-detail-button').addEventListener('click', showDetail);
+    if (window.location.hash === '#detail') {
+      showDetail();
+    }
+  </script>
+</body>
+</html>

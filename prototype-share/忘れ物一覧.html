@@ -85,6 +85,13 @@
       flex-direction: column;
       gap: 12px;
     }
+    .nav-back {
+      border: 0;
+      background: transparent;
+      padding: 0;
+      font: inherit;
+      cursor: pointer;
+    }
     .lost-card {
       display: flex;
       flex-direction: column;
@@ -162,16 +169,49 @@
     .lost-card__action[hidden] {
       display: none;
     }
+    .notice-banner {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin: 16px 0;
+      padding: 16px;
+      background: var(--color-neutral-white);
+      border-radius: 12px;
+      border: 1px solid var(--color-neutral-solid-gray-200);
+      text-decoration: none;
+      cursor: pointer;
+    }
+    .notice-banner__body {
+      flex: 1;
+      min-width: 0;
+    }
+    .notice-banner__label {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--color-neutral-solid-gray-800);
+      margin: 0 0 4px;
+      line-height: 1.2;
+    }
+    .notice-banner__text {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--color-neutral-solid-gray-600);
+      margin: 0;
+      line-height: 1.6;
+      white-space: normal;
+      overflow: visible;
+      text-overflow: clip;
+    }
   </style>
 </head>
 <body>
   <header class="nav-bar">
-    <a class="nav-back" href="./参加者専用_エンジョイ-開催後.html" aria-label="参加者専用ページへ戻る">
+    <button class="nav-back" type="button" aria-label="前の画面へ戻る" data-history-back>
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
         <polyline points="15 18 9 12 15 6"/>
       </svg>
       戻る
-    </a>
+    </button>
     <h1 class="nav-title">忘れ物</h1>
     <span class="nav-spacer" aria-hidden="true"></span>
   </header>
@@ -239,9 +279,26 @@
         <button class="dads-button lost-card__action" data-size="md" data-type="outline" type="button">返送を依頼する</button>
       </article>
     </section>
+
+    <a href="./グループチャット.html" class="notice-banner">
+      <img src="../material/icon/faq.svg" width="24" height="24" alt="" aria-hidden="true" style="flex-shrink:0">
+      <div class="notice-banner__body">
+        <p class="notice-banner__label">忘れ物のお問い合わせはこちら</p>
+        <p class="notice-banner__text">探している忘れ物が一覧にない場合は、こちらからお問い合わせください</p>
+      </div>
+      <svg xmlns="http://www.w3.org/2000/svg" height="16" viewBox="0 -960 960 960" width="10" fill="var(--color-neutral-solid-gray-400)" aria-hidden="true" style="flex-shrink:0">
+        <path d="m321-80-71-71 329-329-329-329 71-71 400 400L321-80Z"/>
+      </svg>
+    </a>
   </main>
 
   <script>
+    document.querySelector('[data-history-back]')?.addEventListener('click', function() {
+      if (window.history.length > 1) {
+        window.history.back();
+      }
+    });
+
     document.querySelectorAll('.lost-card').forEach(function(card) {
       var status = card.dataset.status;
       var action = card.querySelector('.lost-card__action');
