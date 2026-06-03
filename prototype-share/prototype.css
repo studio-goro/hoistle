@@ -318,15 +318,6 @@ body {
   margin-left: 12px;
   pointer-events: none;
 }
-.booking-footer__waitlist-icon {
-  width: 18px;
-  height: 18px;
-  flex-shrink: 0;
-  display: block;
-}
-.booking-footer__cta--waitlist:not(.is-waitlisted) .booking-footer__waitlist-icon {
-  filter: brightness(0) invert(1);
-}
 .booking-footer__price,
 .booking-footer__action {
   flex: 1;

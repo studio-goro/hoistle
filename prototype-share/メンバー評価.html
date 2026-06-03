@@ -46,17 +46,6 @@
       flex-direction: column;
       gap: 0;
     }
-    .step-label {
-      display: inline-flex;
-      width: fit-content;
-      padding: 4px 10px;
-      border-radius: 999px;
-      background: var(--color-neutral-solid-gray-100);
-      color: var(--color-neutral-solid-gray-700);
-      font-size: 12px;
-      font-weight: 700;
-      line-height: 1.4;
-    }
     .intro__title,
     .completion-title {
       margin: 0;
@@ -65,38 +54,6 @@
       line-height: 1.4;
       color: var(--color-neutral-solid-gray-900);
     }
-    .empty-note {
-      margin: 0;
-      font-size: 13px;
-      line-height: 1.7;
-      color: var(--color-neutral-solid-gray-600);
-    }
-    .member-list {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-    .member-card {
-      width: 100%;
-      border: 1px solid var(--color-neutral-solid-gray-200);
-      border-radius: 10px;
-      background: var(--color-neutral-white);
-      padding: 12px;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      text-align: left;
-      color: inherit;
-      font: inherit;
-      cursor: pointer;
-      transition: background 0.16s ease, border-color 0.16s ease, box-shadow 0.16s ease;
-    }
-    .member-card[aria-pressed="true"] {
-      border-color: var(--color-neutral-solid-gray-900);
-      background: var(--color-neutral-solid-gray-50);
-      box-shadow: inset 0 0 0 1px var(--color-neutral-solid-gray-900);
-    }
-    .member-card__avatar,
     .thanks-card__avatar,
     .completion-avatar {
       width: 44px;
@@ -107,7 +64,15 @@
       background: var(--color-neutral-solid-gray-100);
       box-shadow: 0 0 0 1px var(--color-neutral-solid-gray-200);
     }
-    .member-card__avatar img,
+    .thanks-card__avatar {
+      border: none;
+      padding: 0;
+      cursor: pointer;
+    }
+    .thanks-card__avatar:focus-visible {
+      outline: 3px solid var(--color-neutral-solid-gray-200);
+      outline-offset: 3px;
+    }
     .thanks-card__avatar img,
     .completion-avatar img {
       width: 100%;
@@ -116,12 +81,10 @@
       display: block;
       filter: grayscale(100%);
     }
-    .member-card__body,
     .thanks-card__body {
       flex: 1;
       min-width: 0;
     }
-    .member-card__name,
     .thanks-card__name {
       margin: 0;
       font-size: 16px;
@@ -129,30 +92,11 @@
       line-height: 1.4;
       color: var(--color-neutral-solid-gray-900);
     }
-    .member-card__meta,
     .thanks-card__meta {
       margin: 3px 0 0;
       font-size: 12px;
       line-height: 1.5;
       color: var(--color-neutral-solid-gray-500);
-    }
-    .member-card__state {
-      width: 24px;
-      height: 24px;
-      border-radius: 50%;
-      border: 1.5px solid var(--color-neutral-solid-gray-300);
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-      color: transparent;
-      font-size: 14px;
-      font-weight: 700;
-    }
-    .member-card[aria-pressed="true"] .member-card__state {
-      background: var(--color-neutral-solid-gray-900);
-      border-color: var(--color-neutral-solid-gray-900);
-      color: var(--color-neutral-white);
     }
     .thanks-list {
       display: flex;
@@ -230,6 +174,9 @@
       display: flex;
       flex-direction: column;
       gap: 6px;
+    }
+    .message-field[hidden] {
+      display: none;
     }
     .message-textarea {
       width: 100%;
@@ -361,19 +308,9 @@
     }
     .footer-actions {
       display: grid;
-      grid-template-columns: minmax(88px, auto) minmax(0, 1fr);
+      grid-template-columns: minmax(0, 1fr);
       align-items: center;
       gap: 12px;
-    }
-    .footer-actions.has-back {
-      grid-template-columns: minmax(76px, 0.34fr) minmax(0, 1fr);
-    }
-    .footer-count {
-      color: var(--color-neutral-solid-gray-800);
-      font-size: 14px;
-      font-weight: 700;
-      line-height: 1.5;
-      white-space: nowrap;
     }
     .footer-actions .dads-button {
       width: 100%;
@@ -382,7 +319,6 @@
       white-space: nowrap;
     }
     .footer-actions .dads-button[hidden],
-    .footer-count[hidden],
     .fixed-footer[hidden] {
       display: none;
     }
@@ -390,6 +326,49 @@
       align-self: center;
       width: auto;
       min-width: 180px;
+      border-radius: 999px;
+    }
+    .profile-sheet-card {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 12px;
+      padding: 8px 0 4px;
+    }
+    .profile-sheet-avatar {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      overflow: hidden;
+      background: var(--color-neutral-solid-gray-100);
+      box-shadow: 0 0 0 1px var(--color-neutral-solid-gray-200);
+    }
+    .profile-sheet-avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      filter: grayscale(100%);
+    }
+    .profile-sheet-name {
+      margin: 0;
+      color: var(--color-neutral-solid-gray-900);
+      font-size: 18px;
+      font-weight: 700;
+      line-height: 1.45;
+    }
+    .profile-sheet-text {
+      margin: 0;
+      color: var(--color-neutral-solid-gray-700);
+      font-size: 14px;
+      line-height: 1.75;
+      text-align: left;
+    }
+    .profile-sheet-follow.dads-button {
+      width: 100%;
+      margin-top: 4px;
+      justify-content: center;
       border-radius: 999px;
     }
     .completion-panel:not([hidden]) .completion-from {
@@ -512,22 +491,12 @@
   </div>
 
   <main class="main">
-    <div class="step-panel" id="select-step">
-      <section class="intro" aria-labelledby="select-title">
-        <span class="step-label">Step 1 / 2</span>
-        <h1 class="intro__title" id="select-title">送る人を選んでください</h1>
-      </section>
-
-      <section class="member-list" id="member-list" aria-label="送る人を選んでください"></section>
-    </div>
-
-    <div class="step-panel" id="thanks-step" hidden>
+    <div class="step-panel" id="thanks-step">
       <section class="intro" aria-labelledby="thanks-title">
-        <span class="step-label">Step 2 / 2</span>
-        <h1 class="intro__title" id="thanks-title">ひとこと選んでください</h1>
+        <h1 class="intro__title" id="thanks-title">送信対象ユーザー</h1>
       </section>
       <div class="error-box" id="send-error" role="alert">送信できませんでした。通信状況を確認して、もう一度お試しください。</div>
-      <section class="thanks-list" id="thanks-list" aria-label="届ける内容"></section>
+      <section class="thanks-list" id="thanks-list" aria-label="送信対象ユーザー一覧"></section>
     </div>
 
     <div class="step-panel completion-panel" id="complete-step" hidden>
@@ -550,18 +519,38 @@
 
   <footer class="fixed-footer" id="fixed-footer">
     <div class="footer-actions" id="footer-actions">
-      <button class="dads-button" data-size="lg" data-type="outline" type="button" id="back-action" hidden>戻る</button>
-      <span class="footer-count" id="footer-count" aria-live="polite">0人選択中</span>
-      <button class="dads-button" data-size="lg" data-type="solid-fill" type="button" id="primary-action" disabled>次へ</button>
+      <button class="dads-button" data-size="lg" data-type="solid-fill" type="button" id="primary-action" disabled>送信する</button>
     </div>
   </footer>
+
+  <dialog class="bottom-sheet" id="profile-sheet" aria-labelledby="profile-sheet-title">
+    <div class="sheet-handle" aria-hidden="true"></div>
+    <div class="sheet-header">
+      <h2 class="sheet-title" id="profile-sheet-title">プロフィール</h2>
+      <button class="sheet-close" type="button" id="profile-sheet-close" aria-label="閉じる">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <path d="M6 6l12 12M18 6 6 18" stroke-linecap="round"/>
+        </svg>
+      </button>
+    </div>
+    <div class="sheet-body">
+      <div class="profile-sheet-card">
+        <div class="profile-sheet-avatar">
+          <img id="profile-sheet-avatar" src="" alt="">
+        </div>
+        <p class="profile-sheet-name" id="profile-sheet-name"></p>
+        <p class="profile-sheet-text" id="profile-sheet-text"></p>
+        <button class="dads-button profile-sheet-follow" data-type="solid-fill" data-size="md" type="button">フォローする</button>
+      </div>
+    </div>
+  </dialog>
 
   <script>
     var params = new URLSearchParams(window.location.search);
     var returnUrl = params.get('return') || './参加者専用_エンジョイ-開催後.html';
     var eventId = params.get('eventId') || 'enjoy-after-001';
     var senderUserId = 'current-user-001';
-    var currentStep = 'select';
+    var currentStep = 'thanks';
     var selectedReceiverIds = [];
     var isSubmitting = false;
 
@@ -574,31 +563,31 @@
       { label: 'また一緒に', icon: '🏀' }
     ];
     var members = [
-      { id: 'nanami-tanahashi', avatar: '../material/user-icon/Nanami.Tanahashi_棚橋七海.png', name: '棚橋 七海', meta: 'チームB · 背番号12' },
-      { id: 'yusaku-takasugi', avatar: '../material/user-icon/Yusaku.Takasugi_高杉優作.png', name: '高杉 優作', meta: 'チームC · 背番号23' },
-      { id: 'hayato-akaiwa', avatar: '../material/user-icon/Hayato.Akaiwa_赤岩駿斗.png', name: '赤岩 駿斗', meta: 'チームA · 背番号4' },
-      { id: 'mana-kurita', avatar: '../material/user-icon/Mana.Kurita_栗田茉奈.png', name: '栗田 茉奈', meta: 'チームB · 背番号9' },
-      { id: 'hikaru-tezuka', avatar: '../material/user-icon/Hikaru.Tezuka_手塚光.png', name: '手塚 光', meta: 'チームC · 背番号15' },
-      { id: 'takeru-mukai', avatar: '../material/user-icon/Takeru .Mukai_向井猛.png', name: '向井 猛', meta: 'チームA · 背番号18' },
-      { id: 'yuichi-yoshimura', avatar: '../material/user-icon/Yuichi.Yoshimura_吉村優一.png', name: '吉村 優一', meta: 'チームB · 背番号21' }
+      { id: 'nanami-tanahashi', avatar: '../material/user-icon/Nanami.Tanahashi_棚橋七海.png', name: '棚橋 七海', meta: 'チームB · 背番号12', profileText: 'バレーとバスケが好きです。初心者の方も大歓迎！みんなで楽しく体を動かしましょう。' },
+      { id: 'yusaku-takasugi', avatar: '../material/user-icon/Yusaku.Takasugi_高杉優作.png', name: '高杉 優作', meta: 'チームC · 背番号23', profileText: 'バスケとランニングが好きです。週2〜3回活動しています。試合になると本気出します。初めての方も気軽に声かけてください！' },
+      { id: 'hayato-akaiwa', avatar: '../material/user-icon/Hayato.Akaiwa_赤岩駿斗.png', name: '赤岩 駿斗', meta: 'チームA · 背番号4', profileText: 'スポーツ全般好きです。仕事終わりに軽く動けるイベントをよく探しています！よろしく！' },
+      { id: 'mana-kurita', avatar: '../material/user-icon/Mana.Kurita_栗田茉奈.png', name: '栗田 茉奈', meta: 'チームB · 背番号9', profileText: 'テニスとランニングが好きです。健康のために体を動かせる仲間を探しています！' },
+      { id: 'hikaru-tezuka', avatar: '../material/user-icon/Hikaru.Tezuka_手塚光.png', name: '手塚 光', meta: 'チームC · 背番号15', profileText: '週末は必ずスポーツしています。バスケのスリーポイントが得意です！' },
+      { id: 'takeru-mukai', avatar: '../material/user-icon/Takeru .Mukai_向井猛.png', name: '向井 猛', meta: 'チームA · 背番号18', profileText: 'サッカーメインですが、最近バスケにもハマってます。フットワーク得意です。' },
+      { id: 'yuichi-yoshimura', avatar: '../material/user-icon/Yuichi.Yoshimura_吉村優一.png', name: '吉村 優一', meta: 'チームB · 背番号21', profileText: '週1〜2回活動しています。仕事帰りに気軽に参加できるイベントが好きです。' }
     ];
     var thanksDrafts = {};
 
     var closeLink = document.getElementById('close-link');
     var screenTitle = document.getElementById('screen-title');
-    var selectStep = document.getElementById('select-step');
     var thanksStep = document.getElementById('thanks-step');
     var completeStep = document.getElementById('complete-step');
-    var memberList = document.getElementById('member-list');
     var thanksList = document.getElementById('thanks-list');
     var sendError = document.getElementById('send-error');
     var primaryAction = document.getElementById('primary-action');
-    var backAction = document.getElementById('back-action');
-    var footerActions = document.getElementById('footer-actions');
     var fixedFooter = document.getElementById('fixed-footer');
-    var footerCount = document.getElementById('footer-count');
     var returnLink = document.getElementById('return-link');
     var completeVisualReceivers = document.getElementById('complete-visual-receivers');
+    var profileSheet = document.getElementById('profile-sheet');
+    var profileSheetClose = document.getElementById('profile-sheet-close');
+    var profileSheetAvatar = document.getElementById('profile-sheet-avatar');
+    var profileSheetName = document.getElementById('profile-sheet-name');
+    var profileSheetText = document.getElementById('profile-sheet-text');
 
     closeLink.href = returnUrl;
     returnLink.href = withThanksCompleted(returnUrl);
@@ -627,50 +616,25 @@
       return url.href;
     }
 
-    function renderMemberList() {
-      memberList.innerHTML = members.map(function (member) {
-        var selected = selectedReceiverIds.includes(member.id);
-        return [
-          '<button class="member-card" type="button" data-receiver-id="' + member.id + '" aria-pressed="' + selected + '">',
-          '  <span class="member-card__avatar"><img src="' + member.avatar + '" alt="' + member.name + '"></span>',
-          '  <span class="member-card__body">',
-          '    <span class="member-card__name">' + member.name + '</span>',
-          '    <span class="member-card__meta">' + member.meta + '</span>',
-          '  </span>',
-          '  <span class="member-card__state" aria-hidden="true">✓</span>',
-          '</button>'
-        ].join('');
-      }).join('');
-
-      memberList.querySelectorAll('.member-card').forEach(function (card) {
-        card.addEventListener('click', function () {
-          toggleReceiver(card.dataset.receiverId);
-        });
-      });
-      updateSelectFooter();
-    }
-
-    function toggleReceiver(receiverUserId) {
-      if (selectedReceiverIds.includes(receiverUserId)) {
-        selectedReceiverIds = selectedReceiverIds.filter(function (id) { return id !== receiverUserId; });
+    function openProfileSheet(receiverUserId) {
+      var member = getMember(receiverUserId);
+      if (!member) return;
+      profileSheetAvatar.src = member.avatar;
+      profileSheetAvatar.alt = member.name;
+      profileSheetName.textContent = member.name;
+      profileSheetText.textContent = member.profileText;
+      if (typeof profileSheet.showModal === 'function') {
+        profileSheet.showModal();
       } else {
-        selectedReceiverIds.push(receiverUserId);
-        ensureDraft(receiverUserId);
+        profileSheet.setAttribute('open', '');
       }
-      renderMemberList();
-    }
-
-    function updateSelectFooter() {
-      var count = selectedReceiverIds.length;
-      footerCount.textContent = count + '人選択中';
-      primaryAction.disabled = count === 0;
-      primaryAction.textContent = '次へ';
     }
 
     function renderThanksList() {
       thanksList.innerHTML = selectedReceiverIds.map(function (receiverUserId) {
         var member = getMember(receiverUserId);
         var draft = ensureDraft(receiverUserId);
+        var hasReaction = draft.selectedReactions.length > 0;
         var chips = reactions.map(function (reaction) {
           var pressed = draft.selectedReactions.includes(reaction.label);
           return [
@@ -683,7 +647,7 @@
         return [
           '<article class="thanks-card" data-thanks-card="' + receiverUserId + '">',
           '  <div class="thanks-card__profile">',
-          '    <div class="thanks-card__avatar"><img src="' + member.avatar + '" alt="' + member.name + '"></div>',
+          '    <button class="thanks-card__avatar" type="button" data-profile-id="' + receiverUserId + '" aria-label="' + member.name + 'のプロフィールを表示"><img src="' + member.avatar + '" alt="' + member.name + '"></button>',
           '    <div class="thanks-card__body">',
           '      <h2 class="thanks-card__name">' + member.name + '</h2>',
           '      <p class="thanks-card__meta">' + member.meta + '</p>',
@@ -692,7 +656,7 @@
           '  <div class="reaction-group">',
           '    <div class="reaction-chips" role="group" aria-label="' + member.name + 'へ送る一言">' + chips + '</div>',
           '  </div>',
-          '  <div class="message-field">',
+          '  <div class="message-field"' + (hasReaction ? '' : ' hidden') + '>',
           '    <label class="message-label" for="message-' + receiverUserId + '">ひとこと添える（任意）</label>',
           '    <textarea class="message-textarea" id="message-' + receiverUserId + '" data-message-for="' + receiverUserId + '" placeholder="例：声をかけてくれて嬉しかったです">' + draft.optionalMessage + '</textarea>',
           '  </div>',
@@ -700,6 +664,11 @@
         ].join('');
       }).join('');
 
+      thanksList.querySelectorAll('[data-profile-id]').forEach(function (button) {
+        button.addEventListener('click', function () {
+          openProfileSheet(button.dataset.profileId);
+        });
+      });
       thanksList.querySelectorAll('.reaction-chip').forEach(function (chip) {
         chip.addEventListener('click', function () {
           var receiverUserId = chip.dataset.receiverId;
@@ -721,35 +690,14 @@
       });
     }
 
-    function showSelectStep() {
-      currentStep = 'select';
-      selectStep.hidden = false;
-      thanksStep.hidden = true;
-      completeStep.hidden = true;
-      fixedFooter.hidden = false;
-      screenTitle.textContent = 'ナイスを送る';
-      footerCount.hidden = false;
-      footerCount.textContent = selectedReceiverIds.length + '人選択中';
-      primaryAction.textContent = '次へ';
-      primaryAction.disabled = selectedReceiverIds.length === 0;
-      backAction.hidden = true;
-      footerActions.classList.remove('has-back');
-      sendError.classList.remove('is-visible');
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
-
     function showThanksStep() {
       currentStep = 'thanks';
-      selectStep.hidden = true;
       thanksStep.hidden = false;
       completeStep.hidden = true;
       fixedFooter.hidden = false;
-      screenTitle.textContent = 'ひとこと選んでください';
-      footerCount.hidden = true;
       primaryAction.textContent = '送信する';
       primaryAction.disabled = false;
-      backAction.hidden = false;
-      footerActions.classList.add('has-back');
+      screenTitle.textContent = 'ナイスを送る';
       sendError.classList.remove('is-visible');
       renderThanksList();
       window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -757,7 +705,6 @@
 
     function showCompleteStep(payload) {
       currentStep = 'complete';
-      selectStep.hidden = true;
       thanksStep.hidden = true;
       completeStep.hidden = false;
       fixedFooter.hidden = true;
@@ -825,15 +772,19 @@
     }
 
     primaryAction.addEventListener('click', function () {
-      if (currentStep === 'select') {
-        showThanksStep();
-        return;
-      }
       if (currentStep === 'thanks') submitThanks();
     });
 
-    backAction.addEventListener('click', showSelectStep);
-    renderMemberList();
+    profileSheetClose.addEventListener('click', function () {
+      profileSheet.close();
+    });
+    profileSheet.addEventListener('click', function (event) {
+      if (event.target === profileSheet) profileSheet.close();
+    });
+
+    selectedReceiverIds = members.map(function (member) { return member.id; });
+    selectedReceiverIds.forEach(ensureDraft);
+    showThanksStep();
   </script>
   <script src="./prototype-map.js"></script>
 </body>

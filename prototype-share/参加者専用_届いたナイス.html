@@ -9,6 +9,8 @@
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100..900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../design-system/design-system-example-components-html-main/src/global.css">
   <link rel="stylesheet" href="../design-system/design-system-example-components-html-main/src/components/button/button.css">
+  <link rel="stylesheet" href="../design-system/design-system-example-components-html-main/src/components/chip-label/chip-label.css">
+  <link rel="stylesheet" href="../design-system/design-system-example-components-html-main/src/components/textarea/textarea.css">
   <link rel="stylesheet" href="./prototype.css">
   <style>
     body {
@@ -221,6 +223,16 @@
     .arrival-avatars .participant-avatar + .participant-avatar {
       margin-left: -14px;
     }
+    .profile-avatar-button {
+      border: 0;
+      padding: 0;
+      cursor: pointer;
+      font: inherit;
+    }
+    .profile-avatar-button:focus-visible {
+      outline: 3px solid var(--color-neutral-solid-gray-200);
+      outline-offset: 3px;
+    }
     .arrival-actions {
       animation: fade-up 0.42s ease-out 0.86s both;
     }
@@ -352,6 +364,16 @@
       font-size: 13px;
       line-height: 1.65;
     }
+    .nice-card__actions {
+      padding-top: 2px;
+    }
+    .nice-reply-button.dads-button {
+      width: 100%;
+      min-height: 40px;
+      border-radius: 999px;
+      justify-content: center;
+      text-decoration: none;
+    }
     .detail-actions {
       padding: 6px 0 0;
       display: flex;
@@ -363,6 +385,177 @@
       border-radius: 999px;
       justify-content: center;
       text-decoration: none;
+    }
+    .reply-recipient {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px;
+      border: 1px solid var(--color-neutral-solid-gray-200);
+      border-radius: 12px;
+      background: var(--color-neutral-solid-gray-50);
+    }
+    .reply-recipient .participant-avatar {
+      width: 48px;
+      height: 48px;
+      flex: 0 0 auto;
+      box-shadow: 0 0 0 1px var(--color-neutral-solid-gray-200);
+    }
+    .reply-recipient__body {
+      min-width: 0;
+      flex: 1;
+    }
+    .reply-recipient__label {
+      margin: 0 0 2px;
+      color: var(--color-neutral-solid-gray-500);
+      font-size: 12px;
+      font-weight: 700;
+      line-height: 1.5;
+    }
+    .reply-recipient__name {
+      margin: 0;
+      color: var(--color-neutral-solid-gray-900);
+      font-size: 16px;
+      font-weight: 800;
+      line-height: 1.45;
+    }
+    .reply-reactions {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 8px;
+    }
+    .reply-reaction.dads-chip-label {
+      min-height: 58px;
+      width: 100%;
+      padding: 7px 4px;
+      border: 1.5px solid var(--color-neutral-solid-gray-300);
+      background: var(--color-neutral-white);
+      color: var(--color-neutral-solid-gray-700);
+      border-radius: 999px;
+      cursor: pointer;
+      font-family: inherit;
+      font-size: 11px;
+      font-weight: 700;
+      line-height: 1.25;
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 3px;
+      white-space: normal;
+    }
+    .reply-reaction[aria-pressed="true"] {
+      background: var(--color-neutral-solid-gray-900);
+      border-color: var(--color-neutral-solid-gray-900);
+      color: var(--color-neutral-white);
+    }
+    .reply-reaction__icon {
+      font-size: 18px;
+      line-height: 1;
+    }
+    .reply-message-field {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .reply-message-field[hidden] {
+      display: none;
+    }
+    .reply-message-label {
+      margin: 0;
+      color: var(--color-neutral-solid-gray-600);
+      font-size: 12px;
+      font-weight: 700;
+    }
+    .reply-message-textarea {
+      width: 100%;
+      min-height: 72px;
+      padding: 10px 12px;
+      border: 1.5px solid var(--color-neutral-solid-gray-300);
+      border-radius: 8px;
+      background: var(--color-neutral-white);
+      color: var(--color-neutral-solid-gray-800);
+      font: inherit;
+      line-height: 1.6;
+      resize: vertical;
+      box-sizing: border-box;
+    }
+    .reply-send-button.dads-button {
+      width: 100%;
+      min-height: 48px;
+      border-radius: 999px;
+      justify-content: center;
+    }
+    .reply-complete-toast {
+      position: fixed;
+      left: 50%;
+      bottom: max(18px, env(safe-area-inset-bottom));
+      z-index: 20;
+      width: min(calc(100% - 32px), 358px);
+      min-height: 48px;
+      padding: 12px 16px;
+      border-radius: 999px;
+      background: var(--color-neutral-solid-gray-900);
+      color: var(--color-neutral-white);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      font-weight: 800;
+      line-height: 1.45;
+      box-shadow: 0 12px 28px rgba(0,0,0,0.18);
+      transform: translate(-50%, 24px);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.22s ease, transform 0.22s ease;
+      box-sizing: border-box;
+    }
+    .reply-complete-toast.is-visible {
+      opacity: 1;
+      transform: translate(-50%, 0);
+    }
+    .profile-sheet-card {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 12px;
+      padding: 8px 0 4px;
+    }
+    .profile-sheet-avatar {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      overflow: hidden;
+      background: var(--color-neutral-solid-gray-100);
+      box-shadow: 0 0 0 1px var(--color-neutral-solid-gray-200);
+    }
+    .profile-sheet-avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      filter: grayscale(100%);
+    }
+    .profile-sheet-name {
+      margin: 0;
+      color: var(--color-neutral-solid-gray-900);
+      font-size: 18px;
+      font-weight: 700;
+      line-height: 1.45;
+    }
+    .profile-sheet-text {
+      margin: 0;
+      color: var(--color-neutral-solid-gray-700);
+      font-size: 14px;
+      line-height: 1.75;
+      text-align: left;
+    }
+    .profile-sheet-follow.dads-button {
+      width: 100%;
+      margin-top: 4px;
+      justify-content: center;
+      border-radius: 999px;
     }
 
     @keyframes fade-up {
@@ -492,6 +685,59 @@
     </main>
   </section>
 
+  <dialog class="bottom-sheet" id="reply-sheet" aria-labelledby="reply-sheet-title">
+    <div class="sheet-handle" aria-hidden="true"></div>
+    <div class="sheet-header">
+      <h2 class="sheet-title" id="reply-sheet-title">ナイスを送り返す</h2>
+      <button class="sheet-close" type="button" id="reply-sheet-close" aria-label="閉じる">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <path d="M6 6l12 12M18 6 6 18" stroke-linecap="round"/>
+        </svg>
+      </button>
+    </div>
+    <div class="sheet-body">
+      <div class="reply-recipient">
+        <div class="participant-avatar">
+          <img id="reply-recipient-avatar" src="" alt="">
+        </div>
+        <div class="reply-recipient__body">
+          <p class="reply-recipient__label">送信先</p>
+          <p class="reply-recipient__name" id="reply-recipient-name"></p>
+        </div>
+      </div>
+      <div class="reply-reactions" id="reply-reactions" role="group" aria-label="送り返すナイス"></div>
+      <div class="reply-message-field" id="reply-message-field" hidden>
+        <label class="reply-message-label" for="reply-message">ひとこと添える（任意）</label>
+        <textarea class="reply-message-textarea" id="reply-message" placeholder="例：こちらこそありがとうございました"></textarea>
+      </div>
+      <button class="dads-button reply-send-button" data-size="lg" data-type="solid-fill" type="button" id="reply-send-button" disabled>送信する</button>
+    </div>
+  </dialog>
+
+  <dialog class="bottom-sheet" id="profile-sheet" aria-labelledby="profile-sheet-title">
+    <div class="sheet-handle" aria-hidden="true"></div>
+    <div class="sheet-header">
+      <h2 class="sheet-title" id="profile-sheet-title">プロフィール</h2>
+      <button class="sheet-close" type="button" id="profile-sheet-close" aria-label="閉じる">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <path d="M6 6l12 12M18 6 6 18" stroke-linecap="round"/>
+        </svg>
+      </button>
+    </div>
+    <div class="sheet-body">
+      <div class="profile-sheet-card">
+        <div class="profile-sheet-avatar">
+          <img id="profile-sheet-avatar" src="" alt="">
+        </div>
+        <p class="profile-sheet-name" id="profile-sheet-name"></p>
+        <p class="profile-sheet-text" id="profile-sheet-text"></p>
+        <button class="dads-button profile-sheet-follow" data-type="solid-fill" data-size="md" type="button">フォローする</button>
+      </div>
+    </div>
+  </dialog>
+
+  <div class="reply-complete-toast" id="reply-complete-toast" role="status" aria-live="polite" aria-atomic="true">ナイスを送り返しました</div>
+
   <script>
     const nicePageData = {
       eventTitle: 'バスケ エンジョイ交流戦 初心者・未経験者歓迎',
@@ -499,26 +745,32 @@
       place: '藤沢市スポーツセンター',
       senders: [
         {
+          id: 'nanami-tanahashi',
           name: '棚橋 七海',
           team: 'チームB',
           number: '12',
           avatar: '../material/user-icon/Nanami.Tanahashi_棚橋七海.png',
+          profileText: 'バレーとバスケが好きです。初心者の方も大歓迎！みんなで楽しく体を動かしましょう。',
           reactions: ['ナイスプレー', '声かけ助かった'],
           message: '最後まで声をかけてくれて心強かったです。'
         },
         {
+          id: 'yusaku-takasugi',
           name: '高杉 優作',
           team: 'チームC',
           number: '23',
           avatar: '../material/user-icon/Yusaku.Takasugi_高杉優作.png',
+          profileText: 'バスケとランニングが好きです。週2〜3回活動しています。試合になると本気出します。初めての方も気軽に声かけてください！',
           reactions: ['チームプレー最高', 'また一緒に'],
           message: ''
         },
         {
+          id: 'mana-kurita',
           name: '栗田 茉奈',
           team: 'チームB',
           number: '9',
           avatar: '../material/user-icon/Mana.Kurita_栗田茉奈.png',
+          profileText: 'テニスとランニングが好きです。健康のために体を動かせる仲間を探しています！',
           reactions: ['楽しかった', 'また一緒に'],
           message: '一緒のチームで楽しかったです！'
         }
@@ -529,9 +781,24 @@
       'ナイスプレー': '👍',
       'チームプレー最高': '🤝',
       '声かけ助かった': '📣',
+      'ありがとう': '🙏',
       '楽しかった': '😊',
       'また一緒に': '🏀'
     };
+    const replyReactionOptions = [
+      'ナイスプレー',
+      'チームプレー最高',
+      '声かけ助かった',
+      'ありがとう',
+      '楽しかった',
+      'また一緒に'
+    ];
+    const replyState = {
+      sender: null,
+      selectedReactions: [],
+      optionalMessage: ''
+    };
+    let replyToastTimer = null;
 
     function setEventText() {
       document.querySelectorAll('[data-event-title]').forEach((node) => {
@@ -547,10 +814,11 @@
 
     function renderArrivalAvatars() {
       document.getElementById('arrival-avatars').innerHTML = nicePageData.senders.map((sender) => (
-        '<div class="participant-avatar">' +
+        '<button class="participant-avatar profile-avatar-button" type="button" data-profile-id="' + sender.id + '" aria-label="' + sender.name + 'のプロフィールを表示">' +
           '<img src="' + sender.avatar + '" alt="' + sender.name + '">' +
-        '</div>'
+        '</button>'
       )).join('');
+      bindProfileButtons();
     }
 
     function renderNiceList() {
@@ -565,10 +833,10 @@
           ? '<p class="nice-card__message">' + sender.message + '</p>'
           : '';
         return [
-          '<article class="nice-card">',
-          '  <div class="participant-avatar">',
+          '<article class="nice-card" data-sender-id="' + sender.id + '">',
+          '  <button class="participant-avatar profile-avatar-button" type="button" data-profile-id="' + sender.id + '" aria-label="' + sender.name + 'のプロフィールを表示">',
           '    <img src="' + sender.avatar + '" alt="' + sender.name + '">',
-          '  </div>',
+          '  </button>',
           '  <div class="nice-card__body">',
           '    <div>',
           '      <h3 class="nice-card__name">' + sender.name + '</h3>',
@@ -576,10 +844,20 @@
           '    </div>',
           '    <div class="nice-reactions">' + reactions + '</div>',
           message,
+          '    <div class="nice-card__actions">',
+          '      <button class="dads-button nice-reply-button" data-size="md" data-type="outline" type="button" data-reply-id="' + sender.id + '">送り返す</button>',
+          '    </div>',
           '  </div>',
           '</article>'
         ].join('');
       }).join('');
+
+      document.querySelectorAll('[data-reply-id]').forEach((button) => {
+        button.addEventListener('click', () => {
+          openReplySheet(button.dataset.replyId);
+        });
+      });
+      bindProfileButtons();
     }
 
     function showDetail() {
@@ -589,10 +867,143 @@
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
+    function getSender(senderId) {
+      return nicePageData.senders.find((sender) => sender.id === senderId);
+    }
+
+    function openProfileSheet(senderId) {
+      const sender = getSender(senderId);
+      if (!sender) return;
+      document.getElementById('profile-sheet-avatar').src = sender.avatar;
+      document.getElementById('profile-sheet-avatar').alt = sender.name;
+      document.getElementById('profile-sheet-name').textContent = sender.name;
+      document.getElementById('profile-sheet-text').textContent = sender.profileText || '';
+      const sheet = document.getElementById('profile-sheet');
+      if (typeof sheet.showModal === 'function') {
+        sheet.showModal();
+      } else {
+        sheet.setAttribute('open', '');
+      }
+    }
+
+    function closeProfileSheet() {
+      const sheet = document.getElementById('profile-sheet');
+      if (typeof sheet.close === 'function') {
+        sheet.close();
+      } else {
+        sheet.removeAttribute('open');
+      }
+    }
+
+    function bindProfileButtons() {
+      document.querySelectorAll('[data-profile-id]').forEach((button) => {
+        button.addEventListener('click', () => {
+          openProfileSheet(button.dataset.profileId);
+        });
+      });
+    }
+
+    function renderReplyReactions() {
+      document.getElementById('reply-reactions').innerHTML = replyReactionOptions.map((reaction) => {
+        const pressed = replyState.selectedReactions.includes(reaction);
+        return [
+          '<button class="dads-chip-label reply-reaction" data-style="outline" data-color="gray" type="button" data-reply-reaction="' + reaction + '" aria-pressed="' + pressed + '">',
+          '  <span class="reply-reaction__icon" aria-hidden="true">' + (reactionIcons[reaction] || '👍') + '</span>',
+          '  <span>' + reaction + '</span>',
+          '</button>'
+        ].join('');
+      }).join('');
+
+      document.querySelectorAll('[data-reply-reaction]').forEach((button) => {
+        button.addEventListener('click', () => {
+          const reaction = button.dataset.replyReaction;
+          if (replyState.selectedReactions.includes(reaction)) {
+            replyState.selectedReactions = replyState.selectedReactions.filter((item) => item !== reaction);
+          } else {
+            replyState.selectedReactions.push(reaction);
+          }
+          updateReplySheet();
+        });
+      });
+    }
+
+    function updateReplySheet() {
+      renderReplyReactions();
+      const hasReaction = replyState.selectedReactions.length > 0;
+      document.getElementById('reply-message-field').hidden = !hasReaction;
+      document.getElementById('reply-send-button').disabled = !hasReaction;
+    }
+
+    function openReplySheet(senderId) {
+      const sender = getSender(senderId);
+      if (!sender) return;
+      replyState.sender = sender;
+      replyState.selectedReactions = [];
+      replyState.optionalMessage = '';
+      document.getElementById('reply-recipient-avatar').src = sender.avatar;
+      document.getElementById('reply-recipient-avatar').alt = sender.name;
+      document.getElementById('reply-recipient-name').textContent = sender.name;
+      document.getElementById('reply-message').value = '';
+      updateReplySheet();
+      const sheet = document.getElementById('reply-sheet');
+      if (typeof sheet.showModal === 'function') {
+        sheet.showModal();
+      } else {
+        sheet.setAttribute('open', '');
+      }
+    }
+
+    function closeReplySheet() {
+      const sheet = document.getElementById('reply-sheet');
+      if (typeof sheet.close === 'function') {
+        sheet.close();
+      } else {
+        sheet.removeAttribute('open');
+      }
+    }
+
+    function showReplyToast() {
+      const toast = document.getElementById('reply-complete-toast');
+      toast.classList.add('is-visible');
+      window.clearTimeout(replyToastTimer);
+      replyToastTimer = window.setTimeout(() => {
+        toast.classList.remove('is-visible');
+      }, 2400);
+    }
+
+    function submitReplyNice() {
+      if (!replyState.sender || replyState.selectedReactions.length === 0) return;
+      replyState.optionalMessage = document.getElementById('reply-message').value;
+      const payload = {
+        eventTitle: nicePageData.eventTitle,
+        receiverUserId: replyState.sender.id,
+        receiverName: replyState.sender.name,
+        selectedReaction: replyState.selectedReactions.slice(),
+        optionalMessage: replyState.optionalMessage.trim(),
+        sentAt: new Date().toISOString()
+      };
+      const key = 'whistle:thanks-reply:' + replyState.sender.id;
+      window.localStorage.setItem(key, JSON.stringify(payload));
+      closeReplySheet();
+      showReplyToast();
+    }
+
     setEventText();
     renderArrivalAvatars();
     renderNiceList();
     document.getElementById('show-detail-button').addEventListener('click', showDetail);
+    document.getElementById('reply-sheet-close').addEventListener('click', closeReplySheet);
+    document.getElementById('reply-sheet').addEventListener('click', (event) => {
+      if (event.target === document.getElementById('reply-sheet')) closeReplySheet();
+    });
+    document.getElementById('reply-message').addEventListener('input', (event) => {
+      replyState.optionalMessage = event.target.value;
+    });
+    document.getElementById('reply-send-button').addEventListener('click', submitReplyNice);
+    document.getElementById('profile-sheet-close').addEventListener('click', closeProfileSheet);
+    document.getElementById('profile-sheet').addEventListener('click', (event) => {
+      if (event.target === document.getElementById('profile-sheet')) closeProfileSheet();
+    });
     if (window.location.hash === '#detail') {
       showDetail();
     }

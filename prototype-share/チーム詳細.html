@@ -183,9 +183,19 @@
       min-height: 76px;
       padding: 12px 0;
       border-bottom: 1px solid var(--color-neutral-solid-gray-100);
+      color: inherit;
+      text-decoration: none;
+      cursor: pointer;
     }
     .planned-member:last-child {
       border-bottom: none;
+    }
+    .planned-member:hover {
+      background: var(--color-neutral-solid-gray-50);
+    }
+    .planned-member:focus-visible {
+      outline: 2px solid var(--color-neutral-solid-gray-900);
+      outline-offset: 2px;
     }
     .planned-member__avatar {
       width: 52px;
@@ -333,7 +343,7 @@
         <h2 id="planned-members-title" class="section-title">参加予定のメンバー</h2>
       </div>
       <div class="planned-member-list">
-        <div class="planned-member" data-prev-same="true" data-prev-label="前回も一緒！">
+        <a class="planned-member" href="./ユーザープロフィール.html?user=asahi" data-prev-same="true" data-prev-label="友達">
           <img class="planned-member__avatar" src="../material/user-icon/Toshinari.Asahi_旭俊成.png" alt="旭俊成">
           <div class="planned-member__body">
             <p class="planned-member__name">旭 俊成</p>
@@ -341,8 +351,8 @@
             <p class="planned-member__count">一緒になった回数：3回</p>
           </div>
           <span class="planned-member__meta"></span>
-        </div>
-        <div class="planned-member" data-prev-same="true" data-prev-label="前回も一緒！">
+        </a>
+        <a class="planned-member" href="./ユーザープロフィール.html?user=takasugi" data-prev-same="true" data-prev-label="友達">
           <img class="planned-member__avatar" src="../material/user-icon/Yusaku.Takasugi_高杉優作.png" alt="高杉優作">
           <div class="planned-member__body">
             <p class="planned-member__name">高杉 優作</p>
@@ -350,16 +360,16 @@
             <p class="planned-member__count">一緒になった回数：2回</p>
           </div>
           <span class="planned-member__meta"></span>
-        </div>
-        <div class="planned-member" data-prev-same="false">
+        </a>
+        <a class="planned-member" href="./ユーザープロフィール.html?user=tanahashi" data-prev-same="false">
           <img class="planned-member__avatar" src="../material/user-icon/Nanami.Tanahashi_棚橋七海.png" alt="棚橋七海">
           <div class="planned-member__body">
             <p class="planned-member__name">棚橋 七海</p>
             <p class="planned-member__team">Aチーム</p>
           </div>
           <span class="planned-member__meta"></span>
-        </div>
-        <div class="planned-member" data-prev-same="false">
+        </a>
+        <a class="planned-member" href="./ユーザープロフィール.html?user=kurita" data-prev-same="false">
           <img class="planned-member__avatar" src="../material/user-icon/Mana.Kurita_栗田茉奈.png" alt="栗田茉奈">
           <div class="planned-member__body">
             <p class="planned-member__name">栗田 茉奈</p>
@@ -367,7 +377,7 @@
             <p class="planned-member__count">一緒になった回数：1回</p>
           </div>
           <span class="planned-member__meta"></span>
-        </div>
+        </a>
       </div>
     </section>
   </main>
@@ -382,7 +392,7 @@
       if (!meta || meta.querySelector('.planned-member__badge')) return;
       const badge = document.createElement('span');
       badge.className = 'planned-member__badge';
-      badge.textContent = member.dataset.prevLabel || '前回も一緒！';
+      badge.textContent = member.dataset.prevLabel || '友達';
       meta.appendChild(badge);
     });
   </script>

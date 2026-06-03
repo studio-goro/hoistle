@@ -905,7 +905,7 @@
     </div>
     <div class="sheet-body">
       <div class="social-proof-user-list">
-        <div class="social-proof-user" data-prev-same="true" data-prev-label="前回も一緒！">
+        <div class="social-proof-user" data-prev-same="true" data-prev-label="友達">
           <img class="social-proof-user__avatar" src="../material/user-icon/Toshinari.Asahi_旭俊成.png" alt="旭俊成">
           <div class="social-proof-user__body">
             <p class="social-proof-user__name">旭 俊成</p>
@@ -915,7 +915,7 @@
           <div class="social-proof-user__meta">
           </div>
         </div>
-        <div class="social-proof-user" data-prev-same="true" data-prev-label="昨日も一緒">
+        <div class="social-proof-user" data-prev-same="true" data-prev-label="友達">
           <img class="social-proof-user__avatar" src="../material/user-icon/Yusaku.Takasugi_高杉優作.png" alt="高杉優作">
           <div class="social-proof-user__body">
             <p class="social-proof-user__name">高杉 優作</p>
@@ -935,7 +935,7 @@
           <div class="social-proof-user__meta">
           </div>
         </div>
-        <div class="social-proof-user" data-prev-same="true" data-prev-label="前回も一緒！">
+        <div class="social-proof-user" data-prev-same="true" data-prev-label="友達">
           <img class="social-proof-user__avatar" src="../material/user-icon/Mana.Kurita_栗田茉奈.png" alt="栗田茉奈">
           <div class="social-proof-user__body">
             <p class="social-proof-user__name">栗田 茉奈</p>
@@ -976,7 +976,6 @@
       <button class="booking-footer__cta booking-footer__cta--waitlist" type="button" aria-label="キャンセル待ちをする" data-waitlist-button>
         <span class="booking-footer__waitlist-status" aria-hidden="true">満員</span>
         <span class="booking-footer__action">
-          <img class="booking-footer__waitlist-icon" src="../material/icon/heart-filled.svg" alt="" aria-hidden="true" data-waitlist-icon data-icon-default="../material/icon/heart-filled.svg" data-icon-active="../material/icon/heart-filled.svg">
           <span data-waitlist-action-text>キャンセル待ちをする</span>
         </span>
       </button>
@@ -1007,7 +1006,7 @@
       if (!meta || meta.querySelector('.social-proof-user__badge')) return;
       const badge = document.createElement('span');
       badge.className = 'social-proof-user__badge';
-      badge.textContent = user.dataset.prevLabel || '前回も一緒！';
+      badge.textContent = user.dataset.prevLabel || '友達';
       meta.appendChild(badge);
     });
 
@@ -1015,7 +1014,6 @@
     const keepIcon = document.querySelector('[data-keep-icon]');
     const waitlistButton = document.querySelector('[data-waitlist-button]');
     const waitlistActionText = document.querySelector('[data-waitlist-action-text]');
-    const waitlistIcon = document.querySelector('[data-waitlist-icon]');
     const waitlistNote = document.querySelector('[data-waitlist-note]');
     const eventStateButtons = document.querySelectorAll('[data-event-state-option]');
     const toast = document.querySelector('[data-toast]');
@@ -1060,7 +1058,6 @@
       waitlistButton?.classList.toggle('is-waitlisted', isActive);
       if (waitlistButton) waitlistButton.setAttribute('aria-label', isActive ? 'キャンセル待ち中' : 'キャンセル待ちをする');
       if (waitlistActionText) waitlistActionText.textContent = isActive ? 'キャンセル待ち中' : 'キャンセル待ちをする';
-      if (waitlistIcon) waitlistIcon.src = isActive ? waitlistIcon.dataset.iconActive : waitlistIcon.dataset.iconDefault;
       if (waitlistNote) waitlistNote.textContent = 'キャンセルが出た場合、お知らせします';
       if (persist) writeStoredFlag(waitlistStorageKey, isActive);
     }
