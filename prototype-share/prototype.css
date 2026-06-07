@@ -236,12 +236,23 @@ body {
 .event-state-open .event-status-badge--full {
   display: none;
 }
-.event-state-full .booking-footer__keep,
+.event-state-full .booking-footer > .booking-footer__keep,
 .event-state-full .booking-footer__cta-wrap--reserve {
   display: none;
 }
 .event-state-full .booking-footer__cta-wrap--waitlist {
-  display: block;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  max-width: none;
+}
+.booking-footer__waitlist-cta {
+  position: relative;
+  flex: 1;
+  min-width: 0;
+}
+.booking-footer__waitlist-cta .booking-footer__cta {
+  width: 100%;
   max-width: none;
 }
 .booking-cancel-note {
@@ -295,12 +306,13 @@ body {
   background: var(--color-neutral-white);
   color: var(--color-neutral-solid-gray-900);
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.10);
+  cursor: default;
 }
 .booking-footer__cta--waitlist.is-waitlisted .booking-footer__action {
   color: var(--color-neutral-solid-gray-900);
 }
 .booking-footer__cta--waitlist.is-waitlisted .booking-footer__waitlist-status,
-.booking-footer__cta-wrap--waitlist:has(.booking-footer__cta--waitlist.is-waitlisted) .booking-waitlist-note {
+.booking-footer__waitlist-cta:has(.booking-footer__cta--waitlist.is-waitlisted) .booking-waitlist-note {
   display: none;
 }
 .booking-footer__waitlist-status {
@@ -444,6 +456,11 @@ body {
 .sheet-close:hover {
   background: var(--color-neutral-solid-gray-50);
 }
+.sheet-close:focus-visible {
+  outline: 3px solid var(--color-neutral-solid-gray-900);
+  outline-offset: 2px;
+  box-shadow: none;
+}
 
 .sheet-body {
   padding: 0 16px 40px;
@@ -466,6 +483,111 @@ body {
 .sheet-body .dads-button {
   width: 100%;
   justify-content: center;
+}
+
+/* === キャンセル予約 === */
+.cancellation-reservation-summary {
+  padding: 16px;
+  border: 1px solid var(--color-neutral-solid-gray-200);
+  border-radius: 12px;
+  background: var(--color-neutral-white);
+}
+.cancellation-reservation-summary__title {
+  margin: 0;
+  color: var(--color-neutral-solid-gray-900);
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.5;
+}
+.cancellation-reservation-summary__subtitle {
+  margin: 2px 0 14px;
+  color: var(--color-neutral-solid-gray-600);
+  font-size: 13px;
+  line-height: 1.6;
+}
+.cancellation-reservation-summary__meta {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.cancellation-reservation-summary__meta li {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--color-neutral-solid-gray-700);
+  font-size: 13px;
+  line-height: 1.5;
+}
+.cancellation-reservation-summary__icon {
+  width: 18px;
+  height: 18px;
+  flex: 0 0 18px;
+  object-fit: contain;
+  filter: brightness(0.32);
+}
+.cancellation-reservation-summary__capacity {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+.cancellation-reservation-summary__status {
+  display: inline-flex;
+  align-items: center;
+  min-height: 22px;
+  padding: 2px 9px;
+  border-radius: 999px;
+  background: var(--color-neutral-solid-gray-900);
+  color: var(--color-neutral-white);
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 1.2;
+}
+.cancellation-reservation-explanation {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.cancellation-reservation-explanation p {
+  margin: 0;
+  color: var(--color-neutral-solid-gray-800);
+  font-size: 14px;
+  line-height: 1.7;
+}
+.cancellation-reservation-note {
+  margin: 0;
+  padding: 12px 14px;
+  border-radius: 8px;
+  background: var(--color-neutral-solid-gray-50);
+  color: var(--color-neutral-solid-gray-700);
+  font-size: 12px;
+  line-height: 1.7;
+}
+.cancellation-reservation-error {
+  margin: 0;
+  color: var(--color-neutral-solid-gray-900);
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1.6;
+}
+.cancellation-reservation-submit[aria-busy="true"] {
+  opacity: 0.7;
+  cursor: wait;
+}
+.cancellation-reservation-submit.dads-button {
+  border-color: var(--color-neutral-solid-gray-900);
+  background: var(--color-neutral-solid-gray-900);
+  color: var(--color-neutral-white);
+}
+.cancellation-reservation-submit.dads-button:hover {
+  border-color: var(--color-neutral-solid-gray-800);
+  background: var(--color-neutral-solid-gray-800);
+}
+.cancellation-reservation-submit.dads-button:focus-visible {
+  outline-color: var(--color-neutral-solid-gray-900);
 }
 
 /* === 比較用導線 ===
@@ -1939,379 +2061,6 @@ margin: 18 0 6px;}
   color: var(--color-neutral-solid-gray-700);
   font-size: 14px;
   line-height: 1.7;
-}
-.event-vibe {
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-}
-.event-vibe-card {
-  display: flex;
-  gap: 14px;
-  align-items: center;
-  padding: 16px;
-  border-radius: 12px;
-  background: var(--color-neutral-white);
-  border: 1px solid var(--color-neutral-solid-gray-200);
-  opacity: 0;
-  transform: translateY(10px) scale(0.98);
-}
-.participant-type-motion--visible .event-vibe-card {
-  animation: participant-type-pop 0.62s cubic-bezier(0.2, 0.9, 0.2, 1.08) both;
-}
-.event-vibe-card__character {
-  width: 72px;
-  height: 72px;
-  border-radius: 18px;
-  background: var(--color-neutral-white);
-  border: 1px solid var(--color-neutral-solid-gray-200);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex: 0 0 auto;
-  box-shadow: 0 8px 18px rgba(0,0,0,0.08);
-  overflow: hidden;
-}
-.participant-type-motion--visible .event-vibe-card__character {
-  animation: participant-type-float 2.6s ease-in-out 0.7s infinite;
-}
-.event-vibe-card__character img {
-  display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-.event-vibe-card__body {
-  min-width: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
-}
-.event-vibe-card__eyebrow {
-  margin: 0;
-  color: var(--color-neutral-solid-gray-500);
-  font-size: 11px;
-  font-weight: 700;
-  line-height: 1.4;
-}
-.event-vibe-card__title {
-  margin: 0;
-  color: var(--color-neutral-solid-gray-900);
-  font-size: 18px;
-  font-weight: 800;
-  line-height: 1.45;
-}
-.event-vibe-card__text {
-  margin: 0;
-  color: var(--color-neutral-solid-gray-700);
-  font-size: 13px;
-  line-height: 1.7;
-}
-.event-vibe-card__points {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-.event-vibe-card__points li {
-  position: relative;
-  padding-left: 18px;
-  color: var(--color-neutral-solid-gray-700);
-  font-size: 13px;
-  font-weight: 700;
-  line-height: 1.55;
-}
-.event-vibe-card__points li::before {
-  content: "✓";
-  position: absolute;
-  left: 0;
-  top: 0;
-  color: var(--color-neutral-solid-gray-900);
-  font-size: 13px;
-  font-weight: 800;
-  line-height: 1.55;
-}
-.event-vibe-axes {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  padding: 14px 0 2px;
-}
-.event-vibe-axis {
-  display: grid;
-  grid-template-columns: 82px minmax(70px, 1fr) 82px;
-  align-items: center;
-  gap: 10px;
-}
-.event-vibe-axis__label {
-  color: var(--color-neutral-solid-gray-700);
-  font-size: 12px;
-  font-weight: 700;
-  line-height: 1.35;
-}
-.event-vibe-axis__label--right {
-  text-align: right;
-}
-.event-vibe-axis__track {
-  position: relative;
-  height: 1px;
-  background: var(--color-neutral-solid-gray-200);
-}
-.event-vibe-axis__dot {
-  position: absolute;
-  left: var(--vibe-position);
-  top: 50%;
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  background: var(--color-neutral-solid-gray-900);
-  box-shadow: 0 0 0 4px var(--color-neutral-white), 0 2px 8px rgba(0,0,0,0.16);
-  transform: translate(-50%, -50%);
-}
-.participant-type-motion--visible .event-vibe-axis__dot {
-  animation: participant-type-dot 1.8s ease-in-out infinite;
-}
-.mbti-vibe {
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-  padding: 16px;
-  border: 1px solid var(--color-neutral-solid-gray-200);
-  border-radius: 12px;
-  background: var(--color-neutral-white);
-  opacity: 0;
-  transform: translateY(10px) scale(0.98);
-}
-.mbti-vibe.participant-type-motion--visible {
-  animation: participant-type-pop 0.62s cubic-bezier(0.2, 0.9, 0.2, 1.08) 0.08s both;
-}
-.mbti-vibe__summary {
-  margin: 0;
-  color: var(--color-neutral-solid-gray-800);
-  font-size: 14px;
-  font-weight: 700;
-  line-height: 1.7;
-}
-.mbti-vibe__summary-points {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-.mbti-vibe__summary-points li {
-  position: relative;
-  padding-left: 18px;
-  color: var(--color-neutral-solid-gray-800);
-  font-size: 14px;
-  font-weight: 700;
-  line-height: 1.6;
-}
-.mbti-vibe__summary-points li::before {
-  content: "✓";
-  position: absolute;
-  left: 0;
-  top: 0;
-  color: var(--color-neutral-solid-gray-900);
-  font-size: 13px;
-  font-weight: 800;
-  line-height: 1.7;
-}
-.mbti-vibe__bar {
-  display: flex;
-  width: 100%;
-  height: 16px;
-  border-radius: 999px;
-  overflow: hidden;
-  background: var(--color-neutral-solid-gray-100);
-}
-.mbti-vibe__segment {
-  width: var(--mbti-width);
-  min-width: 18px;
-  transform: scaleX(0);
-  transform-origin: left;
-}
-.participant-type-motion--visible .mbti-vibe__segment {
-  animation: mbti-segment-in 0.72s ease-out 0.28s forwards;
-}
-.mbti-vibe__segment--esfj {
-  background: var(--color-neutral-solid-gray-900);
-}
-.mbti-vibe__segment--infj {
-  background: var(--color-neutral-solid-gray-600);
-}
-.mbti-vibe__segment--enfj {
-  background: var(--color-neutral-solid-gray-400);
-}
-.mbti-vibe__segment--other {
-  background: var(--color-neutral-solid-gray-200);
-}
-.mbti-vibe__types {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-.mbti-vibe-type {
-  display: grid;
-  grid-template-columns: 42px 1fr auto;
-  gap: 12px;
-  align-items: center;
-}
-.mbti-vibe-type__image {
-  width: 42px;
-  height: 42px;
-  border: 1px solid var(--color-neutral-solid-gray-200);
-  border-radius: 12px;
-  background: var(--color-neutral-white);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-  flex: 0 0 auto;
-  opacity: 0;
-  transform: scale(0.72) rotate(-4deg);
-}
-.participant-type-motion--visible .mbti-vibe-type__image {
-  animation: mbti-image-in 0.48s cubic-bezier(0.2, 0.9, 0.2, 1.12) both;
-}
-.participant-type-motion--visible .mbti-vibe-type:nth-child(2) .mbti-vibe-type__image {
-  animation-delay: 0.08s;
-}
-.participant-type-motion--visible .mbti-vibe-type:nth-child(3) .mbti-vibe-type__image {
-  animation-delay: 0.16s;
-}
-.participant-type-motion--visible .mbti-vibe-type:nth-child(4) .mbti-vibe-type__image {
-  animation-delay: 0.24s;
-}
-.mbti-vibe-type__image img {
-  display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-.mbti-vibe-type__image--other {
-  background: var(--color-neutral-solid-gray-50);
-  color: var(--color-neutral-solid-gray-600);
-  font-size: 12px;
-  font-weight: 800;
-}
-.mbti-vibe-type__name {
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  margin: 0;
-  color: var(--color-neutral-solid-gray-900);
-  font-size: 14px;
-  font-weight: 800;
-  line-height: 1.45;
-}
-.mbti-vibe-type__name span {
-  margin-left: 4px;
-  color: var(--color-neutral-solid-gray-500);
-  font-size: 12px;
-  font-weight: 700;
-}
-.mbti-vibe-type__help {
-  width: 18px;
-  height: 18px;
-  border: 1px solid var(--color-neutral-solid-gray-300);
-  border-radius: 50%;
-  background: var(--color-neutral-white);
-  color: var(--color-neutral-solid-gray-700);
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  flex: 0 0 auto;
-  padding: 0;
-  font: inherit;
-  font-size: 11px;
-  font-weight: 800;
-  line-height: 1;
-  cursor: pointer;
-}
-.mbti-vibe-type__help[aria-expanded="true"] {
-  background: var(--color-neutral-solid-gray-900);
-  border-color: var(--color-neutral-solid-gray-900);
-  color: var(--color-neutral-white);
-}
-.mbti-vibe-type__note {
-  margin: 6px 0 0;
-  padding: 8px 10px;
-  border-radius: 8px;
-  background: var(--color-neutral-solid-gray-50);
-  color: var(--color-neutral-solid-gray-600);
-  font-size: 12px;
-  font-weight: 700;
-  line-height: 1.55;
-}
-.mbti-vibe-type__ratio {
-  color: var(--color-neutral-solid-gray-800);
-  font-size: 13px;
-  font-weight: 800;
-  line-height: 1.45;
-}
-@keyframes participant-type-pop {
-  0% {
-    opacity: 0;
-    transform: translateY(10px) scale(0.98);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-  }
-}
-@keyframes participant-type-float {
-  0%, 100% {
-    transform: translateY(0) rotate(0deg);
-  }
-  50% {
-    transform: translateY(-4px) rotate(-1.4deg);
-  }
-}
-@keyframes participant-type-dot {
-  0%, 100% {
-    box-shadow: 0 0 0 4px var(--color-neutral-white), 0 2px 8px rgba(0,0,0,0.16);
-  }
-  50% {
-    box-shadow: 0 0 0 6px var(--color-neutral-white), 0 3px 10px rgba(0,0,0,0.2);
-  }
-}
-@keyframes mbti-segment-in {
-  0% {
-    transform: scaleX(0);
-  }
-  100% {
-    transform: scaleX(1);
-  }
-}
-@keyframes mbti-image-in {
-  0% {
-    opacity: 0;
-    transform: scale(0.72) rotate(-4deg);
-  }
-  70% {
-    opacity: 1;
-    transform: scale(1.07) rotate(1deg);
-  }
-  100% {
-    opacity: 1;
-    transform: scale(1) rotate(0deg);
-  }
-}
-@media (prefers-reduced-motion: reduce) {
-  .event-vibe-card,
-  .event-vibe-card__character,
-  .event-vibe-axis__dot,
-  .mbti-vibe,
-  .mbti-vibe__segment,
-  .mbti-vibe-type__image {
-    animation: none;
-    opacity: 1;
-    transform: none;
-  }
 }
 .trend-radar {
   width: min(100%, 320px);
